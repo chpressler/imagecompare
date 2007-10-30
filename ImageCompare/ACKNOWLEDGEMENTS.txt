@@ -1,0 +1,11 @@
+swing-bug-demo contains the filter library from jhlabs 
+(http://www.jhlabs.com/ip/filters/index.html) in its entirity. For ease of
+distribution the library is distributed in source form so that the code
+can easily be built into a single file. However, unless specifically noted
+the source has not been changed. 
+
+Many thanks to jhlabs for producing this excellent set of ImageFilters.
+
+swing-bug depends on the source code for JBookPanel originally posted under the
+apache 2 license at http://jroller.com/page/pieterjan?entry=jbookpanel_and_the_page_turn
+by Pieter-Jan Savat

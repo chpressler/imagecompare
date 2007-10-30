@@ -38,6 +38,7 @@ import javax.swing.SwingUtilities;
  * @author nigel
  */
 public class YahooImageSearch implements ActionListener {
+	
     JCarosel        carousel;
     int             timerCounter=0;
     int             page = 0;

@@ -34,10 +34,14 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -50,10 +54,12 @@ public class YahooImageSearcher extends javax.swing.JFrame implements ActionList
     YahooImageSearch    imageSearch;
     ImageIcon           busyIcon = new ImageIcon(YahooImageSearcher.class.getResource("/com/blogofbug/examples/images/busy.gif"));
     
+    String s;
+    
     /** Creates new form YahooImageSearcher */
     public YahooImageSearcher() {
         initComponents();
-        
+        s = "paul grimm";
         carousel = new ImageCarousel();
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setBorder(null);
@@ -108,12 +114,24 @@ public class YahooImageSearcher extends javax.swing.JFrame implements ActionList
         layeredPane.addDockElement(nextPageButton,"Next Page");
         layeredPane.addDockElement(changeSearchTerm,"Searh For...");
         
-        imageSearch = new YahooImageSearch(carousel,15);
-        imageSearch.searchFor("\"Java Duke\"");
+        imageSearch = new YahooImageSearch(carousel, 10);
+        imageSearch.searchFor(s);
+        
+        JSlider js = new JSlider();
+        js.setOrientation(JSlider.VERTICAL);
+        js.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(((JSlider) e.getSource()).getValue() % 10 == 0) {
+					imageSearch.searchThread.interrupt();
+					imageSearch.resultsPerPage = ((JSlider) e.getSource()).getValue();
+					imageSearch.searchFor(s);
+				}
+			}});
+        getContentPane().add(js, BorderLayout.EAST);
     }
     
     private void searchFor(){
-        String s = JOptionPane.showInputDialog(this,"Enter search term");
+        s = JOptionPane.showInputDialog(this,"Enter search term");
         if (s!=null){
             imageSearch.searchFor(s);
         }
