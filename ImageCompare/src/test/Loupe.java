@@ -48,6 +48,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -72,6 +74,19 @@ public class Loupe extends JComponent {
     private int zoomLevel = 2;
 
     public Loupe(JLayeredPane layeredPane) {
+    	
+//    	this.addMouseWheelListener(new MouseWheelListener() {
+//
+//			@Override
+//			public void mouseWheelMoved(MouseWheelEvent e) {
+//				if(e.getWheelRotation() < 0) {
+//					zoomLevel--;
+//				}
+//				else {
+//					zoomLevel++;
+//				}
+//			}});
+    	
         this.layeredPane = layeredPane;
 
         loadImages();

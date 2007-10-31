@@ -62,17 +62,30 @@ public class ImageViewerComponent extends JPanel {
 					width *= 1.15;
 					height *= 1.15;
 				}
-				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+				
+				new Thread(new Runnable() {
+					public void run() {
+						imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//						jsp.repaint();
+					}}).start();
+				
+				new Thread(new Runnable() {
+					public void run() {
+						if (((Graphics2D) imageLabel.getGraphics()) != null) {
+							imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+							imageLabel.setPreferredSize(new Dimension(width, height));
+							g = ((Graphics2D) imageLabel.getGraphics());
+									g.drawImage(image, 0, 0, width,
+											height, 0, 0, image
+													.getWidth(), image
+													.getHeight(), null);
+									
+						}
+					}}).start();
+				
 				jsp.repaint();
-
-				if (((Graphics2D) imageLabel.getGraphics()) != null) {
-					imageLabel.setPreferredSize(new Dimension(width, height));
-					g = ((Graphics2D) imageLabel.getGraphics());
-							g.drawImage(image, 0, 0, width,
-									height, 0, 0, image
-											.getWidth(), image
-											.getHeight(), null);
-				}
+				
+				
 //				SwingUtilities.updateComponentTreeUI(jsp);
 //				if(image != null) {	
 //					((Graphics2D) ((JLabel) e.getSource()).getGraphics()).drawImage(image, 0, 0, width,
