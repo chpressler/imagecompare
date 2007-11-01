@@ -118,6 +118,11 @@ public class YahooImageSearch implements ActionListener {
             System.out.println("Doing Search");
 
             results = client.imageSearch(request);
+            
+           for(ImageSearchResult r : results.listResults()) {
+        	   System.out.println(r.getClickUrl());
+           }
+            
             showPage();
         } catch (IOException e) {
             // Most likely a network exception of some sort.

@@ -257,6 +257,7 @@ public class JCarosel extends GradientPanel implements  MouseListener,
                 public void run() {
                 	System.out.println("click run");
                     bringToFront((Component) mouseEvent.getSource());
+                    System.out.println(mouseEvent.getSource());
                 }
             },doubleClickDelay);
         	System.out.println("click start");
