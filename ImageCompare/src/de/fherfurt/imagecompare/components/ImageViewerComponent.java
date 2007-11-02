@@ -2,12 +2,17 @@ package de.fherfurt.imagecompare.components;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -46,7 +51,7 @@ public class ImageViewerComponent extends JPanel {
 		imagePanel.setPreferredSize(new Dimension(301, 601));
 //		imageLabel.setPreferredSize(new Dimension(301, 601));
 		jsp = new JScrollPane(imageLabel);
-		jsp.setPreferredSize(new Dimension(300, 600));
+		jsp.setPreferredSize(new Dimension(400, 500));
 	
 //		imagepanel.setPreferredSize(new Dimension(500, 500));
 //		layeredPane = new JLayeredPane();
@@ -66,8 +71,9 @@ public class ImageViewerComponent extends JPanel {
 				new Thread(new Runnable() {
 					public void run() {
 						imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
-//						jsp.repaint();
+						jsp.repaint();
 					}}).start();
+				
 				
 				new Thread(new Runnable() {
 					public void run() {
@@ -82,9 +88,6 @@ public class ImageViewerComponent extends JPanel {
 									
 						}
 					}}).start();
-				
-				jsp.repaint();
-				
 				
 //				SwingUtilities.updateComponentTreeUI(jsp);
 //				if(image != null) {	
@@ -155,6 +158,16 @@ public class ImageViewerComponent extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
+			}});
+		
+		jsp.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+//				System.out.println(e.getValue());
+			}});
+		
+		jsp.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+//				System.out.println(e.getValue());
 			}});
 		
 //		layeredPane.add(imagePanel, (Integer) (JLayeredPane.DEFAULT_LAYER) + 2);

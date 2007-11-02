@@ -83,7 +83,7 @@ public class ImageCompare extends JFrame {
 				try {
 					ivc1.setImage( ImageIO.read(new File("test.jpg")) );
 //					ivc2.setImage( ImageIO.read(new File("test.jpg")) );
-					ivc2.setImage( ImageIO.read(new URL("http://www.reitenimseewinkel.at/_img/_max/pferd_terry.jpg")));
+//					ivc2.setImage( ImageIO.read(new URL("http://www.reitenimseewinkel.at/_img/_max/pferd_terry.jpg")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
