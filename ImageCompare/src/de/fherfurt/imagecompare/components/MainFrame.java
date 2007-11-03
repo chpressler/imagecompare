@@ -62,11 +62,11 @@ public class MainFrame extends JFrame {
 		JLabel logolabel = new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("logo")));
 		startPanel.add(logolabel);
 		
-        JCarosel carosel = new JCarosel(100);
-        carosel.setBackground(Color.DARK_GRAY, Color.BLACK);
+//        JCarosel carosel = new JCarosel(100);
+//        carosel.setBackground(Color.DARK_GRAY, Color.BLACK);
     
-        carosel.add("http://images.nubiles.net/galleries2/nastya/erotic-hottie/14.jpg", "Thanks to You!"); 
-        carosel.add("http://english.people.com.cn/200611/03/images/auto1.jpg", "Thanks to You!");    
+//        carosel.add("http://images.nubiles.net/galleries2/nastya/erotic-hottie/14.jpg", "Thanks to You!"); 
+//        carosel.add("http://english.people.com.cn/200611/03/images/auto1.jpg", "Thanks to You!");    
        
 //        JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 //				carosel, startPanel);
@@ -75,7 +75,9 @@ public class MainFrame extends JFrame {
 //		
 //		this.add(splitpane, BorderLayout.CENTER);
         
-        this.add(carosel, BorderLayout.CENTER);
+//        this.add(carosel, BorderLayout.CENTER);
+		
+		this.add(new LightTableComponent());
 
 		this.setVisible(true);
 	
