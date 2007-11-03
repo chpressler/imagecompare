@@ -2,6 +2,8 @@ package de.fherfurt.imagecompare.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -10,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -18,6 +21,9 @@ import com.jgoodies.looks.Options;
 
 import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.actions.HelpAction;
+import de.fherfurt.imagecompare.actions.OpenAction;
+import de.fherfurt.imagecompare.actions.SaveAction;
+import de.fherfurt.imagecompare.actions.SaveAsAction;
 
 public class ImageCompareMenu extends JMenuBar {
 
@@ -61,10 +67,21 @@ public class ImageCompareMenu extends JMenuBar {
 
 		putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.BOTH);
 		
+		file_exit.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_Q, InputEvent.CTRL_MASK ) ); 
 		file_exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}});
+		file_open.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_O, InputEvent.CTRL_MASK ) ); 
+		file_open.addActionListener(new OpenAction());
+		file_save.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_S, InputEvent.CTRL_MASK ) ); 
+		file_save.addActionListener(new SaveAction());
+		file_save_as.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_A, InputEvent.CTRL_MASK ) ); 
+		file_save_as.addActionListener(new SaveAsAction());
 		file.add(file_open);
 		file.add(file_save);
 		file.add(file_save_as);

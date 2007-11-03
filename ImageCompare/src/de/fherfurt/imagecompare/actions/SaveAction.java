@@ -14,7 +14,7 @@ public class SaveAction extends AbstractAction {
 
 	public SaveAction() {
 		putValue(Action.NAME, "save");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("save")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("save"));
 	}
 

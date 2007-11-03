@@ -162,12 +162,12 @@ public class ImageViewerComponent extends JPanel {
 		
 		jsp.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent e) {
-//				System.out.println(e.getValue());
+				System.out.println(e.getValue());
 			}});
 		
 		jsp.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent e) {
-//				System.out.println(e.getValue());
+				System.out.println(e.getValue());
 			}});
 		
 //		layeredPane.add(imagePanel, (Integer) (JLayeredPane.DEFAULT_LAYER) + 2);

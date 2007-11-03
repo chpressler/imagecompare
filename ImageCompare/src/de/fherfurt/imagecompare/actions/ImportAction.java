@@ -14,7 +14,7 @@ public class ImportAction extends AbstractAction {
 
 	public ImportAction() {
 		putValue(Action.NAME, "import");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("import")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("importT")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("import"));
 	}
 

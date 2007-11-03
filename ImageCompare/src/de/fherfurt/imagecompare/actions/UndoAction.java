@@ -14,7 +14,7 @@ public class UndoAction extends AbstractAction {
 
 	public UndoAction() {
 		putValue(Action.NAME, "undo");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("undo")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("undoT")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("undo"));
 	}
 
