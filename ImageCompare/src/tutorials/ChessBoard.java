@@ -13,6 +13,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
     JLabel chessPiece;
     int xAdjustment;
     int yAdjustment;
+    
     BufferedImage image;
     int width;
     int height;
@@ -34,30 +35,30 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
  
         chessBoard = new JPanel();
         layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
-        chessBoard.setLayout( new GridLayout(8, 8) );
-        chessBoard.setPreferredSize( boardSize );
-        chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
- 
-        for (int i = 0; i < 64; i++)
-        {
-            JPanel square = new JPanel( new BorderLayout() );
-            chessBoard.add( square );
- 
-            int row = (i / 8) % 2;
-            if (row == 0)
-                square.setBackground( i % 2 == 0 ? Color.red : Color.white );
-            else
-                square.setBackground( i % 2 == 0 ? Color.white : Color.red );
-        }
+//        chessBoard.setLayout( new GridLayout(8, 8) );
+//        chessBoard.setPreferredSize( boardSize );
+//        chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
+// 
+//        for (int i = 0; i < 64; i++)
+//        {
+//            JPanel square = new JPanel( new BorderLayout() );
+            chessBoard.add( new JPanel() );
+// 
+//            int row = (i / 8) % 2;
+//            if (row == 0)
+//                square.setBackground( i % 2 == 0 ? Color.red : Color.white );
+//            else
+//                square.setBackground( i % 2 == 0 ? Color.white : Color.red );
+//        }
  
         // Add a few pieces to the board
  
         JLabel piece = new JLabel( new ImageIcon("test.jpg") );
         JPanel panel = (JPanel)chessBoard.getComponent( 0 );
         panel.add( piece );
-        piece = new JLabel( new ImageIcon("test.jpg") );
-        panel = (JPanel)chessBoard.getComponent( 15 );
-        panel.add( piece );
+//        piece = new JLabel( new ImageIcon("test.jpg") );
+//        panel = (JPanel)chessBoard.getComponent( 0 );
+//        panel.add( piece );
     }
  
     /*
@@ -132,10 +133,10 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		 chessPiece = null;
-	        Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+		
+		Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
 	 
-	        if (c instanceof JPanel) return;
+	    if (c instanceof JPanel) return;
 	        
 		if(e.getWheelRotation() > 0) {
 			width /= 1.15;
@@ -147,6 +148,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 		}
 		
 		c.setSize(width, height);
+		
 //		new Thread(new Runnable() {
 //			public void run() {
 //				chessPiece.setBounds(width, height, width, height);
