@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import de.fherfurt.imagecompare.ResourceHandler;
+
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	JLayeredPane layeredPane;
@@ -26,10 +28,10 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		layeredPane = new JLayeredPane();
 		layeredPane.setLayout(new FlowLayout());
         add(layeredPane);
-        layeredPane.setPreferredSize( new Dimension(200, 200) );
+        layeredPane.setPreferredSize( new Dimension(800, 600) );
         background = new JPanel();
 //        layeredPane.add(background, 2);
-        pic = new JLabel(new ImageIcon("test.jpg"));
+        pic = new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));
         layeredPane.add(pic, JLayeredPane.DEFAULT_LAYER);
         
         addMouseListener(this);
@@ -57,13 +59,13 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 
 	public void mousePressed(MouseEvent e) {
 		Component c = layeredPane.findComponentAt(e.getX(), e.getY());
-
+//		System.out.println(c.getClass());
 		if (!(c instanceof JLabel)) {
 			return;
 		}
 
-		pic.setLocation(e.getX(), e.getY());
-		pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
+//		pic.setLocation(e.getX(), e.getY());
+//		pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
 //		layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
 	}
 	 
@@ -72,13 +74,15 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if (pic == null) {
 			return;
 		}
-		pic.setLocation(me.getX(), me.getY());
+		System.out.println(pic.getLocation());
+		pic.setLocation(me.getX() - (int)pic.getParent().getLocation().getX(), me.getY() - (int)pic.getParent().getLocation().getY());
+		System.out.println(pic.getLocation());
 	}
 	 
 	  
 	public void mouseReleased(MouseEvent e) {
-		pic.setLocation(e.getX(), e.getY());
-		pic.setSize(pic.getWidth() - 5, pic.getHeight() - 5);
+		pic.setLocation(e.getX() - (int)pic.getParent().getLocation().getX(), e.getY() - (int)pic.getParent().getLocation().getY());
+//		pic.setSize(pic.getWidth() - 5, pic.getHeight() - 5);
 //		layeredPane.add(pic, JLayeredPane.DEFAULT_LAYER);
 	}
 
