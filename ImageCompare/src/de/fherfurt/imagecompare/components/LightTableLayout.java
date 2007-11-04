@@ -19,6 +19,9 @@ public class LightTableLayout implements LayoutManager, Serializable {
 	public static final int LEADING = 3;
 
 	public static final int TRAILING = 4;
+	
+	boolean b = false;
+	
 	// Serialization constant
 	private static final long serialVersionUID = -7262534875583282631L;
 
@@ -55,7 +58,9 @@ public class LightTableLayout implements LayoutManager, Serializable {
 	}
 
 	public void layoutContainer(Container parent) {
+		if(!b) {
 		synchronized (parent.getTreeLock()) {
+			System.out.println("haha!!");
 			int num = parent.getComponentCount();
 			// This is more efficient than calling getComponents().
 			Component[] comps = parent.getComponents();
@@ -123,6 +128,9 @@ public class LightTableLayout implements LayoutManager, Serializable {
 				y += new_h + vgap;
 			}
 		}
+		
+		}
+		b = true;
 	}
 
 	public Dimension minimumLayoutSize(Container cont) {
