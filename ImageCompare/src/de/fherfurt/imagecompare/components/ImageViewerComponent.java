@@ -68,11 +68,9 @@ public class ImageViewerComponent extends JPanel {
 					height *= 1.15;
 				}
 				
-				new Thread(new Runnable() {
-					public void run() {
-						imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
-						jsp.repaint();
-					}}).start();
+				
+				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+					
 				
 				
 				new Thread(new Runnable() {
@@ -88,6 +86,8 @@ public class ImageViewerComponent extends JPanel {
 									
 						}
 					}}).start();
+				
+				jsp.repaint();
 				
 //				SwingUtilities.updateComponentTreeUI(jsp);
 //				if(image != null) {	
