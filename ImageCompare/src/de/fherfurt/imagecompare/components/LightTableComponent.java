@@ -1,13 +1,17 @@
 package de.fherfurt.imagecompare.components;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,17 +28,23 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     JPanel background;
     JLabel pic;
     JLabel l;
-	
+    ArrayList<JLabel> al = new ArrayList<JLabel>();
+    
 	public LightTableComponent() {
 		layeredPane = new JLayeredPane();
-		layeredPane.setLayout(new FlowLayout());
+		layeredPane.setLayout(new LightTableLayout());
         add(layeredPane);
         layeredPane.setPreferredSize( new Dimension(800, 600) );
         background = new JPanel();
 //      layeredPane.add(background, 2);new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));
 //		l = new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))));
-//        layeredPane.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))), JLayeredPane.DEFAULT_LAYER);
+        
+        al.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))));
+        al.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))));
+        
+        for(JLabel l : al) {
+        	layeredPane.add(l, JLayeredPane.DEFAULT_LAYER);
+        }
         
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -59,24 +69,24 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		
 	}
 
-	public void mousePressed(MouseEvent e) {
-		Component c = layeredPane.findComponentAt(e.getX(), e.getY());
-		System.out.println(c.getClass());
+	public void mousePressed(final MouseEvent e) {
+		Component c = layeredPane.findComponentAt(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
 		if (!(c instanceof JLabel)) {
 			return;
 		}
 		pic = (JLabel) c;
-//		pic.setLocation(e.getX(), e.getY());
-//		pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
-//		layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
+		layeredPane.moveToFront(pic);
+		// pic.setLocation(e.getX(), e.getY());
+		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
+		// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
 	}
 	 
 	   
 	public void mouseDragged(MouseEvent me) {
 		if (pic == null) {
 			return;
-		}
-		pic.setLocation(me.getX() - (int)pic.getParent().getLocation().getX(), me.getY() - (int)pic.getParent().getLocation().getY());
+		}		
+		pic.setLocation(me.getX() - (int)pic.getParent().getLocation().getX(), me.getY()- (int)pic.getParent().getLocation().getY());
 	}
 	 
 	  
@@ -90,11 +100,47 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		System.out.println(e.getX() + " - " + e.getY());
+		
 	}
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		if(pic == null) {
+			return;
+		}
+		pic.setSize(new Dimension(pic.getWidth()+10, pic.getHeight()+10));
+	}
+	
+}
+
+class MyLayout implements LayoutManager, Serializable {
+
+	@Override
+	public void addLayoutComponent(String name, Component comp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void layoutContainer(Container parent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Dimension minimumLayoutSize(Container parent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dimension preferredLayoutSize(Container parent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeLayoutComponent(Component comp) {
 		// TODO Auto-generated method stub
 		
 	}
