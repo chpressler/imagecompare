@@ -20,6 +20,7 @@ import de.fherfurt.imagecompare.swing.components.ImageCompareComponent;
 import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
 import de.fherfurt.imagecompare.swing.components.ImagePreviewComponent;
+import de.fherfurt.imagecompare.swing.components.StatusBar;
 
 public class MainFrame extends JFrame {
 
@@ -65,6 +66,7 @@ public class MainFrame extends JFrame {
 		add(new ControlPanel(), BorderLayout.WEST);
 		add(splitpane, BorderLayout.CENTER);
 		add(new HistogramPanel(), BorderLayout.EAST);
+		add(new StatusBar(), BorderLayout.SOUTH);
 
 		this.setVisible(true);
 	

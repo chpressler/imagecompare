@@ -9,8 +9,11 @@ public class ImagePreviewComponent extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 	
 	public ImagePreviewComponent() {
+		
 		add(new PreviewThumbnailComponent() , ResourceHandler.getInstance().getStrings().getString("previewthumbnail"));
-		add(new PreviewCarouselComponent(), ResourceHandler.getInstance().getStrings().getString("previewcarousel"));
+		PreviewCarouselComponent pc = new PreviewCarouselComponent();
+		pc.setSize(50, 50);
+		add(pc, ResourceHandler.getInstance().getStrings().getString("previewcarousel"));
 	}
 
 }
