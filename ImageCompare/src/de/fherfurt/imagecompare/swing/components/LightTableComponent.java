@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
@@ -35,8 +36,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     ArrayList<JLabel> al = new ArrayList<JLabel>();
     
 	public LightTableComponent() {
-		
 		layeredPane = new JLayeredPane();
+		new LightTableDropTarget(layeredPane);
 		layeredPane.setLayout(new LightTableLayout());
         add(layeredPane);
         layeredPane.setPreferredSize( new Dimension(800, 600) );
@@ -57,8 +58,10 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
-        
-        new LightTableDropTarget(layeredPane);
+	}
+	
+	public void addDD(JComponent c) {
+		
 	}
 
 	@Override
@@ -111,7 +114,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		
+		System.out.println(e.getX() + "--" + e.getY());
 	}
 
 	@Override
@@ -124,40 +127,6 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //		
 //		System.out.println(zoomable.getSize());
 		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
-	}
-	
-}
-
-class MyLayout implements LayoutManager, Serializable {
-
-	@Override
-	public void addLayoutComponent(String name, Component comp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void layoutContainer(Container parent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Dimension minimumLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Dimension preferredLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void removeLayoutComponent(Component comp) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

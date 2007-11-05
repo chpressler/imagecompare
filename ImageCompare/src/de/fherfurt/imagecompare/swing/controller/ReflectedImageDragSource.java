@@ -11,6 +11,7 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.tree.TreePath;
@@ -28,6 +29,8 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 	TransferableImage transferable;
 
 	Node oldNode;
+	
+	BufferedImage bufferedImage;
 
 	ReflectedImageLabel image;
 
@@ -70,7 +73,8 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 //			return;
 //		}
 //		oldNode = (Node) path.getLastPathComponent();
-		transferable = new TransferableImage();
+		bufferedImage = image.getBufferedImage();
+		transferable = new TransferableImage(bufferedImage);
 		source.startDrag(dge, DragSource.DefaultCopyDrop, transferable, this);
 	}
 
@@ -78,32 +82,40 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 
 class TransferableImage implements Transferable {
 	
-	public static DataFlavor IMAGE_FLAVOR = new DataFlavor(ReflectedImageLabel.class,
+	public static DataFlavor BUFFERED_IMAGE_FLAVOR = new DataFlavor(BufferedImage.class,
 			"Image");
 
-	DataFlavor flavors[] = { IMAGE_FLAVOR };
+	DataFlavor flavors[] = { BUFFERED_IMAGE_FLAVOR };
+	
+	BufferedImage image;
 	
 	@Override
 	public Object getTransferData(DataFlavor flavor)
-			throws UnsupportedFlavorException, IOException {
-		// TODO Auto-generated method stub
-		return null;
+//			throws UnsupportedFlavorException, IOException {
+//		// TODO Auto-generated method stub
+//		return null;
+	throws UnsupportedFlavorException, IOException {
+		if (isDataFlavorSupported(flavor)) {
+			return (Object) image;
+		} else {
+			throw new UnsupportedFlavorException(flavor);
+		}
 	}
 
-	public TransferableImage() {
-		// TODO Auto-generated constructor stub
+	public TransferableImage(BufferedImage i) {
+		image = i;
 	}
 	
 	@Override
 	public DataFlavor[] getTransferDataFlavors() {
 		// TODO Auto-generated method stub
-		return null;
+		return flavors;
 	}
 
 	@Override
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
 		// TODO Auto-generated method stub
-		return false;
+		return (flavor.getRepresentationClass() == BufferedImage.class);
 	}
 	
 }

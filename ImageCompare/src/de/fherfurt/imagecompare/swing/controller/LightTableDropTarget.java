@@ -9,7 +9,9 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.image.BufferedImage;
 
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
@@ -39,43 +41,40 @@ public class LightTableDropTarget implements DropTargetListener {
 	}
 
 	public void drop(DropTargetDropEvent dtde) {
-		System.out.println("sdfsdfdfsdf");
-//		Point pt = dtde.getLocation();
-//	    DropTargetContext dtc = dtde.getDropTargetContext();
-//	    JTree tree = (JTree) dtc.getComponent();
-//	    TreePath parentpath = tree.getClosestPathForLocation(pt.x, pt.y);
-//	    
-//	    Node parent = (Node) parentpath
-//	        .getLastPathComponent();
-////	    if (!parent.hasChildNodes()) {
-////	      dtde.rejectDrop();
-////	      return;
-////	    }
-//
-//	    try {
-//	      Transferable tr = dtde.getTransferable();
-//	      DataFlavor[] flavors = tr.getTransferDataFlavors();
-//	      for (int i = 0; i < flavors.length; i++) {
-//	        if (tr.isDataFlavorSupported(flavors[i])) {
-//	          dtde.acceptDrop(dtde.getDropAction());
-//	          TreePath p = (TreePath) tr.getTransferData(flavors[i]);
-//	          Node node = (Node) p.getLastPathComponent();
-//	          
-//	          dtde.dropComplete(true);
-//	          return;
-//	        }
-//	      }
-//	      dtde.rejectDrop();
-//	    } catch (Exception e) {
-//	      e.printStackTrace();
-//	      dtde.rejectDrop();
-//	    }
+		Point pt = dtde.getLocation();
+	    DropTargetContext dtc = dtde.getDropTargetContext();
+	    System.out.println(dtc.getComponent().getClass());
+	    System.out.println(pt.x + " - " + pt.y);
+
+	    try {
+	      Transferable tr = dtde.getTransferable();
+	      DataFlavor[] flavors = tr.getTransferDataFlavors();
+	      for (int i = 0; i < flavors.length; i++) {
+	        if (tr.isDataFlavorSupported(flavors[i])) {
+	          dtde.acceptDrop(dtde.getDropAction());
+	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
+	          System.out.println(image.getHeight() + " - " + image.getWidth());
+	          System.out.println(lt.getComponentCount());
+	          JLabel lab = new JLabel("WWWWWWWWWWWWWWWWWWWWWW");
+	          
+	          lab.setLocation(pt);
+	          lt.add(lab, JLayeredPane.DRAG_LAYER);
+	          
+	          lt.updateUI();
+	          System.out.println(lt.getComponentCount());
+	          dtde.dropComplete(true);
+	          return;
+	        }
+	      }
+	      dtde.rejectDrop();
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	      dtde.rejectDrop();
+	    }
 	  
 	}
 
 	public void dropActionChanged(DropTargetDragEvent dtde) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

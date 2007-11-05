@@ -52,6 +52,10 @@ public class ReflectedImageLabel extends JButton{
      * The image with reflection
      */
     private BufferedImage   bufferedImage = null;
+    
+    public BufferedImage getBufferedImage() {
+    	return bufferedImage;
+    }
         
     /**
      * The desired alpha composite

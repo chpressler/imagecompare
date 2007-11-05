@@ -3,15 +3,14 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jai"/>
-	<classpathentry kind="lib" path="lib/jai_codec.jar"/>
-	<classpathentry kind="lib" path="lib/jai_core.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/looks"/>
-	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sb"/>
-	<classpathentry kind="lib" path="lib/Cascade.jar"/>
-	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart"/>
+	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jai_codec.jar"/>
+	<classpathentry kind="lib" path="lib/jai_core.jar"/>
+	<classpathentry kind="lib" path="lib/Cascade.jar"/>
 	<classpathentry kind="lib" path="lib/gnujaxp.jar"/>
 	<classpathentry kind="lib" path="lib/itext-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.10.jar"/>
@@ -21,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/servlet.jar"/>
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
