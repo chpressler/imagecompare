@@ -1,4 +1,4 @@
-package de.fherfurt.imagecompare.swing.components;
+package de.fherfurt.imagecompare.swing.layout;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;

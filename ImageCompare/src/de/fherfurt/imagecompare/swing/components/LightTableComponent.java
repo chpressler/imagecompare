@@ -20,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
