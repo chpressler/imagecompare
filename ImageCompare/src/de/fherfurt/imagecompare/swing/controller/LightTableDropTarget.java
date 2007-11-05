@@ -39,13 +39,7 @@ public class LightTableDropTarget implements DropTargetListener {
 	}
 
 	public void drop(DropTargetDropEvent dtde) {
-		Transferable tr = dtde.getTransferable();
-	      DataFlavor[] flavors = tr.getTransferDataFlavors();
-	      for (int i = 0; i < flavors.length; i++) {
-	        if (tr.isDataFlavorSupported(flavors[i])) {
-	        	System.out.println(flavors[i]);
-	        }
-	      }
+		System.out.println("sdfsdfdfsdf");
 //		Point pt = dtde.getLocation();
 //	    DropTargetContext dtc = dtde.getDropTargetContext();
 //	    JTree tree = (JTree) dtc.getComponent();
