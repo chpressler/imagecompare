@@ -1,4 +1,4 @@
-package de.fherfurt.imagecompare.actions;
+package de.fherfurt.imagecompare.swing.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;

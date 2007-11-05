@@ -1,4 +1,4 @@
-package de.fherfurt.imagecompare.components;
+package de.fherfurt.imagecompare.swing.components;
 
 import javax.swing.JPanel;
 

@@ -1,4 +1,4 @@
-package de.fherfurt.imagecompare.components;
+package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,10 +20,10 @@ import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
 import de.fherfurt.imagecompare.ResourceHandler;
-import de.fherfurt.imagecompare.actions.HelpAction;
-import de.fherfurt.imagecompare.actions.OpenAction;
-import de.fherfurt.imagecompare.actions.SaveAction;
-import de.fherfurt.imagecompare.actions.SaveAsAction;
+import de.fherfurt.imagecompare.swing.actions.HelpAction;
+import de.fherfurt.imagecompare.swing.actions.OpenAction;
+import de.fherfurt.imagecompare.swing.actions.SaveAction;
+import de.fherfurt.imagecompare.swing.actions.SaveAsAction;
 
 public class ImageCompareMenu extends JMenuBar {
 

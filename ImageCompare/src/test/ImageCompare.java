@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.components.ImageCompareMenu;
-import de.fherfurt.imagecompare.components.ImageViewerComponent;
+import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
+import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 
 public class ImageCompare extends JFrame {
 	

@@ -1,4 +1,4 @@
-package de.fherfurt.imagecompare.components;
+package de.fherfurt.imagecompare;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,7 +17,9 @@ import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DarkStar;
 
-import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
+import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
+import de.fherfurt.imagecompare.swing.components.LightTableComponent;
 
 public class MainFrame extends JFrame {
 
