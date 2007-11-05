@@ -23,6 +23,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.dnd.DnDConstants;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -42,6 +43,8 @@ import com.blogofbug.swing.delegates.MouseTrackerListener;
 import com.blogofbug.swing.layout.CaroselLayout;
 import com.blogofbug.utility.ImageUtilities;
 import com.blogofbug.utility.PerformanceMonitor;
+
+import de.fherfurt.imagecompare.swing.controller.ReflectedImageDragSource;
 
 /**
  * A carousel component which lays out components around a carousel, moving each to the front
@@ -456,6 +459,7 @@ public class JCarosel extends GradientPanel implements  MouseListener,
      */
     public Component add(String imageURL, String textLabel) {
         ReflectedImageLabel component = new ReflectedImageLabel(ImageUtilities.loadCompatibleImage(imageURL),textLabel);
+        new ReflectedImageDragSource(component, DnDConstants.ACTION_COPY);
         return add(component);
     }
     

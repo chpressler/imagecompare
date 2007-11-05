@@ -20,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.controller.LightTableDropTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -34,6 +35,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     ArrayList<JLabel> al = new ArrayList<JLabel>();
     
 	public LightTableComponent() {
+		
 		layeredPane = new JLayeredPane();
 		layeredPane.setLayout(new LightTableLayout());
         add(layeredPane);
@@ -55,6 +57,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
+        
+        new LightTableDropTarget(layeredPane);
 	}
 
 	@Override
