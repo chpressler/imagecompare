@@ -120,7 +120,13 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //		zoomable.setSize(new Dimension(zoomable.getWidth()+10, zoomable.getHeight()+10));
 //		
 //		System.out.println(zoomable.getSize());
-		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
+		if(e.getWheelRotation() > 0) {
+			zoomable.setNewSize((int) (zoomable.getWidth() / 1.15), (int) (zoomable.getHeight() / 1.15));
+		}
+		else if(e.getWheelRotation() < 0) {
+			zoomable.setNewSize((int) (zoomable.getWidth() * 1.15), (int) (zoomable.getHeight() * 1.15));
+		}
+//		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
 	}
 
 	public JLayeredPane getLayeredPane() {

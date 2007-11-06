@@ -71,15 +71,12 @@ public class ImageViewerComponent extends JPanel {
 					height *= 1.15;
 				}
 				
-				
 				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
-					
-				
 				
 				new Thread(new Runnable() {
 					public void run() {
 						if (((Graphics2D) imageLabel.getGraphics()) != null) {
-							imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//							imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
 							imageLabel.setPreferredSize(new Dimension(width, height));
 							g = ((Graphics2D) imageLabel.getGraphics());
 									g.drawImage(image, 0, 0, width,
