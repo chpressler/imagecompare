@@ -38,8 +38,9 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 	public LightTableComponent() {
 		layeredPane = new JLayeredPane();
 		new LightTableDropTarget(layeredPane);
-		layeredPane.setLayout(new LightTableLayout());
-        add(layeredPane);
+//		layeredPane.setLayout(new LightTableLayout());
+layeredPane.setLayout(new FlowLayout());
+		add(layeredPane);
         layeredPane.setPreferredSize( new Dimension(800, 600) );
         background = new JPanel();
 //      layeredPane.add(background, 2);new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));

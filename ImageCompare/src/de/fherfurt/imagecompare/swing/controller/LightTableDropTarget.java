@@ -11,14 +11,19 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 
 import org.w3c.dom.Node;
 
+import com.blogofbug.swing.components.ReflectedImageLabel;
+
 import de.fherfurt.imagecompare.swing.components.LightTableComponent;
+import de.fherfurt.imagecompare.swing.components.LightTableImage;
 
 public class LightTableDropTarget implements DropTargetListener {
 
@@ -55,12 +60,14 @@ public class LightTableDropTarget implements DropTargetListener {
 	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
 	          System.out.println(image.getHeight() + " - " + image.getWidth());
 	          System.out.println(lt.getComponentCount());
-	          JLabel lab = new JLabel("WWWWWWWWWWWWWWWWWWWWWW");
 	          
-	          lab.setLocation(pt);
-	          lt.add(lab, JLayeredPane.DRAG_LAYER);
+//	         lt.remove(1);
+	      LightTableImage lab = new LightTableImage(image);
+			          lab.setLocation(pt);
+			          lt.add(lab, JLayeredPane.DRAG_LAYER);
+			          SwingUtilities.updateComponentTreeUI(lt);
+				
 	          
-	          lt.updateUI();
 	          System.out.println(lt.getComponentCount());
 	          dtde.dropComplete(true);
 	          return;
