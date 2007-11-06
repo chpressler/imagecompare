@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.swing.controller.ImageViewerDropTarget;
+
 public class ImageViewerComponent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +48,7 @@ public class ImageViewerComponent extends JPanel {
 	private Graphics2D g;
 	
 	public ImageViewerComponent() {
+		new ImageViewerDropTarget(this);
 		imagePanel = new JPanel();
 		imageLabel = new JLabel();
 		imagePanel.setPreferredSize(new Dimension(301, 601));
