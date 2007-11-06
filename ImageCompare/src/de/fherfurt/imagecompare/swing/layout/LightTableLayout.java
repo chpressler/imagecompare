@@ -135,7 +135,7 @@ public class LightTableLayout implements LayoutManager, Serializable {
 			Component[] comps = parent.getComponents();
 			for(Component co : comps) {
 				if(co.getBounds().getWidth() == 0 || co.getHeight() == 0) {
-					co.setBounds((int) co.getBounds().getX(), (int) co.getY(), 10, 10);
+					co.setBounds((int) co.getBounds().getX() - (int) co.getParent().getX(), (int) co.getY()  - (int) co.getParent().getY(), 10, 10);
 					((LightTableComponent) co.getParent().getParent()).setZoomable((LightTableImage) co);
 				}
 				else {
