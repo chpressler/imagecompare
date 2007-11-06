@@ -1,23 +1,17 @@
 package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JList;
 import javax.swing.JPanel;
 
 import de.fherfurt.imagecompare.ResourceHandler;
@@ -37,7 +31,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     
 	public LightTableComponent() {
 		layeredPane = new JLayeredPane();
-		new LightTableDropTarget(layeredPane);
+		new LightTableDropTarget(this);
 		layeredPane.setLayout(new LightTableLayout());
 		add(layeredPane);
         layeredPane.setPreferredSize( new Dimension(800, 600) );
@@ -127,6 +121,18 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //		
 //		System.out.println(zoomable.getSize());
 		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
+	}
+
+	public JLayeredPane getLayeredPane() {
+		return layeredPane;
+	}
+
+	public LightTableImage getZoomable() {
+		return zoomable;
+	}
+
+	public void setZoomable(LightTableImage zoomable) {
+		this.zoomable = zoomable;
 	}
 	
 }

@@ -11,16 +11,8 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JTree;
 import javax.swing.SwingUtilities;
-import javax.swing.tree.TreePath;
-
-import org.w3c.dom.Node;
-
-import com.blogofbug.swing.components.ReflectedImageLabel;
 
 import de.fherfurt.imagecompare.swing.components.LightTableComponent;
 import de.fherfurt.imagecompare.swing.components.LightTableImage;
@@ -28,10 +20,10 @@ import de.fherfurt.imagecompare.swing.components.LightTableImage;
 public class LightTableDropTarget implements DropTargetListener {
 
 	DropTarget target = null;
+	
+	LightTableComponent lt;
 
-	JLayeredPane lt = null;
-
-	public LightTableDropTarget(JLayeredPane l) {
+	public LightTableDropTarget(LightTableComponent l) {
 		lt = l;
 		target = new DropTarget(lt, this);
 	}
@@ -58,15 +50,12 @@ public class LightTableDropTarget implements DropTargetListener {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
 	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
-	          System.out.println(image.getHeight() + " - " + image.getWidth());
-	          System.out.println(lt.getComponentCount());
 	          
 	          LightTableImage lab = new LightTableImage(image);
 			  lab.setLocation(pt);
-			  lt.add(lab, JLayeredPane.DRAG_LAYER);
+			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER);
 			  SwingUtilities.updateComponentTreeUI(lt);
 				
-	          System.out.println(lt.getComponentCount());
 	          dtde.dropComplete(true);
 	          return;
 	        }
