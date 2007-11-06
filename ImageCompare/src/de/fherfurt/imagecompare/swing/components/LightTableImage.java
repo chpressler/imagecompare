@@ -44,8 +44,8 @@ public class LightTableImage extends JLabel {
 		this.image = image;
 	}
 	
-	public void setNewSize(final int height, final int width) {
-		setSize(height, width);
+	public void setNewSize(final int width, final int height) {
+		setSize(new Dimension(width, height));
 		new Thread(new Runnable() {
 			public void run() {
 				getGraphics().drawImage(image, 0, 0, width, height, null);

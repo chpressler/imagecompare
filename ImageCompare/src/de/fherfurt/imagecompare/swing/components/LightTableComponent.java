@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.controller.LightTableDropTarget;
@@ -95,6 +96,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			return;
 		}		
 		pic.setLocation(me.getX() - (int)pic.getParent().getLocation().getX(), me.getY()- (int)pic.getParent().getLocation().getY());
+		pic.updateUI();
+//		pic.getGraphics().drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
 	}
 	 
 	  
