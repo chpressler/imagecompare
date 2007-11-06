@@ -61,13 +61,11 @@ public class LightTableDropTarget implements DropTargetListener {
 	          System.out.println(image.getHeight() + " - " + image.getWidth());
 	          System.out.println(lt.getComponentCount());
 	          
-//	         lt.remove(1);
-	      LightTableImage lab = new LightTableImage(image);
-			          lab.setLocation(pt);
-			          lt.add(lab, JLayeredPane.DRAG_LAYER);
-			          SwingUtilities.updateComponentTreeUI(lt);
+	          LightTableImage lab = new LightTableImage(image);
+			  lab.setLocation(pt);
+			  lt.add(lab, JLayeredPane.DRAG_LAYER);
+			  SwingUtilities.updateComponentTreeUI(lt);
 				
-	          
 	          System.out.println(lt.getComponentCount());
 	          dtde.dropComplete(true);
 	          return;

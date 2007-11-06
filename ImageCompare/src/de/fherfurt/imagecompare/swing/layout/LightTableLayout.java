@@ -60,7 +60,6 @@ public class LightTableLayout implements LayoutManager, Serializable {
 	public void layoutContainer(Container parent) {
 		if(!b) {
 		synchronized (parent.getTreeLock()) {
-			System.out.println("haha!!");
 			int num = parent.getComponentCount();
 			// This is more efficient than calling getComponents().
 			Component[] comps = parent.getComponents();
@@ -129,8 +128,20 @@ public class LightTableLayout implements LayoutManager, Serializable {
 			}
 		}
 		
+		} else {
+			Component[] comps = parent.getComponents();
+			for(Component co : comps) {
+				if(co.getBounds().getWidth() == 0 || co.getHeight() == 0) {
+					co.setBounds((int) co.getBounds().getX(), (int) co.getY(), 10, 10);
+				}
+				else {
+					co.setBounds(co.getBounds());
+				}
+			}
 		}
 		b = true;
+		
+		
 	}
 
 	public Dimension minimumLayoutSize(Container cont) {
