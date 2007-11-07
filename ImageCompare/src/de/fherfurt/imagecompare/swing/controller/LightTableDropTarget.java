@@ -15,7 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.swing.components.LightTableComponent;
-import de.fherfurt.imagecompare.swing.components.LightTableImage;
+import de.fherfurt.imagecompare.swing.components.ImageComponent;
 
 public class LightTableDropTarget implements DropTargetListener {
 
@@ -51,7 +51,7 @@ public class LightTableDropTarget implements DropTargetListener {
 	          dtde.acceptDrop(dtde.getDropAction());
 	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
 	          
-	          LightTableImage lab = new LightTableImage(image);
+	          ImageComponent lab = new ImageComponent(image);
 			  lab.setLocation(pt);
 			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER);
 			  SwingUtilities.updateComponentTreeUI(lt);

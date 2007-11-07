@@ -25,8 +25,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 
 	JLayeredPane layeredPane;
     JPanel background;
-    LightTableImage pic;
-    LightTableImage zoomable;
+    ImageComponent pic;
+    ImageComponent zoomable;
     JLabel l;
     ArrayList<JLabel> al = new ArrayList<JLabel>();
     
@@ -47,8 +47,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //        	layeredPane.add(l, JLayeredPane.DEFAULT_LAYER);
 //        }
         
-        layeredPane.add(new LightTableImage("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(new LightTableImage("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
         
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -82,8 +82,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if (!(c instanceof JLabel)) {
 			return;
 		}
-		pic = (LightTableImage) c;
-		zoomable = (LightTableImage) c;
+		pic = (ImageComponent) c;
+		zoomable = (ImageComponent) c;
 		layeredPane.moveToFront(pic);
 		// pic.setLocation(e.getX(), e.getY());
 		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
@@ -136,11 +136,11 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		return layeredPane;
 	}
 
-	public LightTableImage getZoomable() {
+	public ImageComponent getZoomable() {
 		return zoomable;
 	}
 
-	public void setZoomable(LightTableImage zoomable) {
+	public void setZoomable(ImageComponent zoomable) {
 		this.zoomable = zoomable;
 	}
 	

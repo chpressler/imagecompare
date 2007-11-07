@@ -9,7 +9,7 @@ import java.awt.LayoutManager;
 import java.io.Serializable;
 
 import de.fherfurt.imagecompare.swing.components.LightTableComponent;
-import de.fherfurt.imagecompare.swing.components.LightTableImage;
+import de.fherfurt.imagecompare.swing.components.ImageComponent;
 
 public class LightTableLayout implements LayoutManager, Serializable {
 	/** Constant that specifies left alignment.  */
@@ -136,7 +136,7 @@ public class LightTableLayout implements LayoutManager, Serializable {
 			for(Component co : comps) {
 				if(co.getBounds().getWidth() == 0 || co.getHeight() == 0) {
 					co.setBounds((int) co.getBounds().getX() - (int) co.getParent().getX(), (int) co.getY()  - (int) co.getParent().getY(), 10, 10);
-					((LightTableComponent) co.getParent().getParent()).setZoomable((LightTableImage) co);
+					((LightTableComponent) co.getParent().getParent()).setZoomable((ImageComponent) co);
 				}
 				else {
 					co.setBounds(co.getBounds());

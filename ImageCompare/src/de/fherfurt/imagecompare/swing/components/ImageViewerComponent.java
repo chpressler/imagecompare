@@ -39,9 +39,13 @@ public class ImageViewerComponent extends JPanel {
 	
 //	private JLayeredPane layeredPane;
 	
+	/////////////////////////////////////////////////////////
+	//imageLabel als eigenes Objekt und dann paintComponent wie bei LightTableImage...
+	//oder hier paintComponent überschreiben
+	
 	private JPanel imagePanel;
 	
-	private JLabel imageLabel;
+	private ImageComponent imageLabel;
 	
 	private JScrollPane jsp;
 	
@@ -50,7 +54,7 @@ public class ImageViewerComponent extends JPanel {
 	public ImageViewerComponent() {
 		new ImageViewerDropTarget(this);
 		imagePanel = new JPanel();
-		imageLabel = new JLabel();
+		imageLabel = new ImageComponent();
 		imagePanel.setPreferredSize(new Dimension(301, 601));
 //		imageLabel.setPreferredSize(new Dimension(301, 601));
 		jsp = new JScrollPane(imageLabel);
@@ -71,22 +75,23 @@ public class ImageViewerComponent extends JPanel {
 					height *= 1.15;
 				}
 				
-				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//				
+//				new Thread(new Runnable() {
+//					public void run() {
+//						if (((Graphics2D) imageLabel.getGraphics()) != null) {
+////							imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//							imageLabel.setPreferredSize(new Dimension(width, height));
+//							g = ((Graphics2D) imageLabel.getGraphics());
+//									g.drawImage(image, 0, 0, width,
+//											height, 0, 0, image
+//													.getWidth(), image
+//													.getHeight(), null);
+//									
+//						}
+//					}}).start();
 				
-				new Thread(new Runnable() {
-					public void run() {
-						if (((Graphics2D) imageLabel.getGraphics()) != null) {
-//							imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
-							imageLabel.setPreferredSize(new Dimension(width, height));
-							g = ((Graphics2D) imageLabel.getGraphics());
-									g.drawImage(image, 0, 0, width,
-											height, 0, 0, image
-													.getWidth(), image
-													.getHeight(), null);
-									
-						}
-					}}).start();
-				
+				imageLabel.setNewSize(width, height);
 				jsp.repaint();
 				
 //				SwingUtilities.updateComponentTreeUI(jsp);
