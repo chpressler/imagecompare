@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.controller;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -10,7 +11,10 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.util.Hashtable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
@@ -40,8 +44,8 @@ public class LightTableDropTarget implements DropTargetListener {
 	public void drop(DropTargetDropEvent dtde) {
 		Point pt = dtde.getLocation();
 	    DropTargetContext dtc = dtde.getDropTargetContext();
-	    System.out.println(dtc.getComponent().getClass());
-	    System.out.println(pt.x + " - " + pt.y);
+//	    System.out.println(dtc.getComponent().getClass());
+//	    System.out.println(pt.x + " - " + pt.y);
 
 	    try {
 	      Transferable tr = dtde.getTransferable();
@@ -49,13 +53,13 @@ public class LightTableDropTarget implements DropTargetListener {
 	      for (int i = 0; i < flavors.length; i++) {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
-	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
-	          
-	          ImageComponent lab = new ImageComponent(image);
+	           
+	          ImageComponent lab = new ImageComponent((BufferedImage) tr.getTransferData(flavors[i]));
 			  lab.setLocation(pt);
-			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER);
-			  SwingUtilities.updateComponentTreeUI(lt);
-				
+			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER);  
+			  
+			  SwingUtilities.updateComponentTreeUI(lt.getParent());
+			
 	          dtde.dropComplete(true);
 	          return;
 	        }

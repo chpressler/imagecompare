@@ -14,8 +14,6 @@ import java.awt.dnd.DragSourceListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.tree.TreePath;
-
 import org.w3c.dom.Node;
 
 import com.blogofbug.swing.components.ReflectedImageLabel;
@@ -67,7 +65,7 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 	}
 
 	public void dragGestureRecognized(DragGestureEvent dge) {
-		System.out.println(image.getClass());
+//		System.out.println(image.getClass());
 //		TreePath path = sourceTree.getSelectionPath();
 //		if ((path == null)) {
 //			return;
@@ -77,6 +75,12 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 		transferable = new TransferableImage(bufferedImage);
 		source.startDrag(dge, DragSource.DefaultCopyDrop, transferable, this);
 	}
+	
+//	public BufferedImage copy(BufferedImage source) {
+//		BufferedImage newImage = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+//		newImage.setData(source.getData());
+//		return newImage;
+//	}
 
 }
 

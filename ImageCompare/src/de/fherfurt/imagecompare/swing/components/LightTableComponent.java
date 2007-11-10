@@ -13,9 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.controller.LightTableDropTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 
@@ -47,16 +45,12 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //        	layeredPane.add(l, JLayeredPane.DEFAULT_LAYER);
 //        }
         
-        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
+//        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
+//        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
         
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
-	}
-	
-	public void addDD(JComponent c) {
-		
 	}
 
 	@Override
@@ -124,10 +118,10 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //		
 //		System.out.println(zoomable.getSize());
 		if(e.getWheelRotation() > 0) {
-			zoomable.setNewSize((int) (zoomable.getWidth() / 1.15), (int) (zoomable.getHeight() / 1.15));
+			zoomable.setNewSize((int) (zoomable.getWidth() / 1.5), (int) (zoomable.getHeight() / 1.5));
 		}
 		else if(e.getWheelRotation() < 0) {
-			zoomable.setNewSize((int) (zoomable.getWidth() * 1.15), (int) (zoomable.getHeight() * 1.15));
+			zoomable.setNewSize((int) (zoomable.getWidth() * 1.5), (int) (zoomable.getHeight() * 1.5));
 		}
 //		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
 	}

@@ -31,9 +31,9 @@ public class ImageViewerComponent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int width = 0;
+	private int width = 50;
 	
-	private int height = 0;
+	private int height = 50;
 	
 	private BufferedImage image;
 	

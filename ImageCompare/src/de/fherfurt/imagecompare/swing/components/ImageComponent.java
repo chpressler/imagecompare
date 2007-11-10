@@ -6,12 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 public class ImageComponent extends JLabel {
 	
@@ -22,14 +20,18 @@ public class ImageComponent extends JLabel {
 	int width, height;
 	
 	public ImageComponent(String file) {
-		super(new ImageIcon(file));
-		setPreferredSize(new Dimension(10, 10));
-		setMaximumSize(new Dimension(10, 10));
+		ImageIcon i = new ImageIcon(file);
+		setPreferredSize(new Dimension(i.getIconHeight(), i.getIconWidth()));
+		height = i.getIconHeight();
+		width = i.getIconWidth();
+//		setPreferredSize(new Dimension(10, 10));
+//		setMaximumSize(new Dimension(10, 10));
 		try {
-			image = ImageIO.read(new File(file));
+			image = (BufferedImage) i.getImage();//ImageIO.read(new File(file));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setIcon(i);
 	}
 	
 	public ImageComponent() {
@@ -37,10 +39,12 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public ImageComponent(BufferedImage i) {
-		setPreferredSize(new Dimension(10, 10));
-		setMaximumSize(new Dimension(10, 10));
+		setPreferredSize(new Dimension(i.getHeight(), i.getWidth()));
+		height = i.getHeight();
+		width = i.getWidth();
+//		setMaximumSize(new Dimension(60, 60));
 		ImageIcon ii = new ImageIcon();
-		ii.setImage(image);
+		ii.setImage(i);
 		image = i;
 		setIcon(ii);
 	}
@@ -65,8 +69,9 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public void paintComponent( Graphics g ) {
+//		setBounds((getParent().getWidth() - width)/2, (getParent().getHeight() - height)/2, width, height);
         Graphics2D g2d = (Graphics2D) g;
-        Rectangle r = this.getParent().getBounds();
+//        Rectangle r = this.getParent().getBounds();
         
         g2d.drawImage(image,0,0,width,height,this);
         this.setPreferredSize(new Dimension(width,height));
