@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
+import de.fherfurt.imagecompare.swing.components.ImageComponent;
 import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 
 public class ImageCompare extends JFrame {
@@ -82,6 +83,7 @@ public class ImageCompare extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ivc1.setImage( ImageIO.read(new File("test.jpg")) );
+					
 //					ivc2.setImage( ImageIO.read(new File("test.jpg")) );
 //					ivc2.setImage( ImageIO.read(new URL("http://www.reitenimseewinkel.at/_img/_max/pferd_terry.jpg")));
 				} catch (Exception e1) {

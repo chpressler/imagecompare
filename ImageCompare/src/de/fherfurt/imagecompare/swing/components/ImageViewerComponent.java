@@ -127,6 +127,7 @@ public class ImageViewerComponent extends JPanel {
 						if (ret == JFileChooser.APPROVE_OPTION) {
 							image = ImageIO.read(new File(fc.getSelectedFile().getAbsolutePath()));
 							setImage(image);
+//							setImage(new ImageComponent(image));
 							System.out.println(fc.getSelectedFile().getAbsolutePath());
 						}
 						if (ret == JFileChooser.CANCEL_OPTION) {
@@ -209,7 +210,14 @@ public class ImageViewerComponent extends JPanel {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
+		imagePanel.setPreferredSize(new Dimension(height, width));
+		imageLabel.paintComponent(image.getGraphics());
 	}
+	
+//	public void setImage(ImageComponent imageLabel) {
+//		this.imageLabel = imageLabel;
+//		imageLabel.updateUI();
+//	}
 
 	public Graphics2D getG() {
 		return g;

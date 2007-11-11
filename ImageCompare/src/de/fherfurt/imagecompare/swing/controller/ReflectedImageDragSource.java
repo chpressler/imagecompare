@@ -14,6 +14,8 @@ import java.awt.dnd.DragSourceListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import org.w3c.dom.Node;
 
 import com.blogofbug.swing.components.ReflectedImageLabel;
@@ -74,6 +76,7 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 		bufferedImage = image.getBufferedImage();
 		transferable = new TransferableImage(bufferedImage);
 		source.startDrag(dge, DragSource.DefaultCopyDrop, transferable, this);
+		
 	}
 	
 //	public BufferedImage copy(BufferedImage source) {

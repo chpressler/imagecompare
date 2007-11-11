@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.swing.components.ImageComponent;
 import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 
 public class ImageViewerDropTarget implements DropTargetListener {
@@ -38,8 +39,6 @@ public class ImageViewerDropTarget implements DropTargetListener {
 	public void drop(DropTargetDropEvent dtde) {
 		Point pt = dtde.getLocation();
 	    DropTargetContext dtc = dtde.getDropTargetContext();
-	    System.out.println(dtc.getComponent().getClass());
-	    System.out.println(pt.x + " - " + pt.y);
 
 	    try {
 	      Transferable tr = dtde.getTransferable();
@@ -48,10 +47,9 @@ public class ImageViewerDropTarget implements DropTargetListener {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
 	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
-	          
 	          lt.setImage(image);
+	         
 			  SwingUtilities.updateComponentTreeUI(lt);
-				
 	          dtde.dropComplete(true);
 	          return;
 	        }

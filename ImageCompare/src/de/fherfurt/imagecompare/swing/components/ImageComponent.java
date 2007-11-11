@@ -32,6 +32,7 @@ public class ImageComponent extends JLabel {
 			e.printStackTrace();
 		}
 		setIcon(i);
+		setSize(new Dimension(width, height));
 	}
 	
 	public ImageComponent() {
@@ -47,6 +48,7 @@ public class ImageComponent extends JLabel {
 		ii.setImage(i);
 		image = i;
 		setIcon(ii);
+		setSize(new Dimension(width, height));
 	}
 
 	public BufferedImage getImage() {
@@ -58,14 +60,14 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public void setNewSize(final int width, final int height) {
+		this.width = width;
+		this.height = height;
 		setSize(new Dimension(width, height));
 //		new Thread(new Runnable() {
 //			public void run() {
 //				getGraphics().drawImage(image, 0, 0, width, height, null);
 //			}}).start();
 		repaint();
-		this.width = width;
-		this.height = height;
 	}
 	
 	public void paintComponent( Graphics g ) {

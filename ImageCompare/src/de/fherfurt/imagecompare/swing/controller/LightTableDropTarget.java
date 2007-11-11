@@ -56,7 +56,10 @@ public class LightTableDropTarget implements DropTargetListener {
 	           
 	          ImageComponent lab = new ImageComponent((BufferedImage) tr.getTransferData(flavors[i]));
 			  lab.setLocation(pt);
-			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER);  
+			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER); 
+			  
+			  System.out.println(lab.getSize());
+			  System.out.println(((BufferedImage) tr.getTransferData(flavors[i])).getHeight() + " - " + ((BufferedImage) tr.getTransferData(flavors[i])).getWidth());
 			  
 			  SwingUtilities.updateComponentTreeUI(lt.getParent());
 			
