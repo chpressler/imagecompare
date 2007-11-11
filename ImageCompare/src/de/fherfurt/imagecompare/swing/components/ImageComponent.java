@@ -15,7 +15,7 @@ public class ImageComponent extends JLabel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static BufferedImage image;
+	private BufferedImage image;
 	
 	int width, height;
 	
@@ -39,16 +39,22 @@ public class ImageComponent extends JLabel {
 		
 	}
 	
+//	public BufferedImage copy(BufferedImage source) {
+//		BufferedImage newImage = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+//		newImage.setData(source.getData());
+//		return newImage;
+//	}
+	
 	public ImageComponent(BufferedImage i) {
 //		setPreferredSize(new Dimension(i.getHeight(), i.getWidth()));
-		height = i.getHeight();
-		width = i.getWidth();
+		image = i;
+		height = image.getHeight();
+		width = image.getWidth();
 //		setMaximumSize(new Dimension(60, 60));
 		ImageIcon ii = new ImageIcon();
-		ii.setImage(i);
-		image = i;
+		ii.setImage(image);
 		setIcon(ii);
-		setSize(new Dimension(width / 10, height / 10));
+		setSize(new Dimension(width, height));
 	}
 
 	public BufferedImage getImage() {
@@ -73,7 +79,7 @@ public class ImageComponent extends JLabel {
 	public void paintComponent( Graphics g ) {
 //		setBounds((getParent().getWidth() - width)/2, (getParent().getHeight() - height)/2, width, height);
         Graphics2D g2d = (Graphics2D) g;
-//        Rectangle r = this.getParent().getBounds();
+//      Rectangle r = this.getParent().getBounds();
         
         g2d.drawImage(image,0,0,width,height,this);
         this.setPreferredSize(new Dimension(width,height));
