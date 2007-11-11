@@ -58,8 +58,8 @@ public class LightTableDropTarget implements DropTargetListener {
 			  lab.setLocation(pt);
 			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER); 
 			  
-			  System.out.println(lab.getSize());
-			  System.out.println(((BufferedImage) tr.getTransferData(flavors[i])).getHeight() + " - " + ((BufferedImage) tr.getTransferData(flavors[i])).getWidth());
+			  lt.getLayeredPane().moveToFront(lab);
+			  lt.setZoomable(lab);
 			  
 			  SwingUtilities.updateComponentTreeUI(lt.getParent());
 			

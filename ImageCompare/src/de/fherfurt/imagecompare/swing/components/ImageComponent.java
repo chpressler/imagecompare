@@ -21,7 +21,7 @@ public class ImageComponent extends JLabel {
 	
 	public ImageComponent(String file) {
 		ImageIcon i = new ImageIcon(file);
-		setPreferredSize(new Dimension(i.getIconHeight(), i.getIconWidth()));
+//		setPreferredSize(new Dimension(i.getIconHeight(), i.getIconWidth()));
 		height = i.getIconHeight();
 		width = i.getIconWidth();
 //		setPreferredSize(new Dimension(10, 10));
@@ -32,7 +32,7 @@ public class ImageComponent extends JLabel {
 			e.printStackTrace();
 		}
 		setIcon(i);
-		setSize(new Dimension(width, height));
+		setSize(new Dimension(width / 10, height / 10));
 	}
 	
 	public ImageComponent() {
@@ -40,7 +40,7 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public ImageComponent(BufferedImage i) {
-		setPreferredSize(new Dimension(i.getHeight(), i.getWidth()));
+//		setPreferredSize(new Dimension(i.getHeight(), i.getWidth()));
 		height = i.getHeight();
 		width = i.getWidth();
 //		setMaximumSize(new Dimension(60, 60));
@@ -48,7 +48,7 @@ public class ImageComponent extends JLabel {
 		ii.setImage(i);
 		image = i;
 		setIcon(ii);
-		setSize(new Dimension(width, height));
+		setSize(new Dimension(width / 10, height / 10));
 	}
 
 	public BufferedImage getImage() {
