@@ -210,8 +210,11 @@ public class ImageViewerComponent extends JPanel {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
-		imagePanel.setPreferredSize(new Dimension(height, width));
-		imageLabel.paintComponent(image.getGraphics());
+		imageLabel.setImage(image);
+		imageLabel.setNewSize(width, height);
+		jsp.repaint();
+//		imagePanel.setPreferredSize(new Dimension(height, width));
+//		imageLabel.paintComponent(image.getGraphics());
 	}
 	
 //	public void setImage(ImageComponent imageLabel) {
