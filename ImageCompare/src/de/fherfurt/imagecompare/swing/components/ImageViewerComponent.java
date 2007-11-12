@@ -1,6 +1,7 @@
 package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -31,9 +32,9 @@ public class ImageViewerComponent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int width = 50;
+	private int width = 0;
 	
-	private int height = 50;
+	private int height = 0;
 	
 	private BufferedImage image;
 	
@@ -75,7 +76,7 @@ public class ImageViewerComponent extends JPanel {
 					height *= 1.15;
 				}
 				
-//				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
 //				
 //				new Thread(new Runnable() {
 //					public void run() {
@@ -237,5 +238,17 @@ public class ImageViewerComponent extends JPanel {
 //	public void setLayeredPane(JLayeredPane layeredPane) {
 //		this.layeredPane = layeredPane;
 //	}
+	
+	
+	public void paintComponent( Graphics g ) {
+		imageLabel.setBounds(jsp.getWidth() - width/2, jsp.getHeight() - height/2, imageLabel.width, imageLabel.height);
+		
+//		Graphics2D g2d = (Graphics2D) g;
+//      Rectangle r = this.getParent().getBounds();
+        
+//        g2d.drawImage(image,0,0,width,height,this);
+//        this.setPreferredSize(new Dimension(width,height));
+//        this.revalidate();
+    }
 
 }

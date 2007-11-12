@@ -69,6 +69,7 @@ public class ImageComponent extends JLabel {
 		this.width = width;
 		this.height = height;
 		setSize(new Dimension(width, height));
+	
 //		new Thread(new Runnable() {
 //			public void run() {
 //				getGraphics().drawImage(image, 0, 0, width, height, null);
@@ -78,7 +79,10 @@ public class ImageComponent extends JLabel {
 	
 	public void paintComponent( Graphics g ) {
 //		setBounds((getParent().getWidth() - width)/2, (getParent().getHeight() - height)/2, width, height);
-        Graphics2D g2d = (Graphics2D) g;
+		
+		
+		
+		Graphics2D g2d = (Graphics2D) g;
 //      Rectangle r = this.getParent().getBounds();
         
         g2d.drawImage(image,0,0,width,height,this);
