@@ -2,6 +2,7 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -27,6 +28,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     ImageComponent zoomable;
     JLabel l;
     ArrayList<JLabel> al = new ArrayList<JLabel>();
+    int xdiff = 0;
+    int ydiff = 0;
     
 	public LightTableComponent() {
 		layeredPane = new JLayeredPane();
@@ -79,6 +82,10 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		pic = (ImageComponent) c;
 		zoomable = (ImageComponent) c;
 		layeredPane.moveToFront(pic);
+		Point p1 = new Point(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
+		Point p2 = new Point(c.getLocation());
+		xdiff = p1.x - p2.x;
+		ydiff = p1.y - p2.y;
 		// pic.setLocation(e.getX(), e.getY());
 		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
 		// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
@@ -89,7 +96,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if (pic == null) {
 			return;
 		}		
-		pic.setLocation(me.getX() - (int)pic.getParent().getLocation().getX(), me.getY()- (int)pic.getParent().getLocation().getY());
+		pic.setLocation((me.getX() - (int)pic.getParent().getLocation().getX()) - xdiff, (me.getY()- (int)pic.getParent().getLocation().getY()) - ydiff);
 		pic.updateUI();
 //		pic.getGraphics().drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
 	}
@@ -99,7 +106,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if (pic == null) {
 			return;
 		}
-		pic.setLocation(e.getX() - (int)pic.getParent().getLocation().getX(), e.getY() - (int)pic.getParent().getLocation().getY());
+		pic.setLocation((e.getX() - (int)pic.getParent().getLocation().getX()) - xdiff, (e.getY() - (int)pic.getParent().getLocation().getY()) - ydiff);
 		pic = null;
 	}
 
@@ -118,10 +125,10 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 //		
 //		System.out.println(zoomable.getSize());
 		if(e.getWheelRotation() > 0) {
-			zoomable.setNewSize((int) (zoomable.getWidth() / 1.5), (int) (zoomable.getHeight() / 1.5));
+			zoomable.setNewSize((int) (zoomable.getWidth() / 1.2), (int) (zoomable.getHeight() / 1.2));
 		}
 		else if(e.getWheelRotation() < 0) {
-			zoomable.setNewSize((int) (zoomable.getWidth() * 1.5), (int) (zoomable.getHeight() * 1.5));
+			zoomable.setNewSize((int) (zoomable.getWidth() * 1.2), (int) (zoomable.getHeight() * 1.2));
 		}
 //		zoomable.setNewSize(zoomable.getWidth()+5, zoomable.getHeight()+5);
 	}
