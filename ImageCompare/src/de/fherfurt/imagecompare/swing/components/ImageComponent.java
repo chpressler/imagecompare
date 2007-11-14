@@ -72,14 +72,12 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public void setNewSize(final int width, final int height) {
+		int oldwidth = this.width;
+		int oldheight = this.height;
 		this.width = width;
 		this.height = height;
 		setSize(new Dimension(width, height));
-	
-//		new Thread(new Runnable() {
-//			public void run() {
-//				getGraphics().drawImage(image, 0, 0, width, height, null);
-//			}}).start();
+//		setLocation(getLocation().x + (oldwidth-width/2), getLocation().y + (oldheight-height/2));
 		repaint();
 	}
 	
