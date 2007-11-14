@@ -90,6 +90,8 @@ public class ImageComponent extends JLabel {
 //      Rectangle r = this.getParent().getBounds();
         
         g2d.drawImage(image,0,0,width,height,this);
+        g2d.setColor(Color.LIGHT_GRAY);
+        g2d.drawRect(0, 0, width-1, height-1);
         this.setPreferredSize(new Dimension(width,height));
         this.revalidate();
     }

@@ -10,7 +10,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -89,7 +88,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		// pic.setLocation(e.getX(), e.getY());
 		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
 		// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
-		
+		pic.setNewSize(pic.getWidth()+10, pic.getHeight()+10);
 	}
 	 
 	   
@@ -108,6 +107,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			return;
 		}
 		pic.setLocation((e.getX() - (int)pic.getParent().getLocation().getX()) - xdiff, (e.getY() - (int)pic.getParent().getLocation().getY()) - ydiff);
+		pic.setNewSize(pic.getWidth()-10, pic.getHeight()-10);
 		pic = null;
 	}
 
