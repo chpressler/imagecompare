@@ -36,7 +36,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		new LightTableDropTarget(this);
 		layeredPane.setLayout(new LightTableLayout());
 		add(layeredPane);
-        layeredPane.setPreferredSize( new Dimension(800, 600) );
+        layeredPane.setPreferredSize( new Dimension(800, 800) );
         background = new JPanel();
 //      layeredPane.add(background, 2);new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));
 //		l = new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
@@ -89,6 +89,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		// pic.setLocation(e.getX(), e.getY());
 		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
 		// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
+		
 	}
 	 
 	   

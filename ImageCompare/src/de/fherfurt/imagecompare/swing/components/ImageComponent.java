@@ -1,9 +1,15 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.Transparency;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -80,8 +86,6 @@ public class ImageComponent extends JLabel {
 	public void paintComponent( Graphics g ) {
 //		setBounds((getParent().getWidth() - width)/2, (getParent().getHeight() - height)/2, width, height);
 		
-		
-		
 		Graphics2D g2d = (Graphics2D) g;
 //      Rectangle r = this.getParent().getBounds();
         
@@ -90,4 +94,10 @@ public class ImageComponent extends JLabel {
         this.revalidate();
     }
 	
+	public void setTransparency(double val) {
+//		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment(). 
+//	    getDefaultScreenDevice().getDefaultConfiguration(); 
+//		image = gc.createCompatibleImage(image.getWidth(), image.getHeight(), Transparency.TRANSLUCENT );
+	}
+
 }
