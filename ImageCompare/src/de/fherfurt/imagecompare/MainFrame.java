@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DarkStar;
 
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
@@ -42,7 +43,7 @@ public class MainFrame extends JFrame {
 //			PlasticLookAndFeel.setPlasticTheme(new SkyGreen());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyBlue());
 			
-			UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 			
 		} catch (Exception e1) {
 			final JDialog jd = new JDialog();
