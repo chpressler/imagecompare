@@ -71,6 +71,23 @@ public class ImageComponent extends JLabel {
 		this.image = image;
 	}
 	
+	public void setThumbnail(int size) {
+		if(width > height) {
+			this.height = size * height / width;
+			this.width = size;
+		}
+		else if(width < height) {
+			this.width = size * width / height;
+			this.height = size;
+		}
+		else {
+			this.height = size;
+			this.width = size;
+		}
+		setSize(new Dimension(width, height));
+		repaint();
+	}
+	
 	public void setNewSize(final int width, final int height) {
 		int oldwidth = this.width;
 		int oldheight = this.height;
