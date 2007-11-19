@@ -1,6 +1,5 @@
 package de.fherfurt.imagecompare.swing.controller;
 
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -11,15 +10,12 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
-import java.util.Hashtable;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.swing.components.LightTableComponent;
 import de.fherfurt.imagecompare.swing.components.ImageComponent;
+import de.fherfurt.imagecompare.swing.components.LightTableComponent;
 
 public class LightTableDropTarget implements DropTargetListener {
 
@@ -56,7 +52,7 @@ public class LightTableDropTarget implements DropTargetListener {
 	           
 	          ImageComponent lab = new ImageComponent((BufferedImage) tr.getTransferData(flavors[i]));
 	          lab.setNewSize(lab.getWidth()/10, lab.getHeight()/10);
-	          lab.setLocation(pt.x - lt.getLocation().x, pt.y - lt.getLocation().y); 
+	          lab.setLocation(pt.x - lt.getLayeredPane().getLocation().x, pt.y - lt.getLayeredPane().getLocation().y); 
 			
 			  lt.getLayeredPane().add(lab, JLayeredPane.DRAG_LAYER); 
 			  
