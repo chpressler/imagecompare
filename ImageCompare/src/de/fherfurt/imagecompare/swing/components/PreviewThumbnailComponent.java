@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.dnd.DnDConstants;
@@ -68,9 +69,11 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 	}
 
 	@Override
-	public void imageBaseChanged() {
-		removeAll();
-		ImageBase.getInstance().getImages();
+	public void clear() {
+		removeAll();	
+	}
+	
+	public void add() {
 		for(ImageComponent ic : ImageBase.getInstance().getImages()) {
 			addThumbnail(ic);
 		}

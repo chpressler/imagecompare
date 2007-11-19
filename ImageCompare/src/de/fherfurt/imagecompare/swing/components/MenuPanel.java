@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 
 import com.lowagie.text.pdf.TextField;
 
@@ -30,29 +31,16 @@ public class MenuPanel extends JPanel {
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					JFileChooser fc = new JFileChooser();
-					int ret = fc.showOpenDialog(null);
-//					fc.addChoosableFileFilter(new FileFilter() {
-//						public boolean accept(File f) {
-//							if (f.isDirectory())
-//								return true;
-//							return f.getName().toLowerCase().endsWith(".jpg");
-//						}
-//
-//						public String getDescription() {
-//							return "JPG Images";
-//						}
-//					});
-					fc.setMultiSelectionEnabled(false);
-					//fc.setCurrentDirectory(new File("resources/"));
-					fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					if (ret == JFileChooser.APPROVE_OPTION) {
-						ImageBase.getInstance().setImageBase(new File("C:/Dokumente und Einstellungen/Christian/Desktop/swingx/swingx/images"));//fc.getSelectedFile().getAbsolutePath()));
-					}
-					if (ret == JFileChooser.CANCEL_OPTION) {
-						
-					}
-
+					JFileChooser fileChooser = new JFileChooser(".");
+					fileChooser.setMultiSelectionEnabled(false);
+					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		            int status = fileChooser.showOpenDialog(null);
+		            if (status == JFileChooser.APPROVE_OPTION) {
+//		            	System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
+		            	File f = new File(fileChooser.getSelectedFile().getAbsolutePath());
+//		            	System.out.println(f);
+		                ImageBase.getInstance().setImageBase(f);
+		            }
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),

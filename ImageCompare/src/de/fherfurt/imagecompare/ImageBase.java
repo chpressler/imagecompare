@@ -36,7 +36,11 @@ public class ImageBase {
 	}
 	
 	public void setImageBase(File dir) throws IOException {
+		for(ImageBaseChangedListener ibcl : listeners) {
+			ibcl.clear();
+		}
 		images.clear();
+		System.gc();
 		for(File file : dir.listFiles()) {
 			if(file.isFile()) {
 				if(file.getName().endsWith(".jpg") || file.getName().endsWith(".gif") || file.getName().endsWith(".bmp") || file.getName().endsWith(".png")) {
@@ -45,7 +49,7 @@ public class ImageBase {
 			}
 		}
 		for(ImageBaseChangedListener ibcl : listeners) {
-			ibcl.imageBaseChanged();
+			ibcl.add();
 		}
 	}
 	

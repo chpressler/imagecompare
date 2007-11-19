@@ -2,6 +2,8 @@ package de.fherfurt.imagecompare;
 
 public interface ImageBaseChangedListener {
 	
-	void imageBaseChanged();
+	void clear();
+	
+	void add();
 
 }
