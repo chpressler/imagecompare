@@ -36,6 +36,7 @@ public class ImageBase {
 	}
 	
 	public void setImageBase(File dir) throws IOException {
+		images.clear();
 		for(File file : dir.listFiles()) {
 			if(file.isFile()) {
 				if(file.getName().endsWith(".jpg") || file.getName().endsWith(".gif") || file.getName().endsWith(".bmp") || file.getName().endsWith(".png")) {
