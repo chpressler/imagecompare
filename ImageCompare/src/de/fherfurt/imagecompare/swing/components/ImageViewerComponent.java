@@ -40,10 +40,6 @@ public class ImageViewerComponent extends JPanel {
 	
 //	private JLayeredPane layeredPane;
 	
-	/////////////////////////////////////////////////////////
-	//imageLabel als eigenes Objekt und dann paintComponent wie bei LightTableImage...
-	//oder hier paintComponent überschreiben
-	
 	private JPanel imagePanel;
 	
 	private ImageComponent imageLabel;
@@ -56,10 +52,10 @@ public class ImageViewerComponent extends JPanel {
 		new ImageViewerDropTarget(this);
 		imagePanel = new JPanel();
 		imageLabel = new ImageComponent();
-		imagePanel.setPreferredSize(new Dimension(301, 601));
+		imagePanel.setPreferredSize(new Dimension(400, 300));
 //		imageLabel.setPreferredSize(new Dimension(301, 601));
 		jsp = new JScrollPane(imageLabel);
-		jsp.setPreferredSize(new Dimension(400, 500));
+		jsp.setPreferredSize(new Dimension(400, 300));
 	
 //		imagepanel.setPreferredSize(new Dimension(500, 500));
 //		layeredPane = new JLayeredPane();

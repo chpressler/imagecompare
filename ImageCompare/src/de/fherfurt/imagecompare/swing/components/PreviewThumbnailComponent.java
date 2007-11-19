@@ -15,17 +15,15 @@ import javax.swing.JScrollPane;
 import de.fherfurt.imagecompare.swing.controller.ImageComponentDragSource;
 import de.fherfurt.imagecompare.swing.controller.ReflectedImageDragSource;
 
-public class PreviewThumbnailComponent extends JScrollPane {
+public class PreviewThumbnailComponent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
 	private static JPanel panel = new JPanel();
 	
 	public PreviewThumbnailComponent() {
-		super(panel);
-		panel.setLayout(new FlowLayout());
+		setLayout(new FlowLayout());
 		ImageIcon ii = new ImageIcon();
-//		panel.setPreferredSize(new Dimension(800, 600));
 		
 		try {
 //			addThumbnail(ImageIO.read(new File("pics/1.jpg")));
@@ -52,7 +50,7 @@ public class PreviewThumbnailComponent extends JScrollPane {
 		ImageComponent ic = new ImageComponent(image);
 		ic.setThumbnail(80);
 		new ImageComponentDragSource(ic, DnDConstants.ACTION_COPY);
-		panel.add(ic);
+		add(ic);
 	}
 
 }

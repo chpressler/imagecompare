@@ -1,12 +1,17 @@
 package de.fherfurt.imagecompare;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
+import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -74,10 +79,21 @@ public class MainFrame extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		final JWindow jw = new JWindow();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		int h = dim.height;
+		int w = dim.width;
+		JLabel label = new JLabel(new ImageIcon("splash.jpg"));
+		jw.getContentPane().add(label);
+		jw.setBounds(h / 2 - 150, w / 2 - 250, 500, 300);
+		jw.setVisible(true);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new MainFrame();
+				jw.setVisible(false);
+				jw.dispose();
 			}});
+		
 	}
 	
 }
