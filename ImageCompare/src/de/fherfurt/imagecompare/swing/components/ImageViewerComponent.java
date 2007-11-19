@@ -213,7 +213,7 @@ public class ImageViewerComponent extends JPanel {
 		this.height = image.getHeight();
 		imageLabel.setImage(image);
 		imageLabel.setNewSize(width, height);
-		jsp.repaint();
+//		jsp.repaint();
 //		imagePanel.setPreferredSize(new Dimension(height, width));
 //		imageLabel.paintComponent(image.getGraphics());
 	}
@@ -240,15 +240,15 @@ public class ImageViewerComponent extends JPanel {
 //	}
 	
 	
-	public void paintComponent( Graphics g ) {
-		imageLabel.setBounds(jsp.getWidth() - width/2, jsp.getHeight() - height/2, imageLabel.width, imageLabel.height);
-		
-//		Graphics2D g2d = (Graphics2D) g;
-//      Rectangle r = this.getParent().getBounds();
-        
-//        g2d.drawImage(image,0,0,width,height,this);
-//        this.setPreferredSize(new Dimension(width,height));
-//        this.revalidate();
-    }
+//	public void paintComponent( Graphics g ) {
+////		imageLabel.setBounds(jsp.getWidth() - width/2, jsp.getHeight() - height/2, imageLabel.width, imageLabel.height);
+//		
+////		Graphics2D g2d = (Graphics2D) g;
+////      Rectangle r = this.getParent().getBounds();
+//        
+////        g2d.drawImage(image,0,0,width,height,this);
+////        this.setPreferredSize(new Dimension(width,height));
+////        this.revalidate();
+//    }
 
 }
