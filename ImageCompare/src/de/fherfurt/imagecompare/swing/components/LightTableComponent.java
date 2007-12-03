@@ -1,33 +1,32 @@
 package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Label;
+import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.swing.controller.LightTableDropTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
+import de.fherfurt.imagecompare.util.ICUtil;
 
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private static final long serialVersionUID = 1L;
 
 	JLayeredPane layeredPane;
-    JPanel background;
     ImageComponent pic;
     ImageComponent zoomable;
     JLabel l;
-    ArrayList<JLabel> al = new ArrayList<JLabel>();
+
     int xdiff = 0;
     int ydiff = 0;
     
@@ -36,26 +35,12 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		new LightTableDropTarget(this);
 		layeredPane.setLayout(new LightTableLayout());
 		add(layeredPane);
-//        layeredPane.setPreferredSize( new Dimension(1024, 1024) );
-        background = new JPanel();
-//      layeredPane.add(background, 2);new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")));
-//		l = new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
-        
-//        al.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))));
-//        al.add(new JLabel(new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT"))));
-        
-//        for(JLabel l : al) {
-//        	layeredPane.add(l, JLayeredPane.DEFAULT_LAYER);
-//        }
-        
-//        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
-//        layeredPane.add(new ImageComponent("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("saveT")), JLayeredPane.DEFAULT_LAYER);
         
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -75,23 +60,45 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 	}
 
 	public void mousePressed(final MouseEvent e) {
-		Component c = layeredPane.findComponentAt(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
-		if (!(c instanceof JLabel)) {
-			return;
+		
+		if(SwingUtilities.isRightMouseButton(e)) {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					Component c = layeredPane.findComponentAt(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
+					if (!(c instanceof JLabel)) {
+						return;
+					}
+					pic = (ImageComponent) c;
+					System.out.println("Anfang");
+					ICUtil.getInstance().getHistogramData(pic.getImage());
+					System.out.println("Ende");
+					for(int i = 0; i < 256; i++) {
+						System.out.println(i + ": " + ICUtil.getInstance().getLum().get(i));
+					}
+				}});
+			//Context Menu
 		}
-		pic = (ImageComponent) c;
-		zoomable = (ImageComponent) c;
-		layeredPane.moveToFront(pic);
-		Point p1 = new Point(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
-		Point p2 = new Point(c.getLocation());
-		xdiff = p1.x - p2.x;
-		ydiff = p1.y - p2.y;
 		
-		// pic.setLocation(e.getX(), e.getY());
-		// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
-		// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
-		
-		pic.setNewSize(pic.getWidth()+10, pic.getHeight()+10);
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			Component c = layeredPane.findComponentAt(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
+			if (!(c instanceof JLabel)) {
+				return;
+			}
+			this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+			pic = (ImageComponent) c;
+			zoomable = (ImageComponent) c;
+			layeredPane.moveToFront(pic);
+			Point p1 = new Point(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
+			Point p2 = new Point(c.getLocation());
+			xdiff = p1.x - p2.x;
+			ydiff = p1.y - p2.y;
+
+			// pic.setLocation(e.getX(), e.getY());
+			// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
+			// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
+
+			pic.setNewSize(pic.getWidth() + 10, pic.getHeight() + 10);
+		}
 	}
 	 
 	   
@@ -106,6 +113,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 	 
 	  
 	public void mouseReleased(MouseEvent e) {
+		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		if (pic == null) {
 			return;
 		}

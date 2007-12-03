@@ -1,26 +1,28 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
-import java.util.Timer;
 
 import javax.imageio.ImageIO;
+import javax.media.jai.Histogram;
+import javax.media.jai.JAI;
+import javax.media.jai.PlanarImage;
+import javax.media.jai.RenderedOp;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,7 +30,7 @@ import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.swing.controller.ImageViewerDropTarget;
 
-public class ImageViewerComponent extends JPanel {
+public class ImageViewerComponent extends JPanel implements ImageViewerListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -52,11 +54,20 @@ public class ImageViewerComponent extends JPanel {
 		new ImageViewerDropTarget(this);
 		imagePanel = new JPanel();
 		imageLabel = new ImageComponent();
-		imagePanel.setPreferredSize(new Dimension(400, 300));
+		imagePanel.setPreferredSize(new Dimension(500, 300));
 //		imageLabel.setPreferredSize(new Dimension(301, 601));
 		jsp = new JScrollPane(imageLabel);
-		jsp.setPreferredSize(new Dimension(400, 300));
-	
+		jsp.setPreferredSize(new Dimension(500, 350));
+		
+		jsp.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				((ImageViewerComponents) ((Component) e.getSource()).getParent().getParent().getParent()).scrolledVertical(e.getValue());
+			}});
+		jsp.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				((ImageViewerComponents) ((Component) e.getSource()).getParent().getParent().getParent()).scrolledHorizontal(e.getValue());
+			}});
+		
 //		imagepanel.setPreferredSize(new Dimension(500, 500));
 //		layeredPane = new JLayeredPane();
 //		layeredPane.setLayout(new FlowLayout());
@@ -64,15 +75,18 @@ public class ImageViewerComponent extends JPanel {
 		imageLabel.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				if(e.getWheelRotation() > 0) {
-					width /= 1.15;
-					height /= 1.15;
+					((ImageViewerComponents) ((ImageComponent) e.getSource()).getParent().getParent().getParent().getParent()).zoomedOut();
+//					width /= 1.15;
+//					height /= 1.15;
+//
 				}
 				else if(e.getWheelRotation() < 0) {
-					width *= 1.15;
-					height *= 1.15;
+					((ImageViewerComponents) ((ImageComponent) e.getSource()).getParent().getParent().getParent().getParent()).zoomedIn();
+//					width *= 1.15;
+//					height *= 1.15;
 				}
 				
-				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+//				imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
 //				
 //				new Thread(new Runnable() {
 //					public void run() {
@@ -88,8 +102,8 @@ public class ImageViewerComponent extends JPanel {
 //						}
 //					}}).start();
 				
-				imageLabel.setNewSize(width, height);
-				jsp.repaint();
+//				imageLabel.setNewSize(width, height);
+//				jsp.repaint();
 				
 //				SwingUtilities.updateComponentTreeUI(jsp);
 //				if(image != null) {	
@@ -163,16 +177,6 @@ public class ImageViewerComponent extends JPanel {
 				
 			}});
 		
-		jsp.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				System.out.println(e.getValue());
-			}});
-		
-		jsp.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				System.out.println(e.getValue());
-			}});
-		
 //		layeredPane.add(imagePanel, (Integer) (JLayeredPane.DEFAULT_LAYER) + 2);
 		
 		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Bild"));
@@ -225,6 +229,40 @@ public class ImageViewerComponent extends JPanel {
 
 	public void setG(Graphics2D g) {
 		this.g = g;
+	}
+
+	@Override
+	public void scrolledHorizontal(int i) {
+		jsp.getHorizontalScrollBar().setValue(i);
+		jsp.updateUI();
+	}
+	
+	@Override
+	public void scrolledVertical(int i) {
+		jsp.getVerticalScrollBar().setValue(i);
+		jsp.updateUI();
+	}
+
+	@Override
+	public void zoomedIn() {
+		width *= 1.15;
+		height *= 1.15;
+		
+		imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+		
+		imageLabel.setNewSize(width, height);
+		jsp.repaint();
+	}
+
+	@Override
+	public void zoomedOut() {
+		width /= 1.15;
+		height /= 1.15;
+		
+		imageLabel.setBounds((jsp.getWidth() - width)/2, (jsp.getHeight() - height)/2, width, height);
+		
+		imageLabel.setNewSize(width, height);
+		jsp.repaint();
 	}
 
 //	public JLayeredPane getLayeredPane() {

@@ -77,7 +77,11 @@ public class ImageComponentDragSource implements DragSourceListener, DragGesture
 //		oldNode = (Node) path.getLastPathComponent();
 		bufferedImage = image.getImage();
 		transferable = new TransferableImage(bufferedImage);
-		source.startDrag(dge, DragSource.DefaultCopyDrop, transferable, this);
+		try {
+			source.startDrag(dge, DragSource.DefaultCopyDrop, transferable, this);
+		} catch (Exception e) {
+			
+		}
 		
 	}
 	

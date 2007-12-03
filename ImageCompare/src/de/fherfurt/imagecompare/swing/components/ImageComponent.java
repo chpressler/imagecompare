@@ -25,7 +25,7 @@ public class ImageComponent extends JLabel {
 //		setPreferredSize(new Dimension(10, 10));
 //		setMaximumSize(new Dimension(10, 10));
 		try {
-			image = (BufferedImage) i.getImage();//ImageIO.read(new File(file));
+			image = (BufferedImage) i.getImage();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,12 +36,6 @@ public class ImageComponent extends JLabel {
 	public ImageComponent() {
 		
 	}
-	
-//	public BufferedImage copy(BufferedImage source) {
-//		BufferedImage newImage = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
-//		newImage.setData(source.getData());
-//		return newImage;
-//	}
 	
 	public ImageComponent(BufferedImage i) {
 //		setPreferredSize(new Dimension(i.getHeight(), i.getWidth()));
@@ -81,8 +75,8 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public void setNewSize(final int width, final int height) {
-		int oldwidth = this.width;
-		int oldheight = this.height;
+//		int oldwidth = this.width;
+//		int oldheight = this.height;
 		this.width = width;
 		this.height = height;
 		setSize(new Dimension(width, height));

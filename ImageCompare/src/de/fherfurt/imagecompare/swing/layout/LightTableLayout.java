@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.io.Serializable;
 
+import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 import de.fherfurt.imagecompare.swing.components.LightTableComponent;
 import de.fherfurt.imagecompare.swing.components.ImageComponent;
 

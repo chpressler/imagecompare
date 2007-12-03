@@ -1,23 +1,21 @@
 package de.fherfurt.imagecompare;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import de.fherfurt.imagecompare.swing.components.ImageComponent;
-
 public class ImageBase {
 	
 	private static volatile ImageBase instance;
 	
-	private static volatile ArrayList<ImageComponent> images = new ArrayList<ImageComponent>();
-	
 	private static volatile ArrayList<ImageBaseChangedListener> listeners = new ArrayList<ImageBaseChangedListener>();
 	
+	private BufferedImage image; 
+	
 	private ImageBase() {
-		
 	}
 	
 	public static synchronized ImageBase getInstance() {
@@ -30,26 +28,26 @@ public class ImageBase {
 		}
 		return instance;
 	}
-
-	public ArrayList<ImageComponent> getImages() {
-		return images;
-	}
 	
 	public void setImageBase(File dir) throws IOException {
 		for(ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
 		}
-		images.clear();
-		System.gc();
 		for(File file : dir.listFiles()) {
 			if(file.isFile()) {
-				if(file.getName().endsWith(".jpg") || file.getName().endsWith(".gif") || file.getName().endsWith(".bmp") || file.getName().endsWith(".png")) {
-					images.add(new ImageComponent(ImageIO.read(file)));
+				if(file.getName().endsWith(".jpg") || file.getName().endsWith(".gif") || file.getName().endsWith(".bmp") || file.getName().endsWith(".png") || file.getName().endsWith(".JPG")) {
+//					ImageIO.setCacheDirectory(new File("C:/cache"));
+					image = ImageIO.read(file);
+					for(ImageBaseChangedListener ibcl : listeners) {
+						try {
+						ibcl.add(image);
+						System.out.println("added " + file);
+						} catch (Exception e) {
+							return;
+						}
+					}
 				}
 			}
-		}
-		for(ImageBaseChangedListener ibcl : listeners) {
-			ibcl.add();
 		}
 	}
 	

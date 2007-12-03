@@ -119,6 +119,11 @@ public class ImageCompareMenu extends JMenuBar {
 		edit.add(edit_cut);
 		edit.add(edit_copy);
 		edit.add(edit_paste);
+		edit_delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HistogramFrame hf = new HistogramFrame();
+				hf.setVisible(true);
+			}});
 		edit.add(edit_delete);
 		edit.addSeparator();
 		edit.add(laf);
@@ -134,7 +139,7 @@ public class ImageCompareMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				final JDialog jd = new JDialog();
 				JOptionPane.showMessageDialog(jd,
-						"Sirius Client\nVersion 1.0\n\n(C) mokkafish 2007 - mokkafish.com", "About",
+						"ImageCompare\nVersion 1.0\n\n(C)hristian Pressler - FH Erfurt\nMasterthesis 2008", "About",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});

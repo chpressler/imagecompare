@@ -15,22 +15,22 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DarkStar;
 
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
-import de.fherfurt.imagecompare.swing.components.HistogramPanel;
+import de.fherfurt.imagecompare.swing.components.HistogramFrame;
 import de.fherfurt.imagecompare.swing.components.ImageCompareComponent;
 import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
 import de.fherfurt.imagecompare.swing.components.ImagePreviewComponent;
-import de.fherfurt.imagecompare.swing.components.StatusBar;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
+	private JSplitPane splitpane;
 	
 	public MainFrame() {
 		super("ImageCompare");
@@ -65,14 +65,15 @@ public class MainFrame extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.add(new ImageCompareToolBar(), BorderLayout.NORTH);
 		
-		JSplitPane splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ImageCompareComponent(), new ImagePreviewComponent());
+		splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ImageCompareComponent(), new ImagePreviewComponent());
 		splitpane.setBorder(BorderFactory.createEmptyBorder());
-		splitpane.setDividerLocation(0.5);
+		splitpane.setDividerLocation(0.8);
+		splitpane.setOneTouchExpandable(true);
+		splitpane.setSize(800, 600);
 		
 		add(new ControlPanel(), BorderLayout.WEST);
 		add(splitpane, BorderLayout.CENTER);
-		add(new HistogramPanel(), BorderLayout.EAST);
-		add(new StatusBar(), BorderLayout.SOUTH);
+//		add(new StatusBar(), BorderLayout.SOUTH);
 
 		this.setVisible(true);
 	
