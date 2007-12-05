@@ -177,7 +177,8 @@ public class JCarosel extends GradientPanel implements  MouseListener,
      * @return The component created, normally a reflected image label
      */
     public Component add(Image image, String text) {
-        ReflectedImageLabel component = new ReflectedImageLabel(image, text);
+    	ReflectedImageLabel component = new ReflectedImageLabel(image, text);
+    	new ReflectedImageDragSource(component, DnDConstants.ACTION_COPY);
         return add(component);
     }
     
