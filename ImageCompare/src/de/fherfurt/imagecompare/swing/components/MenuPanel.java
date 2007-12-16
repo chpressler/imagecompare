@@ -43,6 +43,7 @@ public class MenuPanel extends JPanel {
 							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}});
+		
 		add(tf);
 		add(b);
 	}
