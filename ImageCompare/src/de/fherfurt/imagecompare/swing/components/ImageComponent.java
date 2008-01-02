@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.sun.jimi.core.JimiUtils;
+import com.sun.jimi.core.util.JimiUtil;
+
 public class ImageComponent extends JLabel {
 	
 	private static final long serialVersionUID = 1L;
