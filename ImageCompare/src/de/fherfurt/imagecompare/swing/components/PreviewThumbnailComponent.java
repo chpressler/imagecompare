@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImageBaseChangedListener;
 import de.fherfurt.imagecompare.swing.controller.ImageComponentDragSource;
+import de.fherfurt.imagecompare.swing.controller.ThumbnailDragSource;
 
 public class PreviewThumbnailComponent extends JPanel implements ImageBaseChangedListener {
 
@@ -33,8 +34,8 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 		add(image);
 	}
 	
-	public void addThumbnail(BufferedImage image) {
-		ImageComponent ic = new ImageComponent(image);
+	public void addThumbnail(BufferedImage image, String path) {
+		ImageComponent ic = new ImageComponent(image, path);
 		ic.setThumbnail(80);
 		new ImageComponentDragSource(ic, DnDConstants.ACTION_COPY);
 		add(ic);
@@ -42,10 +43,14 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 
 	public void clear() {
 		removeAll();	
+		System.gc();
 	}
 	
-	public void add(BufferedImage image) {
-		addThumbnail(new ImageComponent(image));
+	public void add(BufferedImage image, String path, boolean b) {
+//		addThumbnail(new ImageComponent(image));
+		ImageThumbnailComponent itc = new ImageThumbnailComponent(image, path);
+		new ThumbnailDragSource(itc, DnDConstants.ACTION_COPY);
+		add(itc);
 		updateUI();
 	}
 

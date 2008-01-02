@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.swing.controller.ImageViewerDropTarget;
+import de.fherfurt.imagecompare.swing.controller.ImageViewerDropPathTarget;
 
 public class ImageViewerComponent extends JPanel implements ImageViewerListener {
 
@@ -51,13 +51,13 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 	private Graphics2D g;
 	
 	public ImageViewerComponent() {
-		new ImageViewerDropTarget(this);
+		new ImageViewerDropPathTarget(this);
 		imagePanel = new JPanel();
 		imageLabel = new ImageComponent();
-		imagePanel.setPreferredSize(new Dimension(500, 300));
+		imagePanel.setPreferredSize(new Dimension(600, 380));
 //		imageLabel.setPreferredSize(new Dimension(301, 601));
 		jsp = new JScrollPane(imageLabel);
-		jsp.setPreferredSize(new Dimension(500, 350));
+		jsp.setPreferredSize(new Dimension(600, 380));
 		
 		jsp.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 			public void adjustmentValueChanged(AdjustmentEvent e) {

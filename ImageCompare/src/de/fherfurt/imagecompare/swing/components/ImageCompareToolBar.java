@@ -20,7 +20,7 @@ public class ImageCompareToolBar extends JToolBar {
 
 	public ImageCompareToolBar() {
 		putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.BOTH);
-		setFloatable(false);
+		setFloatable(true);
         putClientProperty("JToolBar.isRollover", Boolean.TRUE);
         
 		this.add(new NewAction());

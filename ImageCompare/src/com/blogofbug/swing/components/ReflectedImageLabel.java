@@ -45,6 +45,10 @@ import com.blogofbug.utility.ImageUtilities;
  */
 public class ReflectedImageLabel extends JButton{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * The richtext associated with this component
      */
     private String  text = "";
@@ -55,6 +59,16 @@ public class ReflectedImageLabel extends JButton{
     
     public BufferedImage getBufferedImage() {
     	return bufferedImage;
+    }
+    
+    private String path;
+    
+    public String getPath() {
+		return path;
+	}
+
+	public void setPath(String s) {
+    	this.path = s;
     }
         
     /**

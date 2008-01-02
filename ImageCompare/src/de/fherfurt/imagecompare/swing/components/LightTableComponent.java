@@ -2,21 +2,31 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.media.jai.JAI;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.swing.controller.LightTableDropTarget;
+import com.blogofbug.tests.ChartTest;
+
+import de.fherfurt.imagecompare.swing.controller.LightTableDropPathTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
-import de.fherfurt.imagecompare.util.ICUtil;
 
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -26,16 +36,16 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     ImageComponent pic;
     ImageComponent zoomable;
     JLabel l;
+    private JPopupMenu popupMenu;
 
     int xdiff = 0;
     int ydiff = 0;
     
 	public LightTableComponent() {
 		layeredPane = new JLayeredPane();
-		new LightTableDropTarget(this);
+		new LightTableDropPathTarget(this);
 		layeredPane.setLayout(new LightTableLayout());
 		add(layeredPane);
-        
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
@@ -69,14 +79,15 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 						return;
 					}
 					pic = (ImageComponent) c;
-					System.out.println("Anfang");
-					ICUtil.getInstance().getHistogramData(pic.getImage());
-					System.out.println("Ende");
-					for(int i = 0; i < 256; i++) {
-						System.out.println(i + ": " + ICUtil.getInstance().getLum().get(i));
-					}
+					zoomable = (ImageComponent) c;
+					layeredPane.moveToFront(pic);
+					Point p1 = new Point(e.getX() - layeredPane.getX(), e.getY() - layeredPane.getY());
+					Point p2 = new Point(c.getLocation());
+					xdiff = p1.x - p2.x;
+					ydiff = p1.y - p2.y;
+					buildMenu(e.getX(), e.getY(), pic);
 				}});
-			//Context Menu
+				
 		}
 		
 		if (SwingUtilities.isLeftMouseButton(e)) {
@@ -98,6 +109,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
 
 			pic.setNewSize(pic.getWidth() + 10, pic.getHeight() + 10);
+			
+			pic.rotate();
 		}
 	}
 	 
@@ -118,7 +131,9 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			return;
 		}
 		pic.setLocation((e.getX() - (int)pic.getParent().getLocation().getX()) - xdiff, (e.getY() - (int)pic.getParent().getLocation().getY()) - ydiff);
-		pic.setNewSize(pic.getWidth()-10, pic.getHeight()-10);
+		if(SwingUtilities.isLeftMouseButton(e)) {
+			pic.setNewSize(pic.getWidth()-10, pic.getHeight()-10);
+		}
 		pic = null;
 	}
 
@@ -160,10 +175,49 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 	
 	public void repaint() {
 		if(getParent() != null) {
-			
 			layeredPane.setPreferredSize(getParent().getSize());
 			System.out.println(layeredPane.getSize());
 		}
+	}
+	
+	public void buildMenu(int x, int y, final ImageComponent p) { 
+			popupMenu = new JPopupMenu();
+			JMenuItem remove = new JMenuItem("remove");
+			remove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					layeredPane.remove(p);
+					((JTabbedPane)layeredPane.getParent().getParent()).updateUI();
+				}});
+			popupMenu.add(remove);
+			JMenuItem hist = new JMenuItem("Histogramm");
+			hist.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new ChartTest(p); 
+				
+				}});
+			popupMenu.add(hist);
+			popupMenu.addSeparator();
+			JMenuItem open_ext = new JMenuItem("extern öffnen");
+			open_ext.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Desktop.getDesktop().open(new File(p.getPath()));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}});
+			popupMenu.add(open_ext);
+			JMenuItem mail = new JMenuItem("mail");
+			mail.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Desktop.getDesktop().mail(null); //mailto: Anhang...!!!
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}});
+			popupMenu.add(mail);
+			popupMenu.show(this, x, y);
 	}
 	
 }

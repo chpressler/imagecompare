@@ -16,6 +16,25 @@ public class ICUtil {
 	HashMap<Integer, Integer> green = new HashMap<Integer, Integer>();
 	
 	private ICUtil() {
+		System.out.println("start");
+		for(int ii = 0; ii < 256; ii++) {
+			lum.put(ii, 0);
+			red.put(ii, 0);
+			green.put(ii, 0);
+			blue.put(ii, 0);
+		}
+		System.out.println("finish");
+	}
+	
+	private void clearHistogramm() {
+		System.out.println("start");
+		for(int ii = 0; ii < 256; ii++) {
+			lum.put(ii, 0);
+			red.put(ii, 0);
+			green.put(ii, 0);
+			blue.put(ii, 0);
+		}
+		System.out.println("finish");
 	}
 	
 	public static synchronized ICUtil getInstance() {
@@ -35,24 +54,39 @@ public class ICUtil {
 		return source;
 	}
 	
+	public BufferedImage getThumbnal(BufferedImage original) {
+		
+//		int w = original.getWidth(), h = original.getHeight(); 
+//		int[] argbArray = new int[ (w * h) / 4 ]; 
+//		original.getRGB( 0 /* startX */, 0 /* startY */, 
+//		              w,  h, argbArray, 
+//		              0 /* offset */, w /* scansize */ );
+		
+		BufferedImage thumbnail = new BufferedImage(original.getWidth()/10, original.getHeight()/10, BufferedImage.TYPE_INT_ARGB);
+		for(int i1 = 0; i1 < thumbnail.getWidth(); i1++) {
+			for(int i2 = 0; i2 < thumbnail.getHeight(); i2++) {
+				thumbnail.setRGB(i1, i2, original.getRGB(i1*10, i2*10));
+			}
+		}
+		original.flush();
+//		System.gc();
+		return thumbnail;
+	}
+	
 	public void getHistogramData(BufferedImage image) {
 		int r,g,b,l;
-		for(int ii = 0; ii < 256; ii++) {
-			lum.put(ii, 0);
-			red.put(ii, 0);
-			green.put(ii, 0);
-			blue.put(ii, 0);
-		}
+		clearHistogramm();
 		for(int i1 = 0; i1 < image.getWidth(); i1++) {
 			for(int i2 = 0; i2 < image.getHeight(); i2++) {
-				r = binaryToInteger(Integer.toBinaryString(image.getRGB(i1, i2)).substring(8).substring(0, 7));
-				g = binaryToInteger(Integer.toBinaryString(image.getRGB(i1, i2)).substring(8).substring(8, 15));
+				r = binaryToInteger(Integer.toBinaryString(image.getRGB(i1, i2)).substring(8).substring(0, 8));
+				g = binaryToInteger(Integer.toBinaryString(image.getRGB(i1, i2)).substring(8).substring(8, 16));
 				b = binaryToInteger(Integer.toBinaryString(image.getRGB(i1, i2)).substring(8).substring(16, 24));
-				l = (r+b+g) / 3;		
+				l = (r+b+g) / 3;
+				
 				lum.put(l, lum.get(l)+1);
-				red.put(r, lum.get(r)+1);
-				green.put(g, lum.get(g)+1);
-				blue.put(b, lum.get(b)+1);
+				red.put(r, red.get(r)+1);
+				green.put(g, green.get(g)+1);
+				blue.put(b, blue.get(b)+1);
 			}
 		}
 	}
@@ -61,7 +95,7 @@ public class ICUtil {
 		int i = 0;
 		int s = bin.length()-1;
 		for(Character c : bin.toCharArray()) {
-			i += Integer.parseInt(c.toString()) * (Math.pow(2d, s)) ;
+			i += Integer.parseInt(c.toString()) * (Math.pow(2d, s));
 			s--;
 		}
 		return i;

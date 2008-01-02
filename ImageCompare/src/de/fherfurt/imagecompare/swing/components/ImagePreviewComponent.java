@@ -1,5 +1,8 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
@@ -11,7 +14,9 @@ public class ImagePreviewComponent extends JTabbedPane {
 	
 	public ImagePreviewComponent() {
 		PreviewThumbnailComponent pt = new PreviewThumbnailComponent();
-		add(new JScrollPane(pt) , ResourceHandler.getInstance().getStrings().getString("previewthumbnail"));
+		JScrollPane tsp = new JScrollPane(pt);
+		tsp.getHorizontalScrollBar().setUnitIncrement(50);
+		add(tsp , ResourceHandler.getInstance().getStrings().getString("previewthumbnail"));
 		PreviewCarouselComponent pc = new PreviewCarouselComponent();
 		add(new JScrollPane(pc), ResourceHandler.getInstance().getStrings().getString("previewcarousel"));
 //		add(new PreviewListComponent() , ResourceHandler.getInstance().getStrings().getString("previewlist"));

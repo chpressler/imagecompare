@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import de.fherfurt.imagecompare.util.ICUtil;
+
 public class ImageBase {
 	
 	private static volatile ImageBase instance;
@@ -32,19 +34,27 @@ public class ImageBase {
 	public void setImageBase(File dir) throws IOException {
 		for(ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
+			System.gc();
 		}
 		for(File file : dir.listFiles()) {
 			if(file.isFile()) {
-				if(file.getName().endsWith(".jpg") || file.getName().endsWith(".gif") || file.getName().endsWith(".bmp") || file.getName().endsWith(".png") || file.getName().endsWith(".JPG")) {
-//					ImageIO.setCacheDirectory(new File("C:/cache"));
-					image = ImageIO.read(file);
-					for(ImageBaseChangedListener ibcl : listeners) {
-						try {
-						ibcl.add(image);
-						System.out.println("added " + file);
-						} catch (Exception e) {
-							return;
+				if (file.getName().endsWith(".jpg")
+						|| file.getName().endsWith(".gif")
+						|| file.getName().endsWith(".bmp")
+						|| file.getName().endsWith(".png")
+						|| file.getName().endsWith(".JPG")) {
+					try {
+						ImageIO.setCacheDirectory(new File("C:/cache"));
+						ImageIO.setUseCache(true);
+						// image = JimiUtils.getThumbnal(ImageIO.read(file));
+						// //JIMI API
+						image = ICUtil.getInstance().getThumbnal(
+								ImageIO.read(file));
+						for (ImageBaseChangedListener ibcl : listeners) {
+							ibcl.add(image, file.getAbsolutePath(), true);
+							// System.out.println("added " + file);
 						}
+					} catch (Exception e) {
 					}
 				}
 			}

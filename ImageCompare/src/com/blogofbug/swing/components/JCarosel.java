@@ -44,6 +44,7 @@ import com.blogofbug.swing.layout.CaroselLayout;
 import com.blogofbug.utility.ImageUtilities;
 import com.blogofbug.utility.PerformanceMonitor;
 
+import de.fherfurt.imagecompare.swing.controller.ReflectedImageDragPathSource;
 import de.fherfurt.imagecompare.swing.controller.ReflectedImageDragSource;
 
 /**
@@ -177,8 +178,10 @@ public class JCarosel extends GradientPanel implements  MouseListener,
      * @return The component created, normally a reflected image label
      */
     public Component add(Image image, String text) {
-    	ReflectedImageLabel component = new ReflectedImageLabel(image, text);
-    	new ReflectedImageDragSource(component, DnDConstants.ACTION_COPY);
+        ReflectedImageLabel component = new ReflectedImageLabel(image, "");
+        component.setPath(text);
+        new ReflectedImageDragPathSource(component, DnDConstants.ACTION_COPY);
+//      new ReflectedImageDragSource(component, DnDConstants.ACTION_COPY);
         return add(component);
     }
     

@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.blogofbug.tests.ChartTest;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
@@ -121,8 +122,8 @@ public class ImageCompareMenu extends JMenuBar {
 		edit.add(edit_paste);
 		edit_delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HistogramFrame hf = new HistogramFrame();
-				hf.setVisible(true);
+//				HistogramFrame hf = new HistogramFrame();
+//				hf.setVisible(true);
 			}});
 		edit.add(edit_delete);
 		edit.addSeparator();

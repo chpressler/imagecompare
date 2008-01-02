@@ -71,7 +71,7 @@ public class MainFrame extends JFrame {
 		splitpane.setOneTouchExpandable(true);
 		splitpane.setSize(800, 600);
 		
-		add(new ControlPanel(), BorderLayout.WEST);
+//		add(new ControlPanel(), BorderLayout.WEST);
 		add(splitpane, BorderLayout.CENTER);
 //		add(new StatusBar(), BorderLayout.SOUTH);
 

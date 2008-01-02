@@ -6,6 +6,6 @@ public interface ImageBaseChangedListener {
 	
 	void clear();
 	
-	void add(BufferedImage image);
+	void add(BufferedImage image, String path, boolean b);
 
 }

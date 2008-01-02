@@ -1,11 +1,11 @@
 package test;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
-import de.fherfurt.imagecompare.swing.components.ImageComponent;
 import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 
 public class ImageCompare extends JFrame {

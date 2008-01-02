@@ -26,24 +26,28 @@ public class MenuPanel extends JPanel {
 		b = new JButton("choos Folder");
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					JFileChooser fileChooser = new JFileChooser(".");
-					fileChooser.setMultiSelectionEnabled(false);
-					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		            int status = fileChooser.showOpenDialog(null);
-		            if (status == JFileChooser.APPROVE_OPTION) {
-//		            	System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
-		            	File f = new File(fileChooser.getSelectedFile().getAbsolutePath());
-//		            	System.out.println(f);
-		                ImageBase.getInstance().setImageBase(f);
-		            }
-				} catch (Exception e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
-							"Exception", JOptionPane.ERROR_MESSAGE);
-				}
+				
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							JFileChooser fileChooser = new JFileChooser(".");
+							fileChooser.setMultiSelectionEnabled(false);
+							fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				            int status = fileChooser.showOpenDialog(null);
+				            if (status == JFileChooser.APPROVE_OPTION) {
+//				            	System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
+				            	File f = new File(fileChooser.getSelectedFile().getAbsolutePath());
+//				            	System.out.println(f);
+				                ImageBase.getInstance().setImageBase(f);
+				            }
+						} catch (Exception e1) {
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
+									"Exception", JOptionPane.ERROR_MESSAGE);
+						}
+					}}).start();
+				
 			}});
-		
 		add(tf);
 		add(b);
 	}
