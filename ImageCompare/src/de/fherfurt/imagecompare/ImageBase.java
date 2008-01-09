@@ -44,8 +44,8 @@ public class ImageBase {
 						|| file.getName().endsWith(".png")
 						|| file.getName().endsWith(".JPG")) {
 					try {
-						ImageIO.setCacheDirectory(new File("C:/cache"));
-						ImageIO.setUseCache(true);
+//						ImageIO.setCacheDirectory(new File("C:/cache"));
+//						ImageIO.setUseCache(true);
 						// image = JimiUtils.getThumbnal(ImageIO.read(file));
 						// //JIMI API
 						image = ICUtil.getInstance().getThumbnal(

@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DarkStar;
+import com.jgoodies.looks.plastic.theme.SkyBlue;
 
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.HistogramFrame;
@@ -43,10 +44,12 @@ public class MainFrame extends JFrame {
 					"com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 			UIManager.installLookAndFeel("JGoodies PlasticXP LaF",
 					"com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-			PlasticLookAndFeel.setPlasticTheme(new DarkStar());
+			
+//			PlasticLookAndFeel.setPlasticTheme(new DarkStar());
 //			PlasticLookAndFeel.setPlasticTheme(new Silver());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyGreen());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyBlue());
+			PlasticLookAndFeel.setPlasticTheme(new com.jgoodies.looks.plastic.theme.BrownSugar());
 			
 			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 			

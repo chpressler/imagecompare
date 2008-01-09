@@ -15,7 +15,7 @@ public class HelpAction extends AbstractAction {
 
 	public HelpAction() {
 		putValue(Action.NAME, "help");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("helpT")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("help")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("help_help"));
 	}
 

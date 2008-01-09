@@ -4,11 +4,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.stream.FileImageInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
+import com.drew.metadata.exif.ExifReader;
+import com.drew.metadata.iptc.IptcReader;
+import com.sun.media.jai.util.ImageUtil;
 
 public class ImageComponent extends JLabel {
 	
@@ -27,6 +44,8 @@ public class ImageComponent extends JLabel {
 	int width, height;
 	
 	private String path;
+	
+	private int pc = 0;
 	
 	public String getPath() {
 		return this.path;
@@ -58,6 +77,10 @@ public class ImageComponent extends JLabel {
 		
 	}
 	
+	public int getPixelCount() {
+		return pc;
+	}
+	
 	private void initHistogramm() {
 		for(int ii = 0; ii < 256; ii++) {
 			lum.put(ii, 0);
@@ -73,6 +96,8 @@ public class ImageComponent extends JLabel {
 		image.getRGB( 0 /* startX */, 0 /* startY */, 
 		              w,  h, argbArray, 
 		              0 /* offset */, w /* scansize */ );
+		
+		pc = argbArray.length;
 		
 		int r,g,b,l;
 		

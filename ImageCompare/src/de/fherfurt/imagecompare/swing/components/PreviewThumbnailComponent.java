@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.dnd.DnDConstants;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,7 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 	private static final long serialVersionUID = 1L;
 	
 	public PreviewThumbnailComponent() {
+		setBackground(Color.DARK_GRAY);
 		setLayout(new FlowLayout());
 		ImageBase.getInstance().addImageBaseChangedListener(this);
 		try {

@@ -19,7 +19,7 @@ public class OpenAction extends AbstractAction {
 
 	public OpenAction() {
 		putValue(Action.NAME, "set ImageBase");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("openT")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("open")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("open"));
 	}
 

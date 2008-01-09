@@ -1,5 +1,8 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import ij.ImageJ;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -14,16 +17,14 @@ import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.media.jai.JAI;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-
-import com.blogofbug.tests.ChartTest;
 
 import de.fherfurt.imagecompare.swing.controller.LightTableDropPathTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
@@ -42,6 +43,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     int ydiff = 0;
     
 	public LightTableComponent() {
+		setBackground(Color.black);
 		layeredPane = new JLayeredPane();
 		new LightTableDropPathTarget(this);
 		layeredPane.setLayout(new LightTableLayout());
@@ -189,15 +191,24 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 					((JTabbedPane)layeredPane.getParent().getParent()).updateUI();
 				}});
 			popupMenu.add(remove);
-			JMenuItem hist = new JMenuItem("Histogramm");
+			JMenuItem hist = new JMenuItem("details");
 			hist.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ChartTest(p); 
+					new DetailsFrame(p); 
 				
 				}});
 			popupMenu.add(hist);
 			popupMenu.addSeparator();
-			JMenuItem open_ext = new JMenuItem("extern öffnen");
+			
+			JMenu open = new JMenu("open");
+			
+			JMenuItem open_ij = new JMenuItem("ImageJ");
+			open_ij.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ImageJ.main(new String[]{p.getPath()});
+				}});
+			open.add(open_ij);
+			JMenuItem open_ext = new JMenuItem("Standard");
 			open_ext.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -206,7 +217,28 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 						e1.printStackTrace();
 					}
 				}});
-			popupMenu.add(open_ext);
+			open.add(open_ext);
+			JMenuItem open_br = new JMenuItem("browse");
+			open_br.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Desktop.getDesktop().browse(new File(p.getPath()).toURI());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}});
+			open.add(open_br);
+			JMenuItem open_edit = new JMenuItem("edit");
+			open_edit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Desktop.getDesktop().edit(new File(p.getPath()));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}});
+			open.add(open_edit);
+			popupMenu.add(open);
 			JMenuItem mail = new JMenuItem("mail");
 			mail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

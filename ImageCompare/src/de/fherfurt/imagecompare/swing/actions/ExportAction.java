@@ -15,7 +15,7 @@ public class ExportAction extends AbstractAction {
 
 	public ExportAction() {
 		putValue(Action.NAME, "export");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("exportT")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("export")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("export"));
 	}
 

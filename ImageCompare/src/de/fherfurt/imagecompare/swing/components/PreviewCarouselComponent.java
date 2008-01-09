@@ -35,6 +35,7 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setBackground(Color.GRAY, Color.BLACK);
 	}
 
 }

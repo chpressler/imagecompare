@@ -14,7 +14,7 @@ public class NewAction extends AbstractAction {
 
 	public NewAction() {
 		putValue(Action.NAME, "new");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("newT")));
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("new")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("new"));
 	}
 
