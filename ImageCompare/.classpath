@@ -21,5 +21,9 @@
 	<classpathentry kind="lib" path="lib/servlet.jar"/>
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
 	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/imageJ"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MetadataExtractor"/>
+	<classpathentry kind="lib" path="lib/ij.jar"/>
+	<classpathentry kind="lib" path="lib/MetadataExtractor.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
