@@ -264,8 +264,10 @@ class MyChart extends JComponent {
 	public void paint(Graphics g) {
 		
 		int f;
-		if(ic.getPixelCount() <= 2000000) {
-			f = 150;
+		if(ic.getPixelCount() <= 200000) {
+			f = 20;
+		} else if(ic.getPixelCount() > 200000 && ic.getPixelCount() <= 2000000) {
+			f = 100;
 		} else if(ic.getPixelCount() > 2000000 && ic.getPixelCount() <= 5000000) {
 			f = 600;
 		}

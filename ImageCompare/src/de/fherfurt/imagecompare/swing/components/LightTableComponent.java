@@ -16,6 +16,8 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -222,7 +224,17 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			open_br.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Desktop.getDesktop().browse(new File(p.getPath()).toURI());
+						System.out.println(new File(p.getPath()).toURI());
+						
+						String test = "///" + new File(p.getPath()).toURI();
+						URI uriFile = null;
+						try {
+							uriFile = new URI("file", test, null);
+							System.out.println(uriFile);
+						} catch (URISyntaxException e1) {
+							e1.printStackTrace();
+						}
+						Desktop.getDesktop().browse(uriFile);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
