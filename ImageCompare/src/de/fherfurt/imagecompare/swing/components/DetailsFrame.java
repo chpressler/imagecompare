@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
@@ -88,7 +92,18 @@ class ExifPanel extends JPanel {
 		setLayout(null);
 		File jpegFile = new File(path);
 		try {
-			metadata = JpegMetadataReader.readMetadata(jpegFile);
+			if (path.startsWith("http")) {
+				try {
+					InputStream inputStream = new URL(path).openConnection()
+							.getInputStream();
+					metadata = JpegMetadataReader.readMetadata(inputStream);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				metadata = JpegMetadataReader.readMetadata(jpegFile);
+			}
 		} catch (JpegProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

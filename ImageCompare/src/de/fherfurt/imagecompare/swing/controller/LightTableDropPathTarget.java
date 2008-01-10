@@ -11,6 +11,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLayeredPane;
@@ -44,7 +45,7 @@ public class LightTableDropPathTarget implements DropTargetListener {
 	    DropTargetContext dtc = dtde.getDropTargetContext();
 //	    System.out.println(dtc.getComponent().getClass());
 //	    System.out.println(pt.x + " - " + pt.y);
-
+	    ImageComponent lab = null;
 	    try {
 	      Transferable tr = dtde.getTransferable();
 	      DataFlavor[] flavors = tr.getTransferDataFlavors();
@@ -52,7 +53,11 @@ public class LightTableDropPathTarget implements DropTargetListener {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
 	           
-	          ImageComponent lab = new ImageComponent(ImageIO.read(new File((String) tr.getTransferData(flavors[i]))), (String) tr.getTransferData(flavors[i]));//(BufferedImage) tr.getTransferData(flavors[i]));
+	          if(((String) tr.getTransferData(flavors[i])).startsWith("http")) {
+	        	  lab =	new ImageComponent(ImageIO.read(new URL((String) tr.getTransferData(flavors[i]))), (String) tr.getTransferData(flavors[i]));
+	          } else {
+	        	  lab = new ImageComponent(ImageIO.read(new File((String) tr.getTransferData(flavors[i]))), (String) tr.getTransferData(flavors[i]));//(BufferedImage) tr.getTransferData(flavors[i]));
+	          }
 //	          lab.setNewSize(lab.getWidth()/10, lab.getHeight()/10);
 	          lab.setThumbnail(80);
 	          lab.setThumbnail(100);

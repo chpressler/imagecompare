@@ -11,6 +11,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
@@ -48,7 +49,13 @@ public class ImageViewerDropPathTarget implements DropTargetListener {
 	      for (int i = 0; i < flavors.length; i++) {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
-	          BufferedImage image = ImageIO.read(new File((String) tr.getTransferData(flavors[i])));
+	          
+	          BufferedImage image = null;
+	          if(((String) tr.getTransferData(flavors[i])).startsWith("http")) {
+	        	  image = ImageIO.read(new URL((String) tr.getTransferData(flavors[i])));
+	          } else {
+	        	  image = ImageIO.read(new File((String) tr.getTransferData(flavors[i])));
+	          }
 	          lt.setImage(image);
 	         
 			  SwingUtilities.updateComponentTreeUI(lt);
