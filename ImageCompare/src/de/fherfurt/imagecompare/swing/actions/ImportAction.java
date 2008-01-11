@@ -42,7 +42,7 @@ public class ImportAction extends AbstractAction {
 			public void run() {
 				ImageSearchRequest request = new ImageSearchRequest(response);            
 		        request.setAdultOk(true);
-		        request.setResults(10);
+		        request.setResults(50);
 //		      request.setStart(BigInteger.valueOf(10));
 		        
 		        try {

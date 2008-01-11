@@ -43,9 +43,9 @@ public class ImageBase {
 		}
 		for (ImageSearchResult r : results.listResults()) {
 			try {
-//				image = ICUtil.getInstance().getThumbnal(
-//						ImageIO.read(new URL(r.getClickUrl())));
-				image = ImageIO.read(new URL(r.getClickUrl()));
+				image = ICUtil.getInstance().getThumbnal(
+						ImageIO.read(new URL(r.getClickUrl())));
+//				image = ImageIO.read(new URL(r.getClickUrl()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
