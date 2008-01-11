@@ -62,12 +62,27 @@ public class ICUtil {
 //		              w,  h, argbArray, 
 //		              0 /* offset */, w /* scansize */ );
 		
-		BufferedImage thumbnail = new BufferedImage(original.getWidth()/10, original.getHeight()/10, BufferedImage.TYPE_INT_ARGB);
-		for(int i1 = 0; i1 < thumbnail.getWidth(); i1++) {
-			for(int i2 = 0; i2 < thumbnail.getHeight(); i2++) {
-				thumbnail.setRGB(i1, i2, original.getRGB(i1*10, i2*10));
+		BufferedImage thumbnail = null;
+		 if ((original.getWidth() * original.getHeight()) < 1000000) {
+			 thumbnail = new BufferedImage(
+						original.getWidth() / 5, original.getHeight() / 5,
+						BufferedImage.TYPE_INT_ARGB);
+				for (int i1 = 0; i1 < thumbnail.getWidth(); i1++) {
+					for (int i2 = 0; i2 < thumbnail.getHeight(); i2++) {
+						thumbnail.setRGB(i1, i2, original.getRGB(i1 * 5, i2 * 5));
+					}
+				}
+		} else {
+			thumbnail = new BufferedImage(
+					original.getWidth() / 10, original.getHeight() / 10,
+					BufferedImage.TYPE_INT_ARGB);
+			for (int i1 = 0; i1 < thumbnail.getWidth(); i1++) {
+				for (int i2 = 0; i2 < thumbnail.getHeight(); i2++) {
+					thumbnail.setRGB(i1, i2, original.getRGB(i1 * 10, i2 * 10));
+				}
 			}
 		}
+		
 		original.flush();
 //		System.gc();
 		return thumbnail;
