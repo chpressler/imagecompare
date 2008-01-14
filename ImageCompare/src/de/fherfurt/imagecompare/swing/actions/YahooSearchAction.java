@@ -15,7 +15,7 @@ import com.yahoo.search.SearchClient;
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
 
-public class ImportAction extends AbstractAction {
+public class YahooSearchAction extends AbstractAction {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,7 +23,7 @@ public class ImportAction extends AbstractAction {
 	
 	ImageSearchResults results;
 
-	public ImportAction() {
+	public YahooSearchAction() {
 		
 		client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
 		

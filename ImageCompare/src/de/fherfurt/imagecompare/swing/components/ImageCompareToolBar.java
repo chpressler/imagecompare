@@ -12,7 +12,7 @@ import de.fherfurt.imagecompare.swing.actions.NewAction;
 import de.fherfurt.imagecompare.swing.actions.OpenAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAsAction;
-import de.fherfurt.imagecompare.swing.actions.UndoAction;
+import de.fherfurt.imagecompare.swing.actions.YahooSearchAction;
 
 public class ImageCompareToolBar extends JToolBar {
 	
@@ -32,7 +32,7 @@ public class ImageCompareToolBar extends JToolBar {
 		this.add(new ImportAction());
 		this.add(new ExportAction());
 		this.addSeparator();
-		this.add(new UndoAction());
+		this.add(new YahooSearchAction());
 		this.addSeparator();
 		this.add(new HelpAction());
 	}
