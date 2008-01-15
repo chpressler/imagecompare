@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 
+import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
 
 
@@ -20,7 +21,11 @@ public class ExportAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				ImageBase.getInstance().exportToDir("C:/export");
+			}}).start();
 	}
 
 }

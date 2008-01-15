@@ -2,7 +2,9 @@ package de.fherfurt.imagecompare;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class ImageBase {
 	
 	private BufferedImage image; 
 	
+	private ArrayList<String> imagePaths = new ArrayList<String>();
+	
 	private ImageBase() {
 	}
 	
@@ -36,7 +40,48 @@ public class ImageBase {
 		return instance;
 	}
 	
+	public void exportToDir(String dir) {
+		File d = new File(dir);
+		if(!d.exists()) {
+			d.mkdirs();
+		}
+		int i = 0;
+		for(String s : imagePaths) {
+			i++;
+			if(s.startsWith("http")) {
+				try {
+					String[] sa = s.split("/");
+					System.out.println(sa.length);
+					File f = new File(d + "/" + i + ".jpg");
+					f.createNewFile();
+					FileOutputStream fos = new FileOutputStream(f);
+					InputStream inputStream = new URL(s).openConnection().getInputStream();
+					int z = 0;
+					while(z >= 0) {
+						z = inputStream.read();
+						fos.write(z);
+					}
+					fos.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				//Original
+				File f = new File(s);
+				
+				//Export
+				File ef = new File(d + "");
+				try {
+					ef.createNewFile();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void setImageBase(ImageSearchResults results) {
+		imagePaths.clear();
 		for (ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
 			System.gc();
@@ -51,12 +96,14 @@ public class ImageBase {
 			}
 			for (ImageBaseChangedListener ibcl : listeners) {
 				ibcl.add(image, r.getClickUrl(), true);
+				imagePaths.add(r.getClickUrl());
 				// System.out.println("added " + file);
 			}
 		}
 	}
 	
 	public void setImageBase(File dir) throws IOException {
+		imagePaths.clear();
 		for(ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
 			System.gc();
@@ -77,6 +124,7 @@ public class ImageBase {
 								ImageIO.read(file));
 						for (ImageBaseChangedListener ibcl : listeners) {
 							ibcl.add(image, file.getAbsolutePath(), true);
+							imagePaths.add(file.getAbsolutePath());
 							// System.out.println("added " + file);
 						}
 					} catch (Exception e) {

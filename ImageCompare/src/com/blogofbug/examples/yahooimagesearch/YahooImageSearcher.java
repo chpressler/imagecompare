@@ -59,7 +59,7 @@ public class YahooImageSearcher extends javax.swing.JFrame implements ActionList
     /** Creates new form YahooImageSearcher */
     public YahooImageSearcher() {
         initComponents();
-        s = "paul grimm";
+        s = "pferd";
         carousel = new ImageCarousel();
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setBorder(null);
