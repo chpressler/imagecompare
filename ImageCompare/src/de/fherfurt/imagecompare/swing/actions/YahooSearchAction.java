@@ -1,7 +1,6 @@
 package de.fherfurt.imagecompare.swing.actions;
 
 import java.awt.event.ActionEvent;
-import java.math.BigInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -11,6 +10,9 @@ import javax.swing.JOptionPane;
 import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;
+import com.yahoo.search.VideoSearchRequest;
+import com.yahoo.search.VideoSearchResult;
+import com.yahoo.search.VideoSearchResults;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
@@ -24,9 +26,7 @@ public class YahooSearchAction extends AbstractAction {
 	ImageSearchResults results;
 
 	public YahooSearchAction() {
-		
 		client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
-		
 		putValue(Action.NAME, "import");
 		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("import")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("import"));
@@ -40,11 +40,24 @@ public class YahooSearchAction extends AbstractAction {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				
+				VideoSearchRequest vrequest = new VideoSearchRequest("");   
+				vrequest.setResults(20);
+				vrequest.setAdultOk(true);
+				try {
+					VideoSearchResults vres = client.videoSearch(vrequest);
+					for(VideoSearchResult vsr : vres.listResults()) {
+						System.out.println(vsr.getClickUrl());
+						
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
 				ImageSearchRequest request = new ImageSearchRequest(response);            
 		        request.setAdultOk(true);
 		        request.setResults(50);
-//		      request.setStart(BigInteger.valueOf(10));
-		        
+//		        request.setStart(BigInteger.valueOf(10));
 		        try {
 					results = client.imageSearch(request);
 				} catch (Exception e) {
