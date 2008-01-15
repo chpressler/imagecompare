@@ -28,7 +28,7 @@ public class ImageBase {
 	
 	private BufferedImage image; 
 	
-	private ArrayList<String> imagePaths = new ArrayList<String>();
+	private volatile ArrayList<String> imagePaths = new ArrayList<String>();
 	
 	private ImageBase() {
 	}
@@ -49,17 +49,23 @@ public class ImageBase {
 		if(!d.exists()) {
 			d.mkdirs();
 		}
-		int i = 0;
-		for(String s : imagePaths) {
-			i++;
+		ArrayList<String> ip = (ArrayList<String>) imagePaths.clone();
+		int iii = 0;
+		for(String s : ip) {
+			iii++;
 			if(s.startsWith("http")) {
 				try {
-					String[] sa = s.split("/");
-					System.out.println(sa.length);
-					File f = new File(d + "/" + i + ".jpg");
+					URL ur = new URL(s);
+					String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
+					File f;
+					if(name != null || name != "") {
+						f = new File(d + "/" + name);
+					} else {
+						f = new File(d + "/" + iii + "t.jpg");
+					}
 					f.createNewFile();
 					FileOutputStream fos = new FileOutputStream(f);
-					InputStream inputStream = new URL(s).openConnection().getInputStream();
+					InputStream inputStream = ur.openConnection().getInputStream();
 					int z = 0;
 					while(z >= 0) {
 						z = inputStream.read();
