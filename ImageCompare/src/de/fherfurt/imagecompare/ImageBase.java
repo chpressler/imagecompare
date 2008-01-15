@@ -2,11 +2,15 @@ package de.fherfurt.imagecompare;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -68,11 +72,23 @@ public class ImageBase {
 			} else {
 				//Original
 				File f = new File(s);
+				String name = f.getName();
 				
 				//Export
-				File ef = new File(d + "");
+				File ef = new File(d + "/" + name);
 				try {
 					ef.createNewFile();
+					
+					FileInputStream fis = new FileInputStream(f);
+					FileOutputStream fos = new FileOutputStream(ef);
+					int ii = 0;
+					while(ii != -1) {
+						ii = fis.read();
+						fos.write(ii);
+					}
+					fis.close();
+					fos.close();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
