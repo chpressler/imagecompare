@@ -62,32 +62,36 @@ public class ImportAction extends AbstractAction {
 		JButton button = new JButton("scan");
 		button.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (b) {
-					b = false;
-					ImportXMLStaXHandler.getInstance().startDoc();
-					for (final Component c : ((JButton) e.getSource()).getParent()
-							.getComponents()) {
-						if (c instanceof JCheckBox && ((JCheckBox) c).isSelected()) {
-							for (final File f : File.listRoots()) {
-								if (FileSystemView.getFileSystemView()
-										.getSystemDisplayName(f).equals(
-												((JCheckBox) c).getText())) {
-//									new Thread(new Runnable() {
-//										@Override
-//										public void run() {
-											scan(f);
-//											ImportXMLDomHandler.getInstance().save();
-											System.out.println("finished import for " + ((JCheckBox) c).getText());
-//										}
-//									}).start();
+			public void actionPerformed(final ActionEvent e) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						if (b) {
+							b = false;
+							ImportXMLStaXHandler.getInstance().startDoc();
+							for (final Component c : ((JButton) e.getSource()).getParent()
+									.getComponents()) {
+								if (c instanceof JCheckBox && ((JCheckBox) c).isSelected()) {
+									for (final File f : File.listRoots()) {
+										if (FileSystemView.getFileSystemView()
+												.getSystemDisplayName(f).equals(
+														((JCheckBox) c).getText())) {
+//											new Thread(new Runnable() {
+//												@Override
+//												public void run() {
+													scan(f);
+//													ImportXMLDomHandler.getInstance().save();
+													System.out.println("finished import for " + ((JCheckBox) c).getText());
+//												}
+//											}).start();
+										}
+									}
 								}
 							}
+							ImportXMLStaXHandler.getInstance().closeDoc();
+							b = true;
 						}
-					}
-					ImportXMLStaXHandler.getInstance().closeDoc();
-					b = true;
-				}
+					}}).start();
 			}
 		});
 		panel.add(button);
@@ -106,7 +110,7 @@ public class ImportAction extends AbstractAction {
 					scan(file);
 				}
 				if (file.getName().endsWith(".jpg")) {
-					System.out.println(file);
+//					System.out.println(file);
 					ImportXMLStaXHandler.getInstance().addImage(file.getAbsolutePath(), getMetadata(file));
 //					if(ImportXMLDomHandler.getInstance().getImageByPath(file.getAbsolutePath()) != null) {
 //						System.out.println("Image " + file.getAbsolutePath() + " schon vorhanden");

@@ -15,6 +15,7 @@ public class ImportXMLStaXHandler {
 	XMLOutputFactory factory = XMLOutputFactory.newInstance(); 
 	
 	FileOutputStream fos;
+	
 	XMLStreamWriter writer;
 	
 	private ImportXMLStaXHandler() {
@@ -47,13 +48,13 @@ public class ImportXMLStaXHandler {
 			}
 			file.createNewFile();
 			fos = new FileOutputStream(file, false);
-//			writer = factory.createXMLStreamWriter(fos, "UTF-8");
-//
-//			writer.writeStartDocument("UTF-8", "1.0");
+			writer = factory.createXMLStreamWriter(fos, "UTF-8");
+
+			writer.writeStartDocument("UTF-8", "1.0");
 			
-			writer = factory.createXMLStreamWriter(fos);
-			
-			writer.writeStartDocument();
+//			writer = factory.createXMLStreamWriter(fos);
+//			
+//			writer.writeStartDocument();
 			writer.writeStartElement("images");
 			
 //			writer.close();
