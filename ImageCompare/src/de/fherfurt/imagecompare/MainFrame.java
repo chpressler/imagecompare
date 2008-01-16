@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 //			PlasticLookAndFeel.setPlasticTheme(new Silver());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyGreen());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyBlue());
-			PlasticLookAndFeel.setPlasticTheme(new com.jgoodies.looks.plastic.theme.BrownSugar());
+//			PlasticLookAndFeel.setPlasticTheme(new com.jgoodies.looks.plastic.theme.BrownSugar());
 			
 			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 			

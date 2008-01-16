@@ -1,32 +1,36 @@
 package de.fherfurt.imagecompare.swing.components;
 
-import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class SortComponent extends JPanel {
-
+public class SortComponent extends JFrame {
+	
 	private static final long serialVersionUID = 1L;
 	
-	private JComboBox comboBox1 = null;
+	private JTextField string = new JTextField(10);
 	
-	private JComboBox comboBox2 = null;
+	private JTextField a = new JTextField(5);
+	
+	private JTextField f = new JTextField(5);
+	
+	JPanel panel;
 	
 	public SortComponent() {
-		comboBox1 = new JComboBox();
-		comboBox1.setToolTipText("sort by Attribute ");
-		comboBox1.setPreferredSize(new Dimension(120, 22));
-		add(new JLabel("by Attribute: "));
-		add(comboBox1);
-		comboBox2 = new JComboBox();
-		comboBox2.setToolTipText("sort by profile");
-		comboBox2.setPreferredSize(new Dimension(120, 22));
-		add(new JLabel("by Profile: "));
-		add(comboBox2);
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Sort"));
+		panel = new JPanel();
+		panel.add(new JLabel("String: "));
+		panel.add(string);
+		panel.add(new JLabel("Aperture: "));
+		panel.add(a);
+		panel.add(new JLabel("Focus: "));
+		panel.add(f);
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Sort"));
+		add(panel);
+		setAlwaysOnTop(true);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
-	
+
 }

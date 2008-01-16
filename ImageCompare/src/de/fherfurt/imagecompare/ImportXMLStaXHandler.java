@@ -14,6 +14,9 @@ public class ImportXMLStaXHandler {
 	
 	XMLOutputFactory factory = XMLOutputFactory.newInstance(); 
 	
+	FileOutputStream fos;
+	XMLStreamWriter writer;
+	
 	private ImportXMLStaXHandler() {
 		
 	}
@@ -31,18 +34,29 @@ public class ImportXMLStaXHandler {
 	
 	public void startDoc() {
 		try {
+//			File f = new File(p.getProperty("jarpath") + "/" + pa + "/" + serial + "/protocol_run.xml");
+//			f.createNewFile();
+//			System.out.println(f.getAbsolutePath());
+//			writer = XMLOutputFactory.newInstance().createXMLStreamWriter(
+//					new FileOutputStream(f), "UTF-8");
+//
+//			writer.writeStartDocument("UTF-8", "1.0");
 			File file = new File("import.xml");
 			if(file.exists()) {
 				file.delete();
 			}
 			file.createNewFile();
-			FileOutputStream fos = new FileOutputStream(file, true);
-			XMLStreamWriter writer = factory.createXMLStreamWriter(fos);
+			fos = new FileOutputStream(file, false);
+//			writer = factory.createXMLStreamWriter(fos, "UTF-8");
+//
+//			writer.writeStartDocument("UTF-8", "1.0");
+			
+			writer = factory.createXMLStreamWriter(fos);
 			
 			writer.writeStartDocument();
 			writer.writeStartElement("images");
 			
-			writer.close();
+//			writer.close();
 		} catch (Exception e) {
 
 		}
@@ -50,15 +64,17 @@ public class ImportXMLStaXHandler {
 	
 	public void closeDoc() {
 		try {
-			File file = new File("import.xml");
-			file.createNewFile();
-			FileOutputStream fos = new FileOutputStream(file, true);
-			XMLStreamWriter writer = factory.createXMLStreamWriter(fos);
+//			File file = new File("import.xml");
+//			file.createNewFile();
+//			FileOutputStream fos = new FileOutputStream(file, true);
+//			XMLStreamWriter writer = factory.createXMLStreamWriter(fos);
 			
 			writer.writeEndElement();
 			writer.writeEndDocument();
 			
+			writer.flush();
 			writer.close();
+			fos.close();
 		} catch (Exception e) {
 
 		}
@@ -66,10 +82,10 @@ public class ImportXMLStaXHandler {
 	
 	public void addImage(String abs_path, HashMap<String, String> metadata) {
 		try {
-			File file = new File("import.xml");
-			file.createNewFile();
-			FileOutputStream fos = new FileOutputStream(file, true);
-			XMLStreamWriter writer = factory.createXMLStreamWriter(fos);
+//			File file = new File("import.xml");
+//			file.createNewFile();
+//			FileOutputStream fos = new FileOutputStream(file, true);
+//			XMLStreamWriter writer = factory.createXMLStreamWriter(fos);
 			
 			writer.writeStartElement("image");
 			writer.writeAttribute("path", abs_path);
@@ -81,10 +97,12 @@ public class ImportXMLStaXHandler {
 				String s = iter.next().toString();
 				writer.writeStartElement("imageAtt");
 				writer.writeAttribute("name", s);
-				try {
-					writer.writeAttribute("value", metadata.get(s).trim());
-				} catch(Exception e) {
-					writer.writeAttribute("value", "");
+				if(!s.contains("humbnail")) {
+					try {
+						writer.writeAttribute("value", metadata.get(s).trim());
+					} catch(Exception e) {
+						writer.writeAttribute("value", "");
+					}
 				}
 				writer.writeEndElement();
 			}
@@ -92,9 +110,10 @@ public class ImportXMLStaXHandler {
 			writer.writeEndElement();
 			writer.writeEndElement();
 			
-			writer.close();
+//			writer.close();
 		} catch (Exception e) {
-
+			e.printStackTrace();
+			System.out.println("scheisse");
 		}
 	}
 }

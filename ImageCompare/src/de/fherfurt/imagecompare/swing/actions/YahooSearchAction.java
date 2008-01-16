@@ -27,9 +27,9 @@ public class YahooSearchAction extends AbstractAction {
 
 	public YahooSearchAction() {
 		client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
-		putValue(Action.NAME, "import");
-		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("import")));
-		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("import"));
+		putValue(Action.NAME, "search");
+		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("search")));
+		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance().getStrings().getString("search"));
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

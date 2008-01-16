@@ -73,14 +73,14 @@ public class ImportAction extends AbstractAction {
 								if (FileSystemView.getFileSystemView()
 										.getSystemDisplayName(f).equals(
 												((JCheckBox) c).getText())) {
-									new Thread(new Runnable() {
-										@Override
-										public void run() {
+//									new Thread(new Runnable() {
+//										@Override
+//										public void run() {
 											scan(f);
 //											ImportXMLDomHandler.getInstance().save();
 											System.out.println("finished import for " + ((JCheckBox) c).getText());
-										}
-									}).start();
+//										}
+//									}).start();
 								}
 							}
 						}
@@ -100,12 +100,13 @@ public class ImportAction extends AbstractAction {
 	}
 	
 	public void scan(File f) {
-		if (f.isDirectory() && f.listFiles().length != 0) {
+		if (f.isDirectory() && f.listFiles() != null) {
 			for (File file : f.listFiles()) {
 				if (file.isDirectory()) {
 					scan(file);
 				}
 				if (file.getName().endsWith(".jpg")) {
+					System.out.println(file);
 					ImportXMLStaXHandler.getInstance().addImage(file.getAbsolutePath(), getMetadata(file));
 //					if(ImportXMLDomHandler.getInstance().getImageByPath(file.getAbsolutePath()) != null) {
 //						System.out.println("Image " + file.getAbsolutePath() + " schon vorhanden");
