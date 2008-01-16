@@ -16,7 +16,7 @@ public class StaXReaderTest {
 		while(reader.hasNext()) {
 			if(reader.next() == reader.START_ELEMENT) {
 				if(reader.getName().toString().equals("image")) {
-					if( (reader.getAttributeValue(0)).contains("Netze") ) {
+					if( (reader.getAttributeValue(0)).contains("okka") ) {
 						System.out.println(reader.getAttributeValue(0));
 					}
 				}
