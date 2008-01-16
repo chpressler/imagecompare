@@ -33,6 +33,8 @@ import de.fherfurt.imagecompare.ResourceHandler;
 public class ImportAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
+	
+	private JProgressBar bar;
 
 	boolean b = true;
 
@@ -42,6 +44,7 @@ public class ImportAction extends AbstractAction {
 				+ ResourceHandler.getInstance().getIcons().getString("import")));
 		putValue(Action.SHORT_DESCRIPTION, ResourceHandler.getInstance()
 				.getStrings().getString("import"));
+		bar = new JProgressBar();
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -68,6 +71,7 @@ public class ImportAction extends AbstractAction {
 					public void run() {
 						if (b) {
 							b = false;
+							bar.setIndeterminate(true);
 							ImportXMLStaXHandler.getInstance().startDoc();
 							for (final Component c : ((JButton) e.getSource()).getParent()
 									.getComponents()) {
@@ -89,13 +93,13 @@ public class ImportAction extends AbstractAction {
 								}
 							}
 							ImportXMLStaXHandler.getInstance().closeDoc();
+							bar.setIndeterminate(false);
 							b = true;
 						}
 					}}).start();
 			}
 		});
 		panel.add(button);
-		JProgressBar bar = new JProgressBar();
 		panel.add(bar);
 		scan.getContentPane().add(panel);
 		scan.pack();
