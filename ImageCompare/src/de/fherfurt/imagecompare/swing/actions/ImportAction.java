@@ -27,6 +27,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
 import de.fherfurt.imagecompare.ImportXMLDomHandler;
+import de.fherfurt.imagecompare.ImportXMLStaXHandler;
 import de.fherfurt.imagecompare.ResourceHandler;
 
 public class ImportAction extends AbstractAction {
@@ -64,6 +65,7 @@ public class ImportAction extends AbstractAction {
 			public void actionPerformed(ActionEvent e) {
 				if (b) {
 					b = false;
+					ImportXMLStaXHandler.getInstance().startDoc();
 					for (final Component c : ((JButton) e.getSource()).getParent()
 							.getComponents()) {
 						if (c instanceof JCheckBox && ((JCheckBox) c).isSelected()) {
@@ -75,7 +77,7 @@ public class ImportAction extends AbstractAction {
 										@Override
 										public void run() {
 											scan(f);
-											ImportXMLDomHandler.getInstance().save();
+//											ImportXMLDomHandler.getInstance().save();
 											System.out.println("finished import for " + ((JCheckBox) c).getText());
 										}
 									}).start();
@@ -83,6 +85,7 @@ public class ImportAction extends AbstractAction {
 							}
 						}
 					}
+					ImportXMLStaXHandler.getInstance().closeDoc();
 					b = true;
 				}
 			}
@@ -103,11 +106,12 @@ public class ImportAction extends AbstractAction {
 					scan(file);
 				}
 				if (file.getName().endsWith(".jpg")) {
-					if(ImportXMLDomHandler.getInstance().getImageByPath(file.getAbsolutePath()) != null) {
-						System.out.println("Image " + file.getAbsolutePath() + " schon vorhanden");
-						continue;
-					}
-					ImportXMLDomHandler.getInstance().addImport(file.getAbsolutePath(), getMetadata(file));
+					ImportXMLStaXHandler.getInstance().addImage(file.getAbsolutePath(), getMetadata(file));
+//					if(ImportXMLDomHandler.getInstance().getImageByPath(file.getAbsolutePath()) != null) {
+//						System.out.println("Image " + file.getAbsolutePath() + " schon vorhanden");
+//						continue;
+//					}
+//					ImportXMLDomHandler.getInstance().addImport(file.getAbsolutePath(), getMetadata(file));
 				}
 			}
 		}
