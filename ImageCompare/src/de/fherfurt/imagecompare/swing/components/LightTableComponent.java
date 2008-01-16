@@ -15,9 +15,13 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -214,10 +218,31 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			open_ext.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Desktop.getDesktop().open(new File(p.getPath()));
-					} catch (IOException e1) {
+						File file;
+						if(p.getPath().startsWith("http")) {
+								URLConnection con = null;
+								URL url = new URL(p.getPath());
+								con = url.openConnection();
+								con.setDoOutput(true);
+								file = new File("C:/temp.jpg");
+									if(file.exists()) {
+										file.delete();
+									} file.createNewFile();
+								FileOutputStream fos = new FileOutputStream(file);
+								int xz = 0;
+								while(xz >= 0) {
+									xz = con.getInputStream().read();
+									fos.write(xz);
+								}
+							fos.close();
+							System.out.println(file.getAbsolutePath());
+						} else {
+							file = new File(p.getPath());
+						}
+						Desktop.getDesktop().open(file);
+					} catch (Exception e1) {
 						e1.printStackTrace();
-					}
+				}
 				}});
 			open.add(open_ext);
 			JMenuItem open_br = new JMenuItem("browse");
