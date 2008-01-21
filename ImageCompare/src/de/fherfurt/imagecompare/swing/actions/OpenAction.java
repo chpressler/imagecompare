@@ -2,6 +2,7 @@ package de.fherfurt.imagecompare.swing.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FilenameFilter;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -9,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
@@ -30,6 +32,21 @@ public class OpenAction extends AbstractAction {
 					JFileChooser fileChooser = new JFileChooser(".");
 					fileChooser.setMultiSelectionEnabled(false);
 					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					
+					//Filter
+//					fileChooser.addChoosableFileFilter(new FileFilter() {
+//						@Override
+//						public boolean accept(File f) {
+//							if(f.getName().endsWith("jpg")) {
+//								return true;
+//							} else {
+//								return false;
+//							}
+//						}
+//						@Override
+//						public String getDescription() {
+//							return "JPG only";
+//						}});
 		            int status = fileChooser.showOpenDialog(null);
 		            if (status == JFileChooser.APPROVE_OPTION) {
 //		            	System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
