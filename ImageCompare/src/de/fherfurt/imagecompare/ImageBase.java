@@ -148,8 +148,8 @@ public class ImageBase {
 	public void setImageBase(File dir) throws IOException {
 		boolean b = true;
 		StatusBar.getInstance().activateProgressBar();
-		
 		if(dir.isFile()) {
+			
 			for(String s : imagePaths) {
 				if(s.equalsIgnoreCase(dir.getAbsolutePath())) {
 					StatusBar.getInstance().deactivateProgressBar();
@@ -182,7 +182,6 @@ public class ImageBase {
 						|| file.getName().endsWith(".png")
 						|| file.getName().endsWith(".JPG")) {
 					try {
-						
 						//Versuche Thumbnail aus Metadaten zu lesen (falls möglich)
 						try {
 						Metadata metadata = new Metadata();
