@@ -149,7 +149,7 @@ public class ImageBase {
 		boolean b = true;
 		StatusBar.getInstance().activateProgressBar();
 		if(dir.isFile()) {
-			
+			//Prüfen, ob unterstützte Bilddatei...
 			for(String s : imagePaths) {
 				if(s.equalsIgnoreCase(dir.getAbsolutePath())) {
 					StatusBar.getInstance().deactivateProgressBar();
