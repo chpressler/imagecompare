@@ -2,7 +2,6 @@ package de.fherfurt.imagecompare.swing.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FilenameFilter;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -10,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
+
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
