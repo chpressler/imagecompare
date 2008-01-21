@@ -1,34 +1,28 @@
 package de.fherfurt.imagecompare.swing.components;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 
-import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
@@ -37,9 +31,9 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectory;
-import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.iptc.IptcDirectory;
-import com.drew.metadata.iptc.IptcReader;
+
+import de.fherfurt.imagecompare.util.ICUtil;
 
 public class DetailsFrame extends JFrame {
 	
@@ -50,23 +44,68 @@ public class DetailsFrame extends JFrame {
 	ExifPanel ep;
 
 	public DetailsFrame(ImageComponent ic) {
-		setTitle(ic.getPath());
+		System.out.println(ICUtil.getInstance().getContrast(ic.getImage()));
+		String name = ic.getPath().substring(ic.getPath().lastIndexOf(File.separatorChar)+1);
+		setTitle(name);
 		setAlwaysOnTop(true);
 		setLayout(null);
+		
+		JLabel pathlabel = new JLabel(ic.getPath());
+		pathlabel.setToolTipText(ic.getPath());
+		pathlabel.setBounds(1, 1, 258, 15);
+		add(pathlabel);
+		
+		JSeparator sep1 = new JSeparator(JSeparator.HORIZONTAL);
+		sep1.setBounds(1, 17, 258, 2);
+		add(sep1);
+		
+		int width = ic.getImage().getWidth();
+		int height = ic.getImage().getHeight();
+		if(width > height) {
+			height = 80 * height / width;
+			width = 80;
+		}
+		else if(width < height) {
+			width = 80 * width / height;
+			height = 80;
+		}
+		else {
+			height = 80;
+			width = 80;
+		}
+		ThumbImageComp ipc = new ThumbImageComp(ic.getImage(), width, height);
+		ipc.setBounds(1, 20, width, height);
+		add(ipc);
+		JLabel l_name = new JLabel(name);
+		l_name.setBounds(width + 10, 20, 150, 15);
+		add(l_name);
+		JLabel l_size = new JLabel(ic.getImage().getWidth() + " x " + ic.getImage().getHeight());
+		l_size.setBounds(width + 10, 40, 150, 15);
+		add(l_size);
+		int pixcount = ic.getImage().getWidth() * ic.getImage().getHeight();
+		JLabel l_pixel = new JLabel(pixcount + " Pixel");
+		l_pixel.setBounds(width + 10, 60, 150, 15);
+		add(l_pixel);
+		
+		JSeparator sep2 = new JSeparator(JSeparator.HORIZONTAL);
+		sep2.setBounds(1, 22 + height, 258, 2);
+		add(sep2);
+		
 		MyChart chart = new MyChart(ic);
-		chart.setBounds(1, 1, 258, 162);
+		chart.setBounds(1, 26 + height, 258, 162);
 		add(chart);
- 		JSeparator sep = new JSeparator(JSeparator.HORIZONTAL);
-		sep.setBounds(1, 165, 258, 2);
-		add(sep);
+		
+ 		JSeparator sep3 = new JSeparator(JSeparator.HORIZONTAL);
+		sep3.setBounds(1, 191 + height, 258, 2);
+		add(sep3);
+		
 		ep = new ExifPanel(ic.getPath());
-//		ep.setBounds(1, 170, 258, ep.getUK() + 10);
 		System.out.println("sizeEP " + ep.getSize());
 		jsp = new JScrollPane(ep);
-		jsp.setBounds(1, 175, 255, 300);
+		jsp.setBounds(1, 195 + height, 256, 300);
 		jsp.updateUI();
 		add(jsp);
-		setSize(263, 510);
+		setSize(263, height + 530);
 		jsp.updateUI();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -128,9 +167,12 @@ class ExifPanel extends JPanel {
 			Iterator tags = directory.getTagIterator();
 			while (tags.hasNext()) {
 				final Tag tag = (Tag) tags.next();
-				if(tag.getTagType() == ExifDirectory.TAG_WIN_KEYWORDS || tag.getTagType() == ExifDirectory.TAG_IMAGE_DESCRIPTION) {
-					final int tt = tag.getTagType();
-					JLabel tag_name = new JLabel(tag.getTagName());
+				final int tt = tag.getTagType();
+				JLabel tag_name = new JLabel(tag.getTagName());
+				if(tag.getTagName().contains("Component") || tag.getTagName().contains("humbnail")) {
+					continue;
+				}
+				if(tag.getTagName().contains("eyword")) {
 					JTextField jtf = new JTextField();
 					jtf.addKeyListener(new KeyListener() {
 						@Override
@@ -155,7 +197,6 @@ class ExifPanel extends JPanel {
 					add(tag_name);
 					add(jtf);
 				} else {
-					JLabel tag_name = new JLabel(tag.getTagName());
 					JLabel tag_value = new JLabel();
 					tag_value.setText(directory.getString(tag.getTagType()));
 					tag_value.setToolTipText(directory.getString(tag.getTagType()));
@@ -184,7 +225,7 @@ class ExifPanel extends JPanel {
 		} catch (MetadataException e) {
 			e.printStackTrace();
 		}
-		setPreferredSize(new Dimension(258, uk + 10));
+		setPreferredSize(new Dimension(255, uk + 10));
 	}	
 	
 	public int getUK() {
@@ -204,11 +245,10 @@ class MyChart extends JComponent {
 	
 	private static final long serialVersionUID = 1L;
 
-	ButtonGroup group;
-	JRadioButton rb;
-	JRadioButton gb;
-	JRadioButton bb;
-	JRadioButton lb;
+	JCheckBox rb;
+	JCheckBox gb;
+	JCheckBox bb;
+	JCheckBox lb;
 	
 	ImageComponent ic;
 	
@@ -216,44 +256,33 @@ class MyChart extends JComponent {
 		this.ic = ic;
 		setPreferredSize(new Dimension(258, 160));
 		setLayout(new FlowLayout());
-		group = new ButtonGroup();
-		rb = new JRadioButton("r");
-		gb = new JRadioButton("g");
-		bb = new JRadioButton("b");
-		lb = new JRadioButton("l", true);
-		group.add(rb);
-		group.add(gb);
-		group.add(bb);
-		group.add(lb);
 		
-		rb.addChangeListener(new ChangeListener() {
+		rb = new JCheckBox("r", true);
+		gb = new JCheckBox("g", true);
+		bb = new JCheckBox("b", true);
+		lb = new JCheckBox("l", false);
+		
+		rb.addItemListener(new ItemListener() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(((JRadioButton) e.getSource()).isSelected()) {
-					paint(getGraphics());
-				}
+			public void itemStateChanged(ItemEvent e) {
+				paint(getGraphics());
 			}});
-		gb.addChangeListener(new ChangeListener() {
+		gb.addItemListener(new ItemListener() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(((JRadioButton) e.getSource()).isSelected()) {
-					paint(getGraphics());
-				}
+			public void itemStateChanged(ItemEvent e) {
+				paint(getGraphics());
 			}});
-		bb.addChangeListener(new ChangeListener() {
+		bb.addItemListener(new ItemListener() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(((JRadioButton) e.getSource()).isSelected()) {
-					paint(getGraphics());
-				}
+			public void itemStateChanged(ItemEvent e) {
+				paint(getGraphics());
 			}});
-		lb.addChangeListener(new ChangeListener() {
+		lb.addItemListener(new ItemListener() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(((JRadioButton) e.getSource()).isSelected()) {
-					paint(getGraphics());
-				}
+			public void itemStateChanged(ItemEvent e) {
+				paint(getGraphics());
 			}});
+		add(new JLabel("Histogramm: "));
 		add(rb);
 		add(gb);
 		add(bb);
@@ -262,7 +291,7 @@ class MyChart extends JComponent {
 	
 	@Override
 	public void paint(Graphics g) {
-		
+		//Nochmal anpassen!!!
 		int f;
 		if(ic.getPixelCount() <= 200000) {
 			f = 20;
@@ -275,48 +304,81 @@ class MyChart extends JComponent {
 			f = 900;
 		}
 		
-		System.out.println(ic.getPixelCount());
+//		System.out.println(ic.getPixelCount());
 		
 		g.clearRect(1, 1, 255, 199);
+		g.setColor(getBackground());
+		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		g.drawImage((Image)ic.getImage(),0,0,256,160, null);
+//		g.drawImage((Image)ic.getImage(),0,0,256,160, null);
 		
 		int x = 0;
 		for(int i = 0; i < 255; i++) {
 			int val = 0;
 			if(rb.isSelected()) {
 				val = ic.getRed().get(i);
-				g.setColor(Color.black);
-				g.drawRect(x, 150-(val/f), 1, val/f);
-				g.setColor(new Color(i, 0, 0));
+//				g.setColor(new Color(0, 0, 0, 150));
+//				g.drawRect(x, 150-(val/f), 1, val/f);
+				g.setColor(new Color(i, 0, 0, 150));
+				g.fillRect(x, 150-(val/f), 1, val/f);
+				g.fillRect(x, 150, 1, 10);
 			}
-			else if(gb.isSelected()) {
+			if(gb.isSelected()) {
 				val = ic.getGreen().get(i);
-				g.setColor(Color.black);
-				g.drawRect(x, 150-(val/f), 1, val/f);
-				g.setColor(new Color(0, i, 0));
+//				g.setColor(new Color(0, 0, 0, 150));
+//				g.drawRect(x, 150-(val/f), 1, val/f);
+				g.setColor(new Color(0, i, 0, 150));
+				g.fillRect(x, 150-(val/f), 1, val/f);
+				g.fillRect(x, 150, 1, 10);
+				
 			}
-			else if(bb.isSelected()) {
+			if(bb.isSelected()) {
 				val = ic.getBlue().get(i);
-				g.setColor(Color.black);
-				g.drawRect(x, 150-(val/f), 1, val/f);
-				g.setColor(new Color(0, 0, i));
+//				g.setColor(new Color(0, 0, 0, 150));
+//				g.drawRect(x, 150-(val/f), 1, val/f);
+				g.setColor(new Color(0, 0, i, 150));
+				g.fillRect(x, 150-(val/f), 1, val/f);
+				g.fillRect(x, 150, 1, 10);
+				
 			}
-			else {
+			if(lb.isSelected()) {
 				val = ic.getLum().get(i);
-				g.setColor(Color.black);
-				g.drawRect(x, 150-(val/f), 1, val/f);
-				g.setColor(new Color(i, i, i));
+//				g.setColor(new Color(0, 0, 0, 150));
+//				g.drawRect(x, 150-(val/f), 1, val/f);
+				g.setColor(new Color(i, i, i, 150));
+				g.fillRect(x, 150-(val/f), 1, val/f);
+				g.fillRect(x, 150, 1, 10);
 			}
-			g.fillRect(x, 150-(val/f), 1, val/f);
-			g.fillRect(x, 150, 1, 10);
+//			g.fillRect(x, 150-(val/f), 1, val/f);
+//			g.fillRect(x, 150, 1, 10);
 			x++;
 		}
 		g.setColor(Color.black);
-		g.drawRect(0, 150, 256, 10);
-		g.drawRect(0, 0, 256, 150);
+		g.drawRect(0, 150, 254, 10);
+		g.drawRect(0, 0, 254, 150);
 		
 		super.paint(g);
+	}
+	
+}
+
+class ThumbImageComp extends JComponent {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private BufferedImage image;
+	
+	private int width, height;
+	
+	public ThumbImageComp(BufferedImage image, int width, int height) {
+		this.image = image;
+		this.width = width;
+		this.height = height;
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.drawImage(image,0,0,width,height, null);
 	}
 	
 }

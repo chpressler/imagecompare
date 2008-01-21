@@ -41,18 +41,18 @@ public class YahooSearchAction extends AbstractAction {
 			@Override
 			public void run() {
 				
-				VideoSearchRequest vrequest = new VideoSearchRequest("");   
-				vrequest.setResults(20);
-				vrequest.setAdultOk(true);
-				try {
-					VideoSearchResults vres = client.videoSearch(vrequest);
-					for(VideoSearchResult vsr : vres.listResults()) {
-						System.out.println(vsr.getClickUrl());
-						
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+//				VideoSearchRequest vrequest = new VideoSearchRequest("");   
+//				vrequest.setResults(20);
+//				vrequest.setAdultOk(true);
+//				try {
+//					VideoSearchResults vres = client.videoSearch(vrequest);
+//					for(VideoSearchResult vsr : vres.listResults()) {
+//						System.out.println(vsr.getClickUrl());
+//						
+//					}
+//				} catch (Exception e1) {
+//					e1.printStackTrace();
+//				}
 				
 				ImageSearchRequest request = new ImageSearchRequest(response);            
 		        request.setAdultOk(true);

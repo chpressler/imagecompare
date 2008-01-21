@@ -16,7 +16,7 @@ import de.fherfurt.imagecompare.ResourceHandler;
 public class OpenAction extends AbstractAction {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	public OpenAction() {
 		putValue(Action.NAME, "set ImageBase");
 		putValue(Action.SMALL_ICON, new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("open")));

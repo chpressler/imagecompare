@@ -47,7 +47,7 @@ public class ImageViewerDropTarget implements DropTargetListener {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
 	          BufferedImage image = (BufferedImage) tr.getTransferData(flavors[i]);
-	          lt.setImage(image);
+//	          lt.setImage(image, );
 	         
 			  SwingUtilities.updateComponentTreeUI(lt);
 	          dtde.dropComplete(true);

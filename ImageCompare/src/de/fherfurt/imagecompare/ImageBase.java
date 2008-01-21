@@ -4,25 +4,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
+import com.drew.metadata.exif.ExifDirectory;
 import com.yahoo.search.ImageSearchResult;
 import com.yahoo.search.ImageSearchResults;
 
+import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
 
 public class ImageBase {
 	
 	private static volatile ImageBase instance;
+	
+	//HashMap <String, BufferedImage>...
 	
 	private static volatile ArrayList<ImageBaseChangedListener> listeners = new ArrayList<ImageBaseChangedListener>();
 	
@@ -102,58 +107,142 @@ public class ImageBase {
 		}
 	}
 	
-	public void setImageBase(ImageSearchResults results) {
+	public void clear() {
+		//HashMap...
 		imagePaths.clear();
 		for (ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
-			System.gc();
 		}
+		System.gc();
+	}
+	
+	public void setImageBase(ImageSearchResults results) {	
 		for (ImageSearchResult r : results.listResults()) {
+			StatusBar.getInstance().activateProgressBar();
+			for(String s : imagePaths) {
+				if(s.equalsIgnoreCase(r.getClickUrl())) {
+					StatusBar.getInstance().deactivateProgressBar();
+					return;
+				}
+			}
 			try {
 				image = ICUtil.getInstance().getThumbnal(
 						ImageIO.read(new URL(r.getClickUrl())));
 //				image = ImageIO.read(new URL(r.getClickUrl()));
 			} catch (Exception e) {
+				StatusBar.getInstance().setStatusText("");
+				StatusBar.getInstance().deactivateProgressBar();
 				e.printStackTrace();
 			}
 			for (ImageBaseChangedListener ibcl : listeners) {
 				ibcl.add(image, r.getClickUrl(), true);
 				imagePaths.add(r.getClickUrl());
+				StatusBar.getInstance().setStatusText("adding: " + r.getClickUrl());
 				// System.out.println("added " + file);
 			}
+			StatusBar.getInstance().setStatusText("");
+			StatusBar.getInstance().deactivateProgressBar();
 		}
 	}
 	
 	public void setImageBase(File dir) throws IOException {
-		imagePaths.clear();
-		for(ImageBaseChangedListener ibcl : listeners) {
-			ibcl.clear();
-			System.gc();
+		boolean b = true;
+		StatusBar.getInstance().activateProgressBar();
+		
+		if(dir.isFile()) {
+			for(String s : imagePaths) {
+				if(s.equalsIgnoreCase(dir.getAbsolutePath())) {
+					StatusBar.getInstance().deactivateProgressBar();
+					return;
+				}
+			}
+			image = ICUtil.getInstance().getThumbnal(
+					ImageIO.read(dir));
+			for (ImageBaseChangedListener ibcl : listeners) {
+				ibcl.add(image, dir.getAbsolutePath(), true);
+				imagePaths.add(dir.getAbsolutePath());
+				StatusBar.getInstance().setStatusText("adding: " + dir.getAbsolutePath());
+			}
+			StatusBar.getInstance().setStatusText("");
+			StatusBar.getInstance().deactivateProgressBar();
+			return;
 		}
+		
 		for(File file : dir.listFiles()) {
 			if(file.isFile()) {
+				for(String s : imagePaths) {
+					if(s.equalsIgnoreCase(file.getAbsolutePath())) {
+						StatusBar.getInstance().deactivateProgressBar();
+						return;
+					}
+				}
 				if (file.getName().endsWith(".jpg")
 						|| file.getName().endsWith(".gif")
 						|| file.getName().endsWith(".bmp")
 						|| file.getName().endsWith(".png")
 						|| file.getName().endsWith(".JPG")) {
 					try {
-//						ImageIO.setCacheDirectory(new File("C:/cache"));
-//						ImageIO.setUseCache(true);
-						// image = JimiUtils.getThumbnal(ImageIO.read(file));
-						// //JIMI API
+						
+						//Versuche Thumbnail aus Metadaten zu lesen (falls möglich)
+						try {
+						Metadata metadata = new Metadata();
+						metadata = JpegMetadataReader.readMetadata(file);
+						Iterator directories = metadata.getDirectoryIterator();
+						while (directories.hasNext()) {
+							
+//							final Directory directory = metadata.getDirectory(ExifDirectory.class); 
+//							byte[] b_arr = directory.getByteArray(ExifDirectory.TAG_THUMBNAIL_DATA);
+//							int[] i_arr = new int[b_arr.length];
+//							for(int i = 0; i < b_arr.length; i++) {
+//								i_arr[i] = (int) b_arr[i];
+//							}
+//							image = new BufferedImage(160, 120, BufferedImage.TYPE_INT_ARGB);
+//							image.setRGB(0, 0, 160, 120, i_arr, 0, 120);
+//							b = false;
+							
+							
+							final Directory directory = (Directory) directories.next();
+							Iterator tags = directory.getTagIterator();
+							while (tags.hasNext()) {
+								final Tag tag = (Tag) tags.next();
+								final int tt = tag.getTagType();
+								if(tt == ExifDirectory.TAG_THUMBNAIL_DATA) {
+									String[] s_arr = directory.getString(tt).split(" ");
+									int[] i_arr = new int[s_arr.length];
+									for(int i = 0; i < s_arr.length; i++) {
+										i_arr[i] = Integer.parseInt(s_arr[i]);
+									}
+//									image = new BufferedImage(160, 120, BufferedImage.TYPE_INT_ARGB);
+//									image.setRGB(0, 0, i_arr.length/2, i_arr.length/2, i_arr, 0, 120);
+//									b = false;
+								}
+							}
+						}
+						} catch (Exception e) {
+							System.out.println("kein Exif Thumbnail vorhanden");
+							e.printStackTrace();
+						}
+						
+						if(b) {
 						image = ICUtil.getInstance().getThumbnal(
 								ImageIO.read(file));
+						}
 						for (ImageBaseChangedListener ibcl : listeners) {
 							ibcl.add(image, file.getAbsolutePath(), true);
 							imagePaths.add(file.getAbsolutePath());
+							StatusBar.getInstance().setStatusText("adding: " + file.getAbsolutePath());
 							// System.out.println("added " + file);
 						}
+						b = true;
 					} catch (Exception e) {
+						StatusBar.getInstance().setStatusText("");
+						StatusBar.getInstance().deactivateProgressBar();
 					}
 				}
 			}
 		}
+		StatusBar.getInstance().setStatusText("");
+		StatusBar.getInstance().deactivateProgressBar();
 	}
 	
 	public void addImageBaseChangedListener(ImageBaseChangedListener ibcl) {

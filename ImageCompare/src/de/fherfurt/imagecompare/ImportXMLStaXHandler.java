@@ -96,14 +96,15 @@ public class ImportXMLStaXHandler {
 			Iterator<String> iter = metadata.keySet().iterator();
 			while(iter.hasNext()) {
 				String s = iter.next().toString();
+				if(s.startsWith("Thumbnail") || s.startsWith("Component")) {
+					continue;
+				}
 				writer.writeStartElement("imageAtt");
 				writer.writeAttribute("name", s);
-				if(!s.contains("humbnail")) {
-					try {
-						writer.writeAttribute("value", metadata.get(s).trim());
-					} catch(Exception e) {
-						writer.writeAttribute("value", "");
-					}
+				try {
+					writer.writeAttribute("value", metadata.get(s).trim());
+				} catch (Exception e) {
+					writer.writeAttribute("value", "");
 				}
 				writer.writeEndElement();
 			}

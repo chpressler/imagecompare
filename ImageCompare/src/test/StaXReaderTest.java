@@ -15,13 +15,15 @@ public class StaXReaderTest {
 		
 		while(reader.hasNext()) {
 			if(reader.next() == reader.START_ELEMENT) {
-				if(reader.getName().toString().equals("image")) {
-					if( (reader.getAttributeValue(0)).contains("okka") ) {
-						System.out.println(reader.getAttributeValue(0));
-					}
+				if (reader.getName().toString().equals("imageAtt")) {
+						if (reader.getAttributeValue(1).equalsIgnoreCase(
+								"false")) {
+							System.out.println("qqq");
+						}
 				}
 			}
 		}
+
 	}
 
 }

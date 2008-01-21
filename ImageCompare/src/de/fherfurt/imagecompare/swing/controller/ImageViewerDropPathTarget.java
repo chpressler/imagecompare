@@ -49,15 +49,19 @@ public class ImageViewerDropPathTarget implements DropTargetListener {
 	      for (int i = 0; i < flavors.length; i++) {
 	        if (tr.isDataFlavorSupported(flavors[i])) {
 	          dtde.acceptDrop(dtde.getDropAction());
-	          
 	          BufferedImage image = null;
-	          if(((String) tr.getTransferData(flavors[i])).startsWith("http")) {
-	        	  image = ImageIO.read(new URL((String) tr.getTransferData(flavors[i])));
+	          String s = "";
+	          if(tr.getTransferData(flavors[i]).toString().startsWith("[")) {
+	        	  s = tr.getTransferData(flavors[i]).toString().substring(1, tr.getTransferData(flavors[i]).toString().length()-1);
 	          } else {
-	        	  image = ImageIO.read(new File((String) tr.getTransferData(flavors[i])));
+	        	  s = tr.getTransferData(flavors[i]).toString();
 	          }
-	          lt.setImage(image);
-	         
+	          if(s.startsWith("http")) {
+	        	  image = ImageIO.read(new URL(s));
+	          } else {
+	        	  image = ImageIO.read(new File(s));
+	          }
+	          lt.setImage(image, s);
 			  SwingUtilities.updateComponentTreeUI(lt);
 	          dtde.dropComplete(true);
 	          return;

@@ -8,6 +8,7 @@ import com.blogofbug.swing.components.JCarosel;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImageBaseChangedListener;
+import de.fherfurt.imagecompare.swing.controller.PreviewCarouselComponentExternalDropTarget;
 
 public class PreviewCarouselComponent extends JCarosel implements ImageBaseChangedListener {
 
@@ -15,15 +16,22 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 	
 	public PreviewCarouselComponent() {
 		super(128);
+		new PreviewCarouselComponentExternalDropTarget(this);
 		setPreferredSize(new Dimension(400, 300));
 		setMinimumSize(new Dimension(300, 100));
 		setMaximumSize(new Dimension(400, 400));
-		setBackground(Color.GRAY, Color.BLACK);
+		setBackground(Color.black, new Color(80, 30, 30));
 		ImageBase.getInstance().addImageBaseChangedListener(this);
 	}
 	
 	public void clear() {
+		setBackground(Color.black, new Color(80, 30, 30));
 		removeAll();
+		setBackground(Color.black, new Color(80, 30, 30));
+		updateUI();
+		setBackground(Color.black, new Color(80, 30, 30));
+		System.gc();
+		setBackground(Color.black, new Color(80, 30, 30));
 	}
 	
 	public void add(BufferedImage image, String path, boolean b) {
@@ -35,7 +43,7 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setBackground(Color.GRAY, Color.BLACK);
+		setBackground(Color.black, new Color(80, 30, 30));
 	}
 
 }

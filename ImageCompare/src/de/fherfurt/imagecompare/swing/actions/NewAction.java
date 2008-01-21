@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 
+import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
 
 public class NewAction extends AbstractAction {
@@ -19,7 +20,7 @@ public class NewAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		
+		ImageBase.getInstance().clear();
 	}
 
 }

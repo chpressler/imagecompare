@@ -22,7 +22,7 @@ public class ImageCompareToolBar extends JToolBar {
 	private static final long serialVersionUID = 1L;
 
 	public ImageCompareToolBar() {
-		setBackground(Color.black);
+		setBackground(new Color(80, 30, 30));
 		putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.BOTH);
 		setFloatable(true);
         putClientProperty("JToolBar.isRollover", Boolean.TRUE);

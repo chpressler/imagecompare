@@ -35,30 +35,29 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
  
         chessBoard = new JPanel();
         layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
-//        chessBoard.setLayout( new GridLayout(8, 8) );
-//        chessBoard.setPreferredSize( boardSize );
-//        chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
-// 
-//        for (int i = 0; i < 64; i++)
-//        {
-//            JPanel square = new JPanel( new BorderLayout() );
+        chessBoard.setLayout( new GridLayout(8, 8) );
+        chessBoard.setPreferredSize( boardSize );
+        chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
+ 
+        for (int i = 0; i < 64; i++)
+        {
+            JPanel square = new JPanel( new BorderLayout() );
             chessBoard.add( new JPanel() );
-// 
-//            int row = (i / 8) % 2;
-//            if (row == 0)
-//                square.setBackground( i % 2 == 0 ? Color.red : Color.white );
-//            else
-//                square.setBackground( i % 2 == 0 ? Color.white : Color.red );
-//        }
+            int row = (i / 8) % 2;
+            if (row == 0)
+                square.setBackground( i % 2 == 0 ? Color.red : Color.white );
+            else
+                square.setBackground( i % 2 == 0 ? Color.white : Color.red );
+        }
  
         // Add a few pieces to the board
  
         JLabel piece = new JLabel( new ImageIcon("test.jpg") );
         JPanel panel = (JPanel)chessBoard.getComponent( 0 );
         panel.add( piece );
-//        piece = new JLabel( new ImageIcon("test.jpg") );
-//        panel = (JPanel)chessBoard.getComponent( 0 );
-//        panel.add( piece );
+        piece = new JLabel( new ImageIcon("test.jpg") );
+        panel = (JPanel)chessBoard.getComponent( 0 );
+        panel.add( piece );
     }
  
     /*
@@ -76,8 +75,8 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
         xAdjustment = parentLocation.x - e.getX();
         yAdjustment = parentLocation.y - e.getY();
         chessPiece = (JLabel)c;
-//        chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-//        chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
+        chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+        chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
         layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
     }
  
@@ -149,19 +148,19 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 		
 		c.setSize(width, height);
 		
-//		new Thread(new Runnable() {
-//			public void run() {
-//				chessPiece.setBounds(width, height, width, height);
-//				
-//				if (((Graphics2D) chessPiece.getGraphics()) != null) {
-//		
-//					chessPiece.setPreferredSize(new Dimension(width,
-//							height));
-//					((Graphics2D) chessPiece.getGraphics()).drawImage(image, 0, 0, width, height, 0, 0, image
-//							.getWidth(), image.getHeight(), null);
-//
-//				}
-//			}}).start();
+		new Thread(new Runnable() {
+			public void run() {
+				chessPiece.setBounds(width, height, width, height);
+				
+				if (((Graphics2D) chessPiece.getGraphics()) != null) {
+		
+					chessPiece.setPreferredSize(new Dimension(width,
+							height));
+					((Graphics2D) chessPiece.getGraphics()).drawImage(image, 0, 0, width, height, 0, 0, image
+							.getWidth(), image.getHeight(), null);
+
+				}
+			}}).start();
 	};
 }
 

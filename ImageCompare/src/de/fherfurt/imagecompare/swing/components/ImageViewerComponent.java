@@ -137,7 +137,7 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 						fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 						if (ret == JFileChooser.APPROVE_OPTION) {
 							image = ImageIO.read(new File(fc.getSelectedFile().getAbsolutePath()));
-							setImage(image);
+							setImage(image, fc.getSelectedFile().getAbsolutePath());
 //							setImage(new ImageComponent(image));
 							System.out.println(fc.getSelectedFile().getAbsolutePath());
 						}
@@ -207,11 +207,12 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 		return image;
 	}
 
-	public void setImage(final BufferedImage image) {
+	public void setImage(final BufferedImage image, String p) {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
 		imageLabel.setImage(image);
+		imageLabel.setPath(p);
 		imageLabel.setNewSize(width, height);
 //		jsp.repaint();
 //		imagePanel.setPreferredSize(new Dimension(height, width));

@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.ResourceHandler;
-import de.fherfurt.imagecompare.swing.components.SearchComponent;
 
 public class SearchAction extends AbstractAction {
 	
@@ -20,7 +22,11 @@ public class SearchAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		new SearchComponent();
+		if(	((JFrame) SwingUtilities.getRoot( (JComponent)arg0.getSource() )).getGlassPane().isVisible()) {
+			((JFrame) SwingUtilities.getRoot( (JComponent)arg0.getSource() )).getGlassPane().setVisible(false);
+		} else {
+			((JFrame) SwingUtilities.getRoot( (JComponent)arg0.getSource() )).getGlassPane().setVisible(true);
+		}
 	}
 
 }

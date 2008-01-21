@@ -18,11 +18,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
@@ -32,6 +34,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.swing.controller.LightTableDropPathTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 
@@ -197,6 +200,19 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 					((JTabbedPane)layeredPane.getParent().getParent()).updateUI();
 				}});
 			popupMenu.add(remove);
+			JMenuItem removefromIB = new JMenuItem("remove from ImageBase");
+			removefromIB.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}});
+			popupMenu.add(removefromIB);
+			JMenuItem removePerm = new JMenuItem("delete File");
+			removePerm.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}});
+			popupMenu.add(removePerm);
+			popupMenu.addSeparator();
 			JMenuItem hist = new JMenuItem("details");
 			hist.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -206,8 +222,21 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			popupMenu.add(hist);
 			popupMenu.addSeparator();
 			
-			JMenu open = new JMenu("open");
+			JMenu rate = new JMenu("rate");
+			JMenuItem r1 = new JMenuItem("1");
+			JMenuItem r2 = new JMenuItem("2");
+			JMenuItem r3 = new JMenuItem("3");
+			JMenuItem r4 = new JMenuItem("4");
+			JMenuItem r5 = new JMenuItem("5");
+			rate.add(r1);
+			rate.add(r2);
+			rate.add(r3);
+			rate.add(r4);
+			rate.add(r5);
+			popupMenu.add(rate);
 			
+			popupMenu.addSeparator();
+			JMenu open = new JMenu("open");
 			JMenuItem open_ij = new JMenuItem("ImageJ");
 			open_ij.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -224,10 +253,11 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 								URL url = new URL(p.getPath());
 								con = url.openConnection();
 								con.setDoOutput(true);
-								file = new File("C:/temp.jpg");
-									if(file.exists()) {
-										file.delete();
-									} file.createNewFile();
+//								file = new File("C:/temp.jpg");
+//									if(file.exists()) {
+//										file.delete();
+//									} file.createNewFile();
+								file = File.createTempFile("image", ".jpg");
 								FileOutputStream fos = new FileOutputStream(file);
 								int xz = 0;
 								while(xz >= 0) {
@@ -245,7 +275,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 				}
 				}});
 			open.add(open_ext);
-			JMenuItem open_br = new JMenuItem("browse");
+			JMenuItem open_br = new JMenuItem("Browser");
 			open_br.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -265,7 +295,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 					}
 				}});
 			open.add(open_br);
-			JMenuItem open_edit = new JMenuItem("edit");
+			JMenuItem open_edit = new JMenuItem("Editor");
 			open_edit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -276,7 +306,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 				}});
 			open.add(open_edit);
 			popupMenu.add(open);
-			JMenuItem mail = new JMenuItem("mail");
+			JMenu export = new JMenu("export");
+			JMenuItem mail = new JMenuItem("as Email");
 			mail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -285,7 +316,73 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 						e1.printStackTrace();
 					}
 				}});
-			popupMenu.add(mail);
+			export.add(mail);
+			JMenuItem pdf = new JMenuItem("as PDF");
+			pdf.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}});
+			export.add(pdf);
+			JMenuItem zip = new JMenuItem("as File");
+			zip.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Anpassen SAVE_DIALOG und Dateiendung (Filter?)
+					String path = ""; //FileChooser
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setMultiSelectionEnabled(false);
+					fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		            int status = fileChooser.showSaveDialog(null);
+		            if (status == JFileChooser.APPROVE_OPTION) {
+		            	path = fileChooser.getSelectedFile().getAbsolutePath();
+		            } else {
+		            	return;
+		            }
+					String s = p.getPath();
+					if(s.startsWith("http")) {
+						try {
+							URL ur = new URL(s);
+							String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
+							File f = new File(path);
+							f.createNewFile();
+							FileOutputStream fos = new FileOutputStream(f);
+							InputStream inputStream = ur.openConnection().getInputStream();
+							int z = 0;
+							while(z >= 0) {
+								z = inputStream.read();
+								fos.write(z);
+							}
+							fos.close();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						//Original
+						File f = new File(s);
+						String name = f.getName();
+						
+						//Export
+						File ef = new File(path);
+						try {
+							ef.createNewFile();
+							
+							FileInputStream fis = new FileInputStream(f);
+							FileOutputStream fos = new FileOutputStream(ef);
+							int ii = 0;
+							while(ii != -1) {
+								ii = fis.read();
+								fos.write(ii);
+							}
+							fis.close();
+							fos.close();
+							
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+				}});
+			export.add(zip);
+			popupMenu.add(export);
 			popupMenu.show(this, x, y);
 	}
 	

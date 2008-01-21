@@ -1,13 +1,17 @@
 package de.fherfurt.imagecompare.swing.actions;
 
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -18,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
@@ -29,6 +34,7 @@ import com.drew.metadata.Tag;
 import de.fherfurt.imagecompare.ImportXMLDomHandler;
 import de.fherfurt.imagecompare.ImportXMLStaXHandler;
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.util.ICUtil;
 
 public class ImportAction extends AbstractAction {
 
@@ -71,6 +77,7 @@ public class ImportAction extends AbstractAction {
 					public void run() {
 						if (b) {
 							b = false;
+							SwingUtilities.getRoot(bar).setCursor(new Cursor(Cursor.WAIT_CURSOR));
 							bar.setIndeterminate(true);
 							ImportXMLStaXHandler.getInstance().startDoc();
 							for (final Component c : ((JButton) e.getSource()).getParent()
@@ -94,6 +101,7 @@ public class ImportAction extends AbstractAction {
 							}
 							ImportXMLStaXHandler.getInstance().closeDoc();
 							bar.setIndeterminate(false);
+							SwingUtilities.getRoot(bar).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 							b = true;
 						}
 					}}).start();
@@ -143,11 +151,18 @@ public class ImportAction extends AbstractAction {
 				final int tt = tag.getTagType();
 				metadatamap.put(tag.getTagName(), directory.getString(tt));
 			}
-		} 
-		//Kontrast mit in die HashMap!!! ohne Angabae von Unit
-		//Dynamik mit in die HashMap!!! ohne Angaba von Unit
-		//Anzahl der Pixel zusätzlich mit rein -> aus Histogramm, nicht aus h * b!!!
+		}
+		try {
+			BufferedImage bi = ICUtil.getInstance().getThumbnal(ImageIO.read(f));
+			metadatamap.put("pixelcount", Integer.toString(bi.getWidth() * bi.getHeight()) );
+			metadatamap.put("colored", Boolean.toString( ICUtil.getInstance().isColored(bi) ) );
+			metadatamap.put("dynamic", Integer.toString( ICUtil.getInstance().getDynamic(bi) ));
+			metadatamap.put("contrast", Integer.toString( ICUtil.getInstance().getContrast(bi, false) ));
+		} catch (Exception e1) {
+			return metadatamap;
+		}
 		return metadatamap;
 	}
-
+		
+		
 }
