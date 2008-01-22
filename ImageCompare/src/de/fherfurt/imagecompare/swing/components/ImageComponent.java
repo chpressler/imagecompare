@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,6 +25,8 @@ public class ImageComponent extends JLabel {
 	
 	private HashMap<Integer, Integer> green = new HashMap<Integer, Integer>();
 	
+	private boolean t = false;
+	
 	int width, height;
 	
 	private String path;
@@ -39,6 +42,7 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public ImageComponent(String file) {
+		setOpaque(false);
 		setToolTipText(file);
 		this.path = file;
 		ImageIcon i = new ImageIcon(file);
@@ -206,13 +210,16 @@ public class ImageComponent extends JLabel {
 		repaint();
 	}
 	
-	public void paintComponent( Graphics g ) {
+	@Override
+	public void paint( Graphics g ) {
 //		setBounds((getParent().getWidth() - width)/2, (getParent().getHeight() - height)/2, width, height);
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
 //      Rectangle r = this.getParent().getBounds();
-        
+		if(t) {
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+		}
         g2d.drawImage(image,0,0,width,height,this);
         g2d.setColor(Color.LIGHT_GRAY);
         g2d.drawRect(0, 0, width-1, height-1);
@@ -228,6 +235,10 @@ public class ImageComponent extends JLabel {
 	
 	public void rotate() {
 		
+	}
+
+	public void setT(boolean t) {
+		this.t = t;
 	}
 
 }

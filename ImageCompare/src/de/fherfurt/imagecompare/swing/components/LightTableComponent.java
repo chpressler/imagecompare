@@ -2,11 +2,16 @@ package de.fherfurt.imagecompare.swing.components;
 
 import ij.ImageJ;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Composite;
+import java.awt.CompositeContext;
 import java.awt.Cursor;
 import java.awt.Desktop;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -14,6 +19,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -120,8 +126,8 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
 
 			pic.setNewSize(pic.getWidth() + 10, pic.getHeight() + 10);
-			
-			pic.rotate();
+			pic.setT(true);
+//			pic.rotate();
 		}
 	}
 	 
@@ -145,6 +151,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if(SwingUtilities.isLeftMouseButton(e)) {
 			pic.setNewSize(pic.getWidth()-10, pic.getHeight()-10);
 		}
+		pic.setT(false);
 		pic = null;
 	}
 

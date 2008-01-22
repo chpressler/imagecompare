@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 import de.fherfurt.imagecompare.ImageBase;
@@ -31,7 +32,6 @@ public class OpenAction extends AbstractAction {
 					JFileChooser fileChooser = new JFileChooser(".");
 					fileChooser.setMultiSelectionEnabled(false);
 					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					
 					//Filter
 //					fileChooser.addChoosableFileFilter(new FileFilter() {
 //						@Override
