@@ -42,7 +42,7 @@ public class ImageComponent extends JLabel {
 	}
 	
 	public ImageComponent(String file) {
-		setOpaque(false);
+//		setOpaque(false);
 		setToolTipText(file);
 		this.path = file;
 		ImageIcon i = new ImageIcon(file);
