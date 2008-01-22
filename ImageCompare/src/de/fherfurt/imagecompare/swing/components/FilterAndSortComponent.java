@@ -14,6 +14,7 @@ public class FilterAndSortComponent extends JPanel {
 		setBackground(new Color(80, 30, 30, 160));
 //	    setOpaque(false);       
 		setLayout(new GridLayout(0, 1));
+		add(new SearchComponent());
 		add(new FilterComponent());
 		add(new SortComponent());
 	}
