@@ -66,6 +66,7 @@ public class SearchComponent extends JPanel {
 	tf.setOpaque(false);
 	tf.setLayout(new GridLayout(0, 1));
 	textfield = new JTextField(10);
+	textfield.setOpaque(false);
 	tf.add(textfield);
 	button = new JButton("search");
 	button.setOpaque(false);
