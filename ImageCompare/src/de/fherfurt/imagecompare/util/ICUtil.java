@@ -3,6 +3,7 @@ package de.fherfurt.imagecompare.util;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -129,25 +130,6 @@ public class ICUtil {
 //		}
 	}
 	
-	public int getContrast(BufferedImage image) {
-		clearHistogramm();
-		getHistogramData(image);
-		int smallest = 0, biggest = 0;
-		for(int i = 0; i < 256; i++) {
-			if(lum.get(i) > 0) {
-				smallest = i;
-				break;
-			}
-		}
-		for(int i = 255; i >= 0; i--) {
-			if(lum.get(i) > 0) {
-				biggest = i;
-				break;
-			}
-		}
-		return (biggest - smallest) * 100 / 255;
-	}
-	
 	public int getContrast(BufferedImage image, boolean hist) {
 		if(hist) {
 			clearHistogramm();
@@ -167,19 +149,6 @@ public class ICUtil {
 			}
 		}
 		return (biggest - smallest) * 100 / 255;
-	}
-	
-	public int getDynamic(BufferedImage image) {
-		clearHistogramm();
-		getHistogramData(image);
-		Iterator it = lum.values().iterator();
-		int i = 0;
-		while(it.hasNext()) {
-			if(it.next().equals(0)) {
-				i++;
-			}
-		}
-		return 100 * (255-i) / 255;
 	}
 	
 	public int getDynamic(BufferedImage image, boolean hist) {
@@ -222,6 +191,42 @@ public class ICUtil {
 			}
 		}
 		return false;
+	}
+	
+	public int getAverageLum(BufferedImage image, boolean hist) {
+		if(hist) {
+			clearHistogramm();
+			getHistogramData(image);
+		}
+		Iterator iter = lum.keySet().iterator();
+		int al = 0;
+		int c = 0;
+		while(iter.hasNext()) {
+			al += lum.get(iter.next());
+			c++;
+		}
+		return al / c;
+	}
+	
+	public int getAverageSat(BufferedImage image) {
+		int w = image.getWidth(), h = image.getHeight(); 
+		int[] argbArray = new int[ w * h ]; 
+		image.getRGB( 0 /* startX */, 0 /* startY */, 
+		              w,  h, argbArray, 
+		              0 /* offset */, w /* scansize */ );
+		int r, g, b, as = 0;
+		int a[] = new int[3]; 
+		for (int is = 0; is < argbArray.length; is+=4) {
+			r   = (argbArray[is] >> 16) & 0xff; 
+			g = (argbArray[is] >> 8)  & 0xff; 
+			b  = (argbArray[is])       & 0xff;
+			a[0] = r - b;
+			a[1] = r - g;
+			a[2] = g - b;
+			Arrays.sort(a);
+			as += a[0];
+		}
+		return (as / argbArray.length) * 100 / 255;
 	}
 	
 	private int binaryToInteger(String bin) {

@@ -2,7 +2,6 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -14,12 +13,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 
-import javax.swing.ImageIcon;
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -33,8 +33,6 @@ import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
 
-import de.fherfurt.imagecompare.util.ICUtil;
-
 public class DetailsFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -44,7 +42,6 @@ public class DetailsFrame extends JFrame {
 	ExifPanel ep;
 
 	public DetailsFrame(ImageComponent ic) {
-		System.out.println(ICUtil.getInstance().getContrast(ic.getImage()));
 		String name = ic.getPath().substring(ic.getPath().lastIndexOf(File.separatorChar)+1);
 		setTitle(name);
 		setAlwaysOnTop(true);
@@ -87,25 +84,29 @@ public class DetailsFrame extends JFrame {
 		l_pixel.setBounds(width + 10, 60, 150, 15);
 		add(l_pixel);
 		
+		if(height < 70) {
+			height = 70;
+		}
+		
 		JSeparator sep2 = new JSeparator(JSeparator.HORIZONTAL);
 		sep2.setBounds(1, 22 + height, 258, 2);
 		add(sep2);
 		
 		MyChart chart = new MyChart(ic);
-		chart.setBounds(1, 26 + height, 258, 162);
+		chart.setBounds(1, 26 + height, 258, 190);
 		add(chart);
 		
  		JSeparator sep3 = new JSeparator(JSeparator.HORIZONTAL);
-		sep3.setBounds(1, 191 + height, 258, 2);
+		sep3.setBounds(1, 215 + height, 258, 2);
 		add(sep3);
 		
 		ep = new ExifPanel(ic.getPath());
-		System.out.println("sizeEP " + ep.getSize());
 		jsp = new JScrollPane(ep);
-		jsp.setBounds(1, 195 + height, 256, 300);
+		jsp.setBounds(1, 220 + height, 256, 150);
 		jsp.updateUI();
 		add(jsp);
-		setSize(263, height + 530);
+		
+		setSize(263, height + 402);
 		jsp.updateUI();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -192,7 +193,7 @@ class ExifPanel extends JPanel {
 						}});
 					jtf.setText(directory.getString(tt));
 					tag_name.setBounds(2, uk, 100, 15);
-					jtf.setBounds(150, uk, 100, 15);
+					jtf.setBounds(150, uk, 87, 15);
 					uk += 20;
 					add(tag_name);
 					add(jtf);
@@ -201,7 +202,7 @@ class ExifPanel extends JPanel {
 					tag_value.setText(directory.getString(tag.getTagType()));
 					tag_value.setToolTipText(directory.getString(tag.getTagType()));
 					tag_name.setBounds(2, uk, 100, 15);
-					tag_value.setBounds(150, uk, 100, 15);
+					tag_value.setBounds(150, uk, 87, 15);
 					uk += 20;
 					add(tag_name);
 					add(tag_value);
@@ -225,7 +226,7 @@ class ExifPanel extends JPanel {
 		} catch (MetadataException e) {
 			e.printStackTrace();
 		}
-		setPreferredSize(new Dimension(255, uk + 10));
+		setPreferredSize(new Dimension(237, uk + 10));
 	}	
 	
 	public int getUK() {
@@ -250,17 +251,45 @@ class MyChart extends JComponent {
 	JCheckBox bb;
 	JCheckBox lb;
 	
+	JRadioButton lin_b;
+	JRadioButton log_b;
+	ButtonGroup bg;
+	
+	boolean log = false;
+	
 	ImageComponent ic;
 	
 	public MyChart(ImageComponent ic) {
 		this.ic = ic;
-		setPreferredSize(new Dimension(258, 160));
-		setLayout(new FlowLayout());
+		setPreferredSize(new Dimension(258, 200));
+		setLayout(null);
 		
 		rb = new JCheckBox("r", true);
 		gb = new JCheckBox("g", true);
 		bb = new JCheckBox("b", true);
 		lb = new JCheckBox("l", false);
+		
+		bg = new ButtonGroup();
+		lin_b = new JRadioButton("linear", true);
+		log_b = new JRadioButton("log", false);
+		bg.add(lin_b);
+		bg.add(log_b);
+		lin_b.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(((JRadioButton) e.getSource()).isSelected()) {
+					log = false;
+					paint(getGraphics());
+				}
+			}});
+		log_b.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(((JRadioButton) e.getSource()).isSelected()) {
+					log = true;
+					paint(getGraphics());
+				}
+			}});
 		
 		rb.addItemListener(new ItemListener() {
 			@Override
@@ -282,29 +311,40 @@ class MyChart extends JComponent {
 			public void itemStateChanged(ItemEvent e) {
 				paint(getGraphics());
 			}});
-		add(new JLabel("Histogramm: "));
+		
+		JLabel label = new JLabel("Histogramm: ");
+		label.setBounds(10, 10, 80, 15);
+		rb.setBounds(90, 10, 30, 15);
+		gb.setBounds(130, 10, 30, 15);
+		bb.setBounds(170, 10, 30, 15);
+		lb.setBounds(210, 10, 30, 15);
+		lin_b.setBounds(60, 165, 60, 20);
+		log_b.setBounds(150, 165, 100, 20);
+		add(label);
 		add(rb);
 		add(gb);
 		add(bb);
 		add(lb);
+		add(lin_b);
+		add(log_b);
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		//Nochmal anpassen!!!
+		
 		int f;
-		if(ic.getPixelCount() <= 200000) {
+		if (ic.getPixelCount() <= 200000) {
 			f = 20;
-		} else if(ic.getPixelCount() > 200000 && ic.getPixelCount() <= 2000000) {
+		} else if (ic.getPixelCount() > 200000 && ic.getPixelCount() <= 2000000) {
 			f = 100;
-		} else if(ic.getPixelCount() > 2000000 && ic.getPixelCount() <= 5000000) {
+		} else if (ic.getPixelCount() > 2000000
+				&& ic.getPixelCount() <= 5000000) {
 			f = 600;
-		}
-		else {
+		} else {
 			f = 900;
 		}
-		
-//		System.out.println(ic.getPixelCount());
+	
+// System.out.println(ic.getPixelCount());
 		
 		g.clearRect(1, 1, 255, 199);
 		g.setColor(getBackground());
@@ -316,7 +356,12 @@ class MyChart extends JComponent {
 		for(int i = 0; i < 255; i++) {
 			int val = 0;
 			if(rb.isSelected()) {
-				val = ic.getRed().get(i);
+				if(log) {
+					f = 1;
+					val = (int) (Math.log(ic.getRed().get(i)) * 10);
+				} else {
+					val = ic.getRed().get(i);
+				}
 //				g.setColor(new Color(0, 0, 0, 150));
 //				g.drawRect(x, 150-(val/f), 1, val/f);
 				g.setColor(new Color(i, 0, 0, 150));
@@ -324,7 +369,12 @@ class MyChart extends JComponent {
 				g.fillRect(x, 150, 1, 10);
 			}
 			if(gb.isSelected()) {
-				val = ic.getGreen().get(i);
+				if(log) {
+					f = 1;
+					val = (int) (Math.log(ic.getGreen().get(i)) * 10);
+				} else {
+					val = ic.getGreen().get(i);
+				}
 //				g.setColor(new Color(0, 0, 0, 150));
 //				g.drawRect(x, 150-(val/f), 1, val/f);
 				g.setColor(new Color(0, i, 0, 150));
@@ -333,7 +383,12 @@ class MyChart extends JComponent {
 				
 			}
 			if(bb.isSelected()) {
-				val = ic.getBlue().get(i);
+				if(log) {
+					f = 1;
+					val = (int) (Math.log(ic.getBlue().get(i)) * 10);
+				} else {
+					val = ic.getBlue().get(i);
+				}
 //				g.setColor(new Color(0, 0, 0, 150));
 //				g.drawRect(x, 150-(val/f), 1, val/f);
 				g.setColor(new Color(0, 0, i, 150));
@@ -342,7 +397,12 @@ class MyChart extends JComponent {
 				
 			}
 			if(lb.isSelected()) {
-				val = ic.getLum().get(i);
+				if(log) {
+					f = 1;
+					val = (int) (Math.log(ic.getLum().get(i)) * 10);
+				} else {
+					val = ic.getLum().get(i);
+				}
 //				g.setColor(new Color(0, 0, 0, 150));
 //				g.drawRect(x, 150-(val/f), 1, val/f);
 				g.setColor(new Color(i, i, i, 150));

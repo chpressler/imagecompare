@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -27,13 +28,11 @@ public class ImageBase {
 	
 	private static volatile ImageBase instance;
 	
-	//HashMap <String, BufferedImage>...
+	private volatile HashMap<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 	
-	private static volatile ArrayList<ImageBaseChangedListener> listeners = new ArrayList<ImageBaseChangedListener>();
+	private volatile ArrayList<ImageBaseChangedListener> listeners = new ArrayList<ImageBaseChangedListener>();
 	
 	private BufferedImage image; 
-	
-	private volatile ArrayList<String> imagePaths = new ArrayList<String>();
 	
 	private ImageBase() {
 	}
@@ -54,13 +53,13 @@ public class ImageBase {
 		if(!d.exists()) {
 			d.mkdirs();
 		}
-		ArrayList<String> ip = (ArrayList<String>) imagePaths.clone();
+		Object[] ids = images.keySet().toArray();
 		int iii = 0;
-		for(String s : ip) {
+		for(Object s : ids) {
 			iii++;
-			if(s.startsWith("http")) {
+			if(s.toString().startsWith("http")) {
 				try {
-					URL ur = new URL(s);
+					URL ur = new URL(s.toString());
 					String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
 					File f;
 					if(name != null || name != "") {
@@ -82,7 +81,7 @@ public class ImageBase {
 				}
 			} else {
 				//Original
-				File f = new File(s);
+				File f = new File(s.toString());
 				String name = f.getName();
 				
 				//Export
@@ -108,8 +107,7 @@ public class ImageBase {
 	}
 	
 	public void clear() {
-		//HashMap...
-		imagePaths.clear();
+		images.clear();
 		for (ImageBaseChangedListener ibcl : listeners) {
 			ibcl.clear();
 		}
@@ -117,13 +115,20 @@ public class ImageBase {
 	}
 	
 	public void setImageBase(ImageSearchResults results) {	
+		boolean b = false;
 		for (ImageSearchResult r : results.listResults()) {
 			StatusBar.getInstance().activateProgressBar();
-			for(String s : imagePaths) {
-				if(s.equalsIgnoreCase(r.getClickUrl())) {
+			Object[] ids = images.keySet().toArray();
+			for(Object s : ids) {
+				if(s.toString().equalsIgnoreCase(r.getClickUrl())) {
 					StatusBar.getInstance().deactivateProgressBar();
-					return;
+					b = true;
+				} else {
+					b = false;
 				}
+			}
+			if(b) {
+				continue;
 			}
 			try {
 				image = ICUtil.getInstance().getThumbnal(
@@ -135,10 +140,9 @@ public class ImageBase {
 				e.printStackTrace();
 			}
 			for (ImageBaseChangedListener ibcl : listeners) {
-				ibcl.add(image, r.getClickUrl(), true);
-				imagePaths.add(r.getClickUrl());
+				images.put(r.getClickUrl(), image);
 				StatusBar.getInstance().setStatusText("adding: " + r.getClickUrl());
-				// System.out.println("added " + file);
+				ibcl.add(image, r.getClickUrl(), true);
 			}
 			StatusBar.getInstance().setStatusText("");
 			StatusBar.getInstance().deactivateProgressBar();
@@ -150,8 +154,9 @@ public class ImageBase {
 		StatusBar.getInstance().activateProgressBar();
 		if(dir.isFile()) {
 			//Prüfen, ob unterstützte Bilddatei...
-			for(String s : imagePaths) {
-				if(s.equalsIgnoreCase(dir.getAbsolutePath())) {
+			Object[] ids = images.keySet().toArray();
+			for(Object s : ids) {
+				if(s.toString().equalsIgnoreCase(dir.getAbsolutePath())) {
 					StatusBar.getInstance().deactivateProgressBar();
 					return;
 				}
@@ -159,9 +164,9 @@ public class ImageBase {
 			image = ICUtil.getInstance().getThumbnal(
 					ImageIO.read(dir));
 			for (ImageBaseChangedListener ibcl : listeners) {
-				ibcl.add(image, dir.getAbsolutePath(), true);
-				imagePaths.add(dir.getAbsolutePath());
+				images.put(dir.getAbsolutePath(), image);
 				StatusBar.getInstance().setStatusText("adding: " + dir.getAbsolutePath());
+				ibcl.add(image, dir.getAbsolutePath(), true);
 			}
 			StatusBar.getInstance().setStatusText("");
 			StatusBar.getInstance().deactivateProgressBar();
@@ -169,12 +174,17 @@ public class ImageBase {
 		}
 		
 		for(File file : dir.listFiles()) {
+			boolean b1 = false;
 			if(file.isFile()) {
-				for(String s : imagePaths) {
+				String[] ids = (String[]) images.keySet().toArray();
+				for(String s : ids) {
 					if(s.equalsIgnoreCase(file.getAbsolutePath())) {
 						StatusBar.getInstance().deactivateProgressBar();
-						return;
+						b1 = true;
 					}
+				}
+				if(b1) {
+					continue;
 				}
 				if (file.getName().endsWith(".jpg")
 						|| file.getName().endsWith(".gif")
@@ -227,10 +237,9 @@ public class ImageBase {
 								ImageIO.read(file));
 						}
 						for (ImageBaseChangedListener ibcl : listeners) {
-							ibcl.add(image, file.getAbsolutePath(), true);
-							imagePaths.add(file.getAbsolutePath());
+							images.put(file.getAbsolutePath(), image);
 							StatusBar.getInstance().setStatusText("adding: " + file.getAbsolutePath());
-							// System.out.println("added " + file);
+							ibcl.add(image, file.getAbsolutePath(), true);
 						}
 						b = true;
 					} catch (Exception e) {

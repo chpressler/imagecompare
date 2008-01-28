@@ -27,6 +27,26 @@ public class FilterComponent extends JPanel {
 		add(a);
 		add(new JLabel("Focus: "));
 		add(f);
+		
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		add(new JLabel("String: "));
+		add(string);
+		
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Filter"));
 	}
 

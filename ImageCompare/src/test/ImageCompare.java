@@ -81,7 +81,7 @@ public class ImageCompare extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ivc1.setImage( ImageIO.read(new File("test.jpg")) );
+					ivc1.setImage( ImageIO.read(new File("test.jpg")), "test.pg" );
 					
 //					ivc2.setImage( ImageIO.read(new File("test.jpg")) );
 //					ivc2.setImage( ImageIO.read(new URL("http://www.reitenimseewinkel.at/_img/_max/pferd_terry.jpg")));

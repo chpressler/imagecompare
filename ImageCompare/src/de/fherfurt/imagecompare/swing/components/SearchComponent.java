@@ -1,100 +1,232 @@
 package de.fherfurt.imagecompare.swing.components;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import com.blogofbug.examples.yahooimagesearch.YahooImageSearch;
 import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;
 
 import de.fherfurt.imagecompare.ImageBase;
-import de.fherfurt.imagecompare.swing.actions.YahooSearchAction;
 
 public class SearchComponent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField textfield;
-	
-	private JButton button;
-	
 	private static SearchClient client;
 	
 	ImageSearchResults results;
 	
-	private JCheckBox yahoo, google, lokal;
+	private javax.swing.JButton jButton1;
 	
-	private JPanel checkboxes;
+	private javax.swing.JCheckBox jCheckBox1;
 	
-	private JPanel tf;
+	private javax.swing.JCheckBox jCheckBox2;
+	
+	private javax.swing.JCheckBox jCheckBox3;
+	
+	private javax.swing.JCheckBox jCheckBox4;
+	
+	private javax.swing.JCheckBox jCheckBox5;
+	
+	private javax.swing.JTextField jTextField1;
+	
+	private boolean yahoo, google, torrent, gnutella = false;
+	
+	private boolean local = true;
 	
 	public SearchComponent() {
 		
-	checkboxes = new JPanel();
-	checkboxes.setBackground(null);
-	checkboxes.setOpaque(false);
-	checkboxes.setLayout(new GridLayout(0, 1));
-	yahoo = new JCheckBox("Yahoo");
-	google = new JCheckBox("Google");
-	lokal = new JCheckBox("lokal");
-	yahoo.setBackground(null);
-	google.setBackground(null);
-	lokal.setBackground(null);
-	yahoo.setOpaque(false);
-	google.setOpaque(false);
-	lokal.setOpaque(false);
-	checkboxes.add(yahoo);
-	checkboxes.add(google);
-	checkboxes.add(lokal);
-	
-	client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
-	setBackground(null);
-    setOpaque(false);
-	setLayout(new GridLayout(0, 2));
-	
-	tf = new JPanel();
-	tf.setBackground(null);
-	tf.setOpaque(false);
-	tf.setLayout(new GridLayout(0, 1));
-	textfield = new JTextField(10);
-	textfield.setOpaque(false);
-	tf.add(textfield);
-	button = new JButton("search");
-	button.setOpaque(false);
-	button.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			final String response = textfield.getText();
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					ImageSearchRequest request = new ImageSearchRequest(response);            
-			        request.setAdultOk(true);
-			        request.setResults(50);
-//			        request.setStart(BigInteger.valueOf(10));
-			        try {
-						results = client.imageSearch(request);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					} 
-					
-					ImageBase.getInstance().setImageBase(results);
-				}}).start();
-		}});
-	tf.add(button);
-	add(tf);
-	add(checkboxes);
-	
-	setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Search"));
+		client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
+		setBackground(null);
+	    setOpaque(false);
+	    
+	    setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Search"));
+		
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox5.setSelected(true);
+        jCheckBox1.setOpaque(false);
+        jCheckBox1.setBackground(null);
+        jCheckBox2.setOpaque(false);
+        jCheckBox2.setBackground(null);
+        jCheckBox3.setOpaque(false);
+        jCheckBox3.setBackground(null);
+        jCheckBox4.setOpaque(false);
+        jCheckBox4.setBackground(null);
+        jCheckBox5.setOpaque(false);
+        jCheckBox5.setBackground(null);
+        
+        jCheckBox1.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if( ((JCheckBox) e.getSource()).isSelected() ) {
+					yahoo = true;
+				} else {
+					yahoo = false;
+				}
+			}});
+        jCheckBox2.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if( ((JCheckBox) e.getSource()).isSelected() ) {
+					google = true;
+				} else {
+					google = false;
+				}
+			}});
+        jCheckBox3.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if( ((JCheckBox) e.getSource()).isSelected() ) {
+					torrent = true;
+				} else {
+					torrent = false;
+				}
+			}});
+        jCheckBox4.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if( ((JCheckBox) e.getSource()).isSelected() ) {
+					gnutella = true;
+				} else {
+					gnutella = false;
+				}
+			}});
+        jCheckBox5.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if( ((JCheckBox) e.getSource()).isSelected() ) {
+					local = true;
+				} else {
+					local = false;
+				}
+			}});
+
+        jButton1.setText("search");
+        jButton1.addActionListener(new ActionListener() {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			//TODO -> erst alle laufenden Threads beenden!
+    			final String response = jTextField1.getText();
+    			if(yahoo) {
+    			new Thread(new Runnable() {
+    				@Override
+    				public void run() {
+    					ImageSearchRequest request = new ImageSearchRequest(response);            
+    			        request.setAdultOk(true);
+    			        request.setResults(50);
+//    			        request.setStart(BigInteger.valueOf(10));
+    			        try {
+    						results = client.imageSearch(request);
+    					} catch (Exception e1) {
+    						e1.printStackTrace();
+    					} 
+    					
+    					ImageBase.getInstance().setImageBase(results);
+    				}}).start();
+    			}
+    			if(google) {
+    				new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+						}}).start();
+    			}
+    			if(torrent) {
+    				new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+						}}).start();
+    			}
+    			if(gnutella) {
+    				new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+						}}).start();
+    			}
+    			if(local) {
+    				new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+						}}).start();
+    			}
+    		}});
+
+        jCheckBox1.setText("Yahoo");
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+
+        jCheckBox2.setText("Google");
+        jCheckBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+
+        jCheckBox3.setText("Torrent");
+        jCheckBox3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        
+        jCheckBox4.setText("Gnutella");
+        jCheckBox4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        
+        jCheckBox5.setText("Local");
+        jCheckBox5.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(this);
+        this.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
 	}
 	
 }

@@ -218,7 +218,7 @@ public class ImageComponent extends JLabel {
 		
 //      Rectangle r = this.getParent().getBounds();
 		if(t) {
-			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
 		}
         g2d.drawImage(image,0,0,width,height,this);
         g2d.setColor(Color.LIGHT_GRAY);
