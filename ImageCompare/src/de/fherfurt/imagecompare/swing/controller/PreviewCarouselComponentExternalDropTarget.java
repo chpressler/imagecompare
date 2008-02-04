@@ -28,21 +28,15 @@ public class PreviewCarouselComponentExternalDropTarget implements DropTargetLis
 	}
 
 	@Override
-	public void dragEnter(DropTargetDragEvent dtde) {
-		// TODO Auto-generated method stub
-		
+	public void dragEnter(DropTargetDragEvent dtde) {		
 	}
 
 	@Override
-	public void dragExit(DropTargetEvent dte) {
-		// TODO Auto-generated method stub
-		
+	public void dragExit(DropTargetEvent dte) {		
 	}
 
 	@Override
-	public void dragOver(DropTargetDragEvent dtde) {
-		// TODO Auto-generated method stub
-		
+	public void dragOver(DropTargetDragEvent dtde) {		
 	}
 
 	@Override
@@ -77,9 +71,7 @@ public class PreviewCarouselComponentExternalDropTarget implements DropTargetLis
 	}
 
 	@Override
-	public void dropActionChanged(DropTargetDragEvent dtde) {
-		// TODO Auto-generated method stub
-		
+	public void dropActionChanged(DropTargetDragEvent dtde) {	
 	}
 	
 }

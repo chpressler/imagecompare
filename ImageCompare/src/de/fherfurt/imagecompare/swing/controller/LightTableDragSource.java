@@ -32,33 +32,23 @@ public class LightTableDragSource implements DragSourceListener, DragGestureList
 	}
 	
 	@Override
-	public void dragDropEnd(DragSourceDropEvent dsde) {
-		// TODO Auto-generated method stub
-		
+	public void dragDropEnd(DragSourceDropEvent dsde) {		
 	}
 
 	@Override
-	public void dragEnter(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-		
+	public void dragEnter(DragSourceDragEvent dsde) {		
 	}
 
 	@Override
-	public void dragExit(DragSourceEvent dse) {
-		// TODO Auto-generated method stub
-		
+	public void dragExit(DragSourceEvent dse) {		
 	}
 
 	@Override
-	public void dragOver(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-		
+	public void dragOver(DragSourceDragEvent dsde) {		
 	}
 
 	@Override
-	public void dropActionChanged(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-		
+	public void dropActionChanged(DragSourceDragEvent dsde) {		
 	}
 
 	@Override

@@ -42,28 +42,18 @@ public class ReflectedImageDragSource implements DragSourceListener, DragGesture
 	}
 
 	public void dragDropEnd(DragSourceDropEvent dsde) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dragEnter(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dragExit(DragSourceEvent dse) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dragOver(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dropActionChanged(DragSourceDragEvent dsde) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dragGestureRecognized(DragGestureEvent dge) {
@@ -99,7 +89,6 @@ class TransferableImage implements Transferable {
 	@Override
 	public Object getTransferData(DataFlavor flavor)
 //			throws UnsupportedFlavorException, IOException {
-//		// TODO Auto-generated method stub
 //		return null;
 	throws UnsupportedFlavorException, IOException {
 		if (isDataFlavorSupported(flavor)) {
@@ -115,13 +104,11 @@ class TransferableImage implements Transferable {
 	
 	@Override
 	public DataFlavor[] getTransferDataFlavors() {
-		// TODO Auto-generated method stub
 		return flavors;
 	}
 
 	@Override
 	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		// TODO Auto-generated method stub
 		return (flavor.getRepresentationClass() == BufferedImage.class);
 	}
 	
