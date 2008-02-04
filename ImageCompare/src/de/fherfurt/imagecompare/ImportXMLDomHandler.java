@@ -43,13 +43,10 @@ public class ImportXMLDomHandler {
 			try {
 				doc = dbf.newDocumentBuilder().parse(new File("import.xml"));
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			removeTextNodes(doc);

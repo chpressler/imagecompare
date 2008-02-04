@@ -49,7 +49,6 @@ public class ImportXMLStaXHandler {
 			file.createNewFile();
 			fos = new FileOutputStream(file, false);
 			writer = factory.createXMLStreamWriter(fos, "UTF-8");
-
 			writer.writeStartDocument("UTF-8", "1.0");
 			
 //			writer = factory.createXMLStreamWriter(fos);
@@ -80,6 +79,8 @@ public class ImportXMLStaXHandler {
 
 		}
 	}
+	
+	//TODO -> openDoc mit append (Images in vorhandene import.xml einfügen)
 	
 	public void addImage(String abs_path, HashMap<String, String> metadata) {
 		try {
