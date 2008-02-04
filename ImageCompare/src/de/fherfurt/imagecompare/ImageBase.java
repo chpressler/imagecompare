@@ -176,9 +176,9 @@ public class ImageBase {
 		for(File file : dir.listFiles()) {
 			boolean b1 = false;
 			if(file.isFile()) {
-				String[] ids = (String[]) images.keySet().toArray();
-				for(String s : ids) {
-					if(s.equalsIgnoreCase(file.getAbsolutePath())) {
+				Object[] ids = images.keySet().toArray();
+				for(Object s : ids) {
+					if(s.toString().equalsIgnoreCase(file.getAbsolutePath())) {
 						StatusBar.getInstance().deactivateProgressBar();
 						b1 = true;
 					}
