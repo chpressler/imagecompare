@@ -21,7 +21,7 @@ public class HelpAction extends AbstractAction {
 
 	public void actionPerformed(ActionEvent arg0) {
 		try {
-			Runtime.getRuntime().exec("cmd.exe /c start http://www.mokkafish.com");
+			Runtime.getRuntime().exec("cmd.exe /c start http://www.fh-erfurt.de");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

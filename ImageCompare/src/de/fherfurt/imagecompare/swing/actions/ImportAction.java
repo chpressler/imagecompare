@@ -59,6 +59,7 @@ public class ImportAction extends AbstractAction {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		JCheckBox dc;
+		//TODO -> add Radiobutton for overwrite import (new), or append (add) 
 		for (File f : File.listRoots()) {
 			dc = new JCheckBox(FileSystemView.getFileSystemView()
 					.getSystemDisplayName(f), true);
