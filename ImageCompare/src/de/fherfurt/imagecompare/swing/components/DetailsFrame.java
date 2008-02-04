@@ -145,19 +145,16 @@ class ExifPanel extends JPanel {
 				metadata = JpegMetadataReader.readMetadata(jpegFile);
 			}
 		} catch (JpegProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		try {
 //			new ExifReader(jpegFile).extract(metadata);
 //		} catch (JpegProcessingException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		try {
 //			new IptcReader(jpegFile).extract(metadata);
 //		} catch (JpegProcessingException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 		// iterate through metadata directories
@@ -177,14 +174,10 @@ class ExifPanel extends JPanel {
 					JTextField jtf = new JTextField();
 					jtf.addKeyListener(new KeyListener() {
 						@Override
-						public void keyPressed(KeyEvent e) {
-							// TODO Auto-generated method stub
-							
+						public void keyPressed(KeyEvent e) {	
 						}
 						@Override
 						public void keyReleased(KeyEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
 						@Override
 						public void keyTyped(KeyEvent e) {

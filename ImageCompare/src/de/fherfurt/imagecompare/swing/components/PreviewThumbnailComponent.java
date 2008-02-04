@@ -21,6 +21,7 @@ import de.fherfurt.imagecompare.ImageBaseChangedListener;
 import de.fherfurt.imagecompare.swing.controller.ImageComponentDragSource;
 import de.fherfurt.imagecompare.swing.controller.PreviewThumbnailComponentExternalDropTarget;
 import de.fherfurt.imagecompare.swing.controller.ThumbnailDragSource;
+import de.fherfurt.imagecompare.swing.layout.PreviewThumbnailComponentLayout;
 
 public class PreviewThumbnailComponent extends JPanel implements ImageBaseChangedListener {
 
@@ -31,7 +32,8 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 	public PreviewThumbnailComponent() {
 		new PreviewThumbnailComponentExternalDropTarget(this);
 		setBackground(Color.DARK_GRAY);
-		setLayout(new FlowLayout());
+//		setLayout(new FlowLayout());
+		setLayout(new PreviewThumbnailComponentLayout());
 		ImageBase.getInstance().addImageBaseChangedListener(this);
 	}
 	
