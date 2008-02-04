@@ -104,7 +104,7 @@ public class LensBlurFilter extends AbstractBufferedImageOp {
         int h = rows;
 
 		tileWidth = w;
-		tileHeight = h;//FIXME-tileWidth, w, and cols are always all the same
+		tileHeight = h;
 
         FFT fft = new FFT( Math.max(log2rows, log2cols) );
 
@@ -258,7 +258,7 @@ public class LensBlurFilter extends AbstractBufferedImageOp {
                 int col_flip = h >> 1;
                 int index = 0;
 
-                //FIXME-don't bother converting pixels off image edges
+              
                 for ( int y = 0; y < w; y++ ) {
                     int ym = y ^ row_flip;
                     int yi = ym*cols;

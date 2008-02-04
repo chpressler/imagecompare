@@ -139,7 +139,7 @@ public class GlintFilter extends AbstractBufferedImageOp {
 		if ( glintOnly )
 			dstPixels = new int[width*height];
 		else
-			dstPixels = getRGB( src, 0, 0, width, height, null );//FIXME - only need 2*length
+			dstPixels = getRGB( src, 0, 0, width, height, null );
 
 		for ( int y = 0; y < height; y++ ) {
 			int index = y*width;

@@ -250,7 +250,7 @@ public class ShadeFilter extends WholeImageFilter implements Serializable {
 				if (normal.z >= 0) {
 					// Get the material colour at this point
 					if (environmentMap != null) {
-						//FIXME-too much normalizing going on here
+						
 						tmpv2.set(viewpoint);
 						tmpv2.sub(position);
 						tmpv2.normalize();
@@ -262,7 +262,7 @@ public class ShadeFilter extends WholeImageFilter implements Serializable {
 						tmpv.sub(v);
 						
 						tmpv.normalize();
-						setFromRGB(c, getEnvironmentMapP(normal, inPixels, width, height));//FIXME-interpolate()
+						setFromRGB(c, getEnvironmentMapP(normal, inPixels, width, height));
 						int alpha = inPixels[index] & 0xff000000;
 						int rgb = ((int)(c.x * 255) << 16) | ((int)(c.y * 255) << 8) | (int)(c.z * 255);
 						outPixels[index++] = alpha | rgb;

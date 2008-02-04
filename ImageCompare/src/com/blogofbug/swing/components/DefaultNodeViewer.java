@@ -63,7 +63,7 @@ public class DefaultNodeViewer extends JLabel implements PropertyChangeListener{
     }
     
     /**
-     * Converts a long into a string in the form of XXX MB or GB or whatever the
+     * Converts a long into a string in the form of (X X X) MB or GB or whatever the
      * appropriate unit is
      * 
      * @param size The size of the object in bytes

@@ -26,7 +26,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 
 /**
- * TODO: Add API to change color of text
+ * 
  * @author nigel
  */
 public class ComponentTextEffect extends ComponentEffect implements AlphaEffect{

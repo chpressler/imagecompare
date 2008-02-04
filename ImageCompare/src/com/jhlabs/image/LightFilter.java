@@ -339,7 +339,7 @@ if ( bumpShape != 0 ) {
 					else
 						setFromRGB(diffuseColor, material.diffuseColor);
 					if (reflectivity != 0 && environmentMap != null) {
-						//FIXME-too much normalizing going on here
+						
 						tmpv2.set(viewpoint);
 						tmpv2.sub(position);
 						tmpv2.normalize();
@@ -351,7 +351,7 @@ if ( bumpShape != 0 ) {
 						tmpv.sub(v);
 						
 						tmpv.normalize();
-						setFromRGB(envColor, getEnvironmentMap(tmpv, inPixels, width, height));//FIXME-interpolate()
+						setFromRGB(envColor, getEnvironmentMap(tmpv, inPixels, width, height));
 						diffuseColor.x = reflectivity*envColor.x + areflectivity*diffuseColor.x;
 						diffuseColor.y = reflectivity*envColor.y + areflectivity*diffuseColor.y;
 						diffuseColor.z = reflectivity*envColor.z + areflectivity*diffuseColor.z;

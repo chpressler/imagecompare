@@ -359,7 +359,7 @@ ny += t*windSpeed;// Wind towards the camera
 		nx /= scale;
 		ny /= scale * stretch;
 		float f = evaluate(nx, ny);
-float fg = f;//FIXME-bump map
+float fg = f;
 		// Normalize to 0..1
 //		f = (f-min)/(max-min);
 
