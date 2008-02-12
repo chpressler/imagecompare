@@ -155,6 +155,7 @@ public class ImportAction extends AbstractAction {
 		}
 		try {
 			BufferedImage bi = ICUtil.getInstance().getThumbnal(ImageIO.read(f));
+			metadatamap.put("faceCount", Integer.toString(ICUtil.getInstance().getFaceCount(f.getAbsolutePath())));
 			metadatamap.put("lastModofied", Long.toString(f.lastModified()));
 			metadatamap.put("size", Long.toString(f.length()));
 			metadatamap.put("imageWidth", Integer.toString(bi.getWidth()) );

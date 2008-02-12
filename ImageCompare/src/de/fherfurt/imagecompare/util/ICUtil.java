@@ -30,7 +30,7 @@ public class ICUtil {
 		clearHistogramm();
 	}
 	
-	private int getFaceCount(String path) {
+	public int getFaceCount(String path) {
 		ImageModel im = new ImageModel(new File(path));
 		Region[] faces = MainController.getInstance().detectFaces(im, false);
 		return faces.length;
