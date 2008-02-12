@@ -116,7 +116,6 @@ public class ImportXMLStaXHandler {
 //			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("scheisse");
 		}
 	}
 }
