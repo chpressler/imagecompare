@@ -25,5 +25,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MetadataExtractor"/>
 	<classpathentry kind="lib" path="lib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/MetadataExtractor.jar"/>
+	<classpathentry kind="lib" path="lib/faint.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

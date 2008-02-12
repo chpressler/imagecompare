@@ -2,12 +2,17 @@ package de.fherfurt.imagecompare.util;
 
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.media.jai.IHSColorSpace;
+
+import de.offis.faint.controller.MainController;
+import de.offis.faint.model.ImageModel;
+import de.offis.faint.model.Region;
 
 public class ICUtil {
 	
@@ -23,6 +28,12 @@ public class ICUtil {
 	
 	private ICUtil() {
 		clearHistogramm();
+	}
+	
+	private int getFaceCount(String path) {
+		ImageModel im = new ImageModel(new File(path));
+		Region[] faces = MainController.getInstance().detectFaces(im, false);
+		return faces.length;
 	}
 	
 	private void clearHistogramm() {
