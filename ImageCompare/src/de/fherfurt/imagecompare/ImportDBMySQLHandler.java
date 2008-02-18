@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class ImportDBMySQLHandler {
+public class ImportDBMySQLHandler implements IImport {
 	
 	private static volatile ImportDBMySQLHandler instance;
 	

@@ -24,6 +24,11 @@ public class ExportAction extends AbstractAction {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				//JOptionPane mit DropDown FS, FTP, Email...
+				//if(FS) {
+				//FSExport fse = new FSExport();
+				//fse.exportImageBase();
+				//}...
 				ImageBase.getInstance().exportToDir("C:/export");
 			}}).start();
 	}
