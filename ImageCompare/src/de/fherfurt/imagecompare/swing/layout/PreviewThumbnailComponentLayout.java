@@ -7,8 +7,12 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.io.Serializable;
 
-//TODO -> implement PrieviwThumbnailComponentLayout
-public class PreviewThumbnailComponentLayout implements LayoutManager, Serializable {
+import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
+import de.fherfurt.imagecompare.swing.components.PreviewThumbnailComponent;
+import de.fherfurt.imagecompare.swing.components.StatusBar;
+import de.fherfurt.imagecompare.swing.components.ThumbnailSizeListener;
+
+public class PreviewThumbnailComponentLayout implements LayoutManager, ThumbnailSizeListener, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +29,10 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Serializa
 	private int maxComponentWidth = 0;
 	
 	private int maxComponentHeight = 0;
+	
+	int w, h = 0; 
+	
+	int x = 5, y = 5;
 	
 	public void setSizes(Container parent) {
 		if (sizesSet)
@@ -56,6 +64,9 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Serializa
 	}
 	
 	public PreviewThumbnailComponentLayout() {
+		StatusBar.getInstance().addThumbnailSizeListener(this);
+		w = StatusBar.getInstance().getSliderValue();
+		h = StatusBar.getInstance().getSliderValue();
 	}
 
 	@Override
@@ -65,10 +76,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Serializa
 	@Override
 	public void layoutContainer(Container parent) {
 		synchronized (parent.getTreeLock()) {
-			int x = 5, y = 5;
+			x = 5; y = 5;
 			for (Component c : parent.getComponents()) {
-				System.out.println("parent: " + parent.getSize() + " c: " + c.getSize());
-				c.setBounds(x, y, 90, 90);
+				if(x > parent.getWidth() - w + 10) {
+					y += c.getHeight() + 5;
+					x = 5;
+				}
+				c.setBounds(x, y, w, h);
 				x += c.getWidth() + 5;
 			}
 		}
@@ -95,5 +109,21 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Serializa
 	@Override
 	public void removeLayoutComponent(Component comp) {
 	}
+
+	@Override
+	public void thumbnailSizChanged() {
+		w = StatusBar.getInstance().getSliderValue();
+		h = StatusBar.getInstance().getSliderValue();
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+	
+	
 
 }

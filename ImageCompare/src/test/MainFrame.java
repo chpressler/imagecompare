@@ -44,7 +44,6 @@ public class MainFrame extends JFrame {
 	    try {
 			bimg = ImageIO.read(new File(s));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}   
 		

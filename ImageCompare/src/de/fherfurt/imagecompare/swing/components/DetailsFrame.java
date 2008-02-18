@@ -33,6 +33,8 @@ import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
 
+import de.fherfurt.imagecompare.util.ICUtil;
+
 public class DetailsFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -42,6 +44,7 @@ public class DetailsFrame extends JFrame {
 	ExifPanel ep;
 
 	public DetailsFrame(ImageComponent ic) {
+		System.out.println(ICUtil.getInstance().getFaceCount(ic.getPath()));
 		String name = ic.getPath().substring(ic.getPath().lastIndexOf(File.separatorChar)+1);
 		setTitle(name);
 		setAlwaysOnTop(true);

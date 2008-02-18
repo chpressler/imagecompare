@@ -1,6 +1,7 @@
 package de.fherfurt.imagecompare;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,6 +22,7 @@ import com.drew.metadata.exif.ExifDirectory;
 import com.yahoo.search.ImageSearchResult;
 import com.yahoo.search.ImageSearchResults;
 
+import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
 
@@ -114,6 +116,13 @@ public class ImageBase {
 		System.gc();
 	}
 	
+	public void remove(String path) {
+		images.remove(path);
+		for (ImageBaseChangedListener ibcl : listeners) {
+			ibcl.removedImage(path);
+		}
+	}
+	
 	public void setImageBase(ImageSearchResults results) {	
 		boolean b = false;
 		for (ImageSearchResult r : results.listResults()) {
@@ -192,44 +201,23 @@ public class ImageBase {
 						|| file.getName().endsWith(".png")
 						|| file.getName().endsWith(".JPG")) {
 					try {
-						//Versuche Thumbnail aus Metadaten zu lesen (falls möglich)
+						
 						try {
-						Metadata metadata = new Metadata();
-						metadata = JpegMetadataReader.readMetadata(file);
-						Iterator directories = metadata.getDirectoryIterator();
-						while (directories.hasNext()) {
-							
-//							final Directory directory = metadata.getDirectory(ExifDirectory.class); 
-//							byte[] b_arr = directory.getByteArray(ExifDirectory.TAG_THUMBNAIL_DATA);
-//							int[] i_arr = new int[b_arr.length];
-//							for(int i = 0; i < b_arr.length; i++) {
-//								i_arr[i] = (int) b_arr[i];
-//							}
-//							image = new BufferedImage(160, 120, BufferedImage.TYPE_INT_ARGB);
-//							image.setRGB(0, 0, 160, 120, i_arr, 0, 120);
-//							b = false;
-							
-							
-							final Directory directory = (Directory) directories.next();
-							Iterator tags = directory.getTagIterator();
-							while (tags.hasNext()) {
-								final Tag tag = (Tag) tags.next();
-								final int tt = tag.getTagType();
-								if(tt == ExifDirectory.TAG_THUMBNAIL_DATA) {
-									String[] s_arr = directory.getString(tt).split(" ");
-									int[] i_arr = new int[s_arr.length];
-									for(int i = 0; i < s_arr.length; i++) {
-										i_arr[i] = Integer.parseInt(s_arr[i]);
+							Metadata metadata = JpegMetadataReader.readMetadata(file);
+							Iterator directories = metadata.getDirectoryIterator();
+							while (directories.hasNext()) {
+								Directory directory = (Directory) directories.next();
+								if (directory instanceof ExifDirectory){
+									ExifDirectory exifDir = (ExifDirectory) directory;
+									if (exifDir.containsThumbnail()){
+											InputStream in = new ByteArrayInputStream(exifDir.getThumbnailData());
+											image = ImageIO.read(in);
+											b = false;
 									}
-//									image = new BufferedImage(160, 120, BufferedImage.TYPE_INT_ARGB);
-//									image.setRGB(0, 0, i_arr.length/2, i_arr.length/2, i_arr, 0, 120);
-//									b = false;
 								}
 							}
-						}
 						} catch (Exception e) {
-							System.out.println("kein Exif Thumbnail vorhanden");
-							e.printStackTrace();
+							b = true;
 						}
 						
 						if(b) {
@@ -245,6 +233,7 @@ public class ImageBase {
 					} catch (Exception e) {
 						StatusBar.getInstance().setStatusText("");
 						StatusBar.getInstance().deactivateProgressBar();
+						b = true;
 					}
 				}
 			}

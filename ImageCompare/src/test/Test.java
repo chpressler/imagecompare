@@ -23,7 +23,6 @@ public class Test extends JFrame {
 	    try {
 			bimg = ImageIO.read(new File("test.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}   
 	    g2d.drawImage(bimg, null, 0, 0);  

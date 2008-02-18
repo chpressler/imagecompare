@@ -121,7 +121,7 @@ public class ReflectedImageLabel extends JButton{
      * @param text The text to be displayed
      */
     public ReflectedImageLabel(Image image, String text) {
-        this(image, text, image.getWidth(null), image.getHeight(null));
+    	this(image, text, image.getWidth(null), image.getHeight(null));
     }
     
     /**

@@ -1,10 +1,12 @@
 package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import com.blogofbug.swing.components.JCarosel;
+import com.blogofbug.swing.components.ReflectedImageLabel;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImageBaseChangedListener;
@@ -43,6 +45,18 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setBackground(Color.black, new Color(80, 30, 30));
+	}
+
+	@Override
+	public void removedImage(String path) {
+		for(Component c : getComponents()) {
+			if(((ReflectedImageLabel) c).getPath().equals(path)) {
+				remove(((ReflectedImageLabel) c));
+			}
+		}
+		this.validate();
+		this.updateUI();
 		setBackground(Color.black, new Color(80, 30, 30));
 	}
 

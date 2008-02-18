@@ -31,6 +31,7 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
+import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.ImportXMLDomHandler;
 import de.fherfurt.imagecompare.ImportXMLStaXHandler;
 import de.fherfurt.imagecompare.ResourceHandler;
@@ -80,7 +81,7 @@ public class ImportAction extends AbstractAction {
 							b = false;
 							SwingUtilities.getRoot(bar).setCursor(new Cursor(Cursor.WAIT_CURSOR));
 							bar.setIndeterminate(true);
-							ImportXMLStaXHandler.getInstance().startDoc();
+//							ImportXMLStaXHandler.getInstance().startDoc();
 							for (final Component c : ((JButton) e.getSource()).getParent()
 									.getComponents()) {
 								if (c instanceof JCheckBox && ((JCheckBox) c).isSelected()) {
@@ -100,7 +101,7 @@ public class ImportAction extends AbstractAction {
 									}
 								}
 							}
-							ImportXMLStaXHandler.getInstance().closeDoc();
+//							ImportXMLStaXHandler.getInstance().closeDoc();
 							bar.setIndeterminate(false);
 							SwingUtilities.getRoot(bar).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 							b = true;
@@ -124,12 +125,13 @@ public class ImportAction extends AbstractAction {
 				}
 				if (file.getName().endsWith(".jpg")) {
 //					System.out.println(file);
-					ImportXMLStaXHandler.getInstance().addImage(file.getAbsolutePath(), getMetadata(file));
+//					ImportXMLStaXHandler.getInstance().addImage(file.getAbsolutePath(), getMetadata(file));
 //					if(ImportXMLDomHandler.getInstance().getImageByPath(file.getAbsolutePath()) != null) {
 //						System.out.println("Image " + file.getAbsolutePath() + " schon vorhanden");
 //						continue;
 //					}
 //					ImportXMLDomHandler.getInstance().addImport(file.getAbsolutePath(), getMetadata(file));
+					ImportDBMySQLHandler.getInstance().addImport(file.getAbsolutePath(), getMetadata(file));
 				}
 			}
 		}
@@ -144,30 +146,30 @@ public class ImportAction extends AbstractAction {
 			e.printStackTrace();
 		}
 		
-//		Iterator directories = metadata.getDirectoryIterator();
-//		while (directories.hasNext()) {
-//			final Directory directory = (Directory) directories.next();
-//			Iterator tags = directory.getTagIterator();
-//			while (tags.hasNext()) {
-//				final Tag tag = (Tag) tags.next();
-//				final int tt = tag.getTagType();
-//				metadatamap.put(tag.getTagName(), directory.getString(tt));
-//			}
-//		}
+		Iterator directories = metadata.getDirectoryIterator();
+		while (directories.hasNext()) {
+			final Directory directory = (Directory) directories.next();
+			Iterator tags = directory.getTagIterator();
+			while (tags.hasNext()) {
+				final Tag tag = (Tag) tags.next();
+				final int tt = tag.getTagType();
+				metadatamap.put(tag.getTagName(), directory.getString(tt));
+			}
+		}
 		
 		try {
 			BufferedImage bi = ICUtil.getInstance().getThumbnal(ImageIO.read(f));
 			metadatamap.put("faceCount", Integer.toString(ICUtil.getInstance().getFaceCount(f.getAbsolutePath())));
-//			metadatamap.put("lastModofied", Long.toString(f.lastModified()));
-//			metadatamap.put("size", Long.toString(f.length()));
-//			metadatamap.put("imageWidth", Integer.toString(bi.getWidth()) );
-//			metadatamap.put("imageHeight", Integer.toString(bi.getHeight()) );
-//			metadatamap.put("pixelcount", Integer.toString(bi.getWidth() * bi.getHeight()) );
-//			metadatamap.put("colored", Boolean.toString( ICUtil.getInstance().isColored(bi) ) );
-//			metadatamap.put("dynamic", Integer.toString( ICUtil.getInstance().getDynamic(bi, true) ));
-//			metadatamap.put("contrast", Integer.toString( ICUtil.getInstance().getContrast(bi, false) ));
-//			metadatamap.put("averageLum", Integer.toString(ICUtil.getInstance().getAverageLum(bi, false)));
-//			metadatamap.put("averageSat", Integer.toString(ICUtil.getInstance().getAverageSat(bi)));
+			metadatamap.put("lastModofied", Long.toString(f.lastModified()));
+			metadatamap.put("size", Long.toString(f.length()));
+			metadatamap.put("imageWidth", Integer.toString(bi.getWidth()) );
+			metadatamap.put("imageHeight", Integer.toString(bi.getHeight()) );
+			metadatamap.put("pixelcount", Integer.toString(bi.getWidth() * bi.getHeight()) );
+			metadatamap.put("colored", Boolean.toString( ICUtil.getInstance().isColored(bi) ) );
+			metadatamap.put("dynamic", Integer.toString( ICUtil.getInstance().getDynamic(bi, true) ));
+			metadatamap.put("contrast", Integer.toString( ICUtil.getInstance().getContrast(bi, false) ));
+			metadatamap.put("averageLum", Integer.toString(ICUtil.getInstance().getAverageLum(bi, false)));
+			metadatamap.put("averageSat", Integer.toString(ICUtil.getInstance().getAverageSat(bi)));
 		} catch (Exception e1) {
 			return metadatamap;
 		}

@@ -80,8 +80,6 @@ public class ImportXMLStaXHandler {
 		}
 	}
 	
-	//TODO -> openDoc mit append (Images in vorhandene import.xml einfügen)
-	
 	public void addImage(String abs_path, HashMap<String, String> metadata) {
 		try {
 //			File file = new File("import.xml");

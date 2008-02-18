@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="lib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/MetadataExtractor.jar"/>
 	<classpathentry kind="lib" path="lib/faint.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-3.1.12-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

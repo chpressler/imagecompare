@@ -16,13 +16,14 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.blogofbug.tests.ChartTest;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
 import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.actions.HelpAction;
+import de.fherfurt.imagecompare.swing.actions.NewAction;
 import de.fherfurt.imagecompare.swing.actions.OpenAction;
+import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAsAction;
 
@@ -33,6 +34,8 @@ public class ImageCompareMenu extends JMenuBar {
 	JFrame jframe = null;
 	
 	JMenu file = new JMenu(ResourceHandler.getInstance().getStrings().getString("file"));
+	
+	JMenuItem file_new = new JMenuItem(ResourceHandler.getInstance().getStrings().getString("new"), new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("new")));
 	
 	JMenuItem file_exit = new JMenuItem(ResourceHandler.getInstance().getStrings().getString("exit"), new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("exit")));
 	
@@ -83,9 +86,13 @@ public class ImageCompareMenu extends JMenuBar {
 		file_save_as.setAccelerator( 
 		        KeyStroke.getKeyStroke( KeyEvent.VK_A, InputEvent.CTRL_MASK ) ); 
 		file_save_as.addActionListener(new SaveAsAction());
+		file_new.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_N, InputEvent.CTRL_MASK ) ); 
+		file_new.addActionListener(new NewAction());
+		file.add(file_new);
 		file.add(file_open);
-		file.add(file_save);
-		file.add(file_save_as);
+//		file.add(file_save);
+//		file.add(file_save_as);
 		file.addSeparator();
 		file.add(file_exit);
 
@@ -120,11 +127,9 @@ public class ImageCompareMenu extends JMenuBar {
 		edit.add(edit_cut);
 		edit.add(edit_copy);
 		edit.add(edit_paste);
-		edit_delete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				HistogramFrame hf = new HistogramFrame();
-//				hf.setVisible(true);
-			}});
+		edit_delete.setAccelerator( 
+		        KeyStroke.getKeyStroke( KeyEvent.VK_D, InputEvent.CTRL_MASK ) ); 
+		edit_delete.addActionListener(new RemoveSelectedAction());
 		edit.add(edit_delete);
 		edit.addSeparator();
 		edit.add(laf);

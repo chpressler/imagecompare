@@ -1,16 +1,20 @@
 package de.fherfurt.imagecompare.util;
 
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.media.jai.IHSColorSpace;
-
+import de.offis.faint.controller.HotSpotController;
 import de.offis.faint.controller.MainController;
+import de.offis.faint.interfaces.IDetectionFilter;
+import de.offis.faint.interfaces.IDetectionPlugin;
+import de.offis.faint.interfaces.IModule;
+import de.offis.faint.interfaces.IRecognitionFilter;
+import de.offis.faint.interfaces.IRecognitionPlugin;
 import de.offis.faint.model.ImageModel;
 import de.offis.faint.model.Region;
 
@@ -31,6 +35,7 @@ public class ICUtil {
 	}
 	
 	public int getFaceCount(String path) {
+		//TODO -> implement FaceCount
 		ImageModel im = new ImageModel(new File(path));
 		Region[] faces = MainController.getInstance().detectFaces(im, false);
 		return faces.length;

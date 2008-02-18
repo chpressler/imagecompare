@@ -118,7 +118,7 @@ public class SearchComponent extends JPanel {
         jButton1.addActionListener(new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			//TODO -> erst alle laufenden Threads beenden!
+    			//TODO -> erst alle laufenden Threads beenden! (ThreadWorker???)
     			final String response = jTextField1.getText();
     			if(yahoo) {
     			new Thread(new Runnable() {
