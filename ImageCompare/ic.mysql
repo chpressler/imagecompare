@@ -7,7 +7,7 @@ use ic;
 create table if not exists images
 (
 id bigint auto_increment ,
-path varchar(500) not null ,
+path varchar(500) not null unique ,
 primary key ( id ) 
 );
 
