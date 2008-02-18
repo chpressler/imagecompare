@@ -17,5 +17,6 @@ id bigint auto_increment ,
 name varchar(500) not null ,
 value varchar(500) not null ,
 image_id bigint not null ,
-primary key ( id ) 
+primary key ( id ) ,
+foreign key (image_id) references images(id) 
 );
