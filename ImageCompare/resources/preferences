@@ -1,0 +1,5 @@
+dbhost=localhost
+dbport=3306
+db=ic
+user=root
+password=duluth

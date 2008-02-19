@@ -1,16 +1,19 @@
 package de.fherfurt.imagecompare;
 
-import java.math.BigDecimal;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 
 public class ImportDBMySQLHandler implements IImport {
 	
 	private static volatile ImportDBMySQLHandler instance;
+	
+	private Properties properties;
 	
 	private ResultSet rs;
 	
@@ -28,13 +31,24 @@ public class ImportDBMySQLHandler implements IImport {
 	}
 
 	private ImportDBMySQLHandler() {
+		try {
+			properties = new Properties();
+			properties.load(new FileInputStream("resources/preferences"));;
+		} catch(Exception e) {
+			
+		}
 	}
 
 	public synchronized void addImport(String absolutePath, HashMap<String, String> metadata) {
 		try {
+		String dbhost = properties.getProperty("dbhost");
+		String dbport = properties.getProperty("dbport");
+		String db = properties.getProperty("db");
+		String user = properties.getProperty("user");
+		String password = properties.getProperty("password");
+		
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn = DriverManager
-				.getConnection("jdbc:mysql://localhost:3306/ic?user=root&password=duluth");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":" + dbport + "/" + db + "?user=" + user + "&password=" + password);
 		Statement stmt = conn.createStatement();
 
 		//TODO -> Radiobutton if new... 
