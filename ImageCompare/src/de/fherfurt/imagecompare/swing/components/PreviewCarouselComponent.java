@@ -36,10 +36,11 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 		setBackground(Color.black, new Color(80, 30, 30));
 	}
 	
-	public void add(BufferedImage image, String path, boolean b) {
+	@Override
+	public void add(ImageThumbnailComponent image, boolean b) {
 		try {
 			if(getComponentCount() < 10) {
-				add(image, path);
+				add(image.getImage(), image.getPath());
 				updateUI();
 			}
 		} catch (Exception e) {

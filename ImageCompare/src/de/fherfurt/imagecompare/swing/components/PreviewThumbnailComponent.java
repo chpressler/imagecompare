@@ -2,6 +2,7 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.dnd.DnDConstants;
 import java.awt.image.BufferedImage;
@@ -43,10 +44,9 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 	}
 
 	@Override
-	public void add(BufferedImage image, String path, boolean b) {
-		ImageThumbnailComponent itc = new ImageThumbnailComponent(image, path);
-		new ThumbnailDragSource(itc, DnDConstants.ACTION_COPY);
-		add(itc);
+	public void add(ImageThumbnailComponent image, boolean b) {
+		new ThumbnailDragSource(image, DnDConstants.ACTION_COPY);
+		add(image);
 		validate();
 		updateUI();
 	}

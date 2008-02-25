@@ -30,7 +30,7 @@ public class ImageBase {
 	
 	private static volatile ImageBase instance;
 	
-	private volatile HashMap<String, BufferedImage> images = new HashMap<String, BufferedImage>();
+	private volatile ArrayList<ImageThumbnailComponent> images = new ArrayList<ImageThumbnailComponent>();
 	
 	private volatile ArrayList<ImageBaseChangedListener> listeners = new ArrayList<ImageBaseChangedListener>();
 	
@@ -55,13 +55,13 @@ public class ImageBase {
 		if(!d.exists()) {
 			d.mkdirs();
 		}
-		Object[] ids = images.keySet().toArray();
+		Object[] ids = images.toArray();
 		int iii = 0;
-		for(Object s : ids) {
+		for(Object itc : ids) {
 			iii++;
-			if(s.toString().startsWith("http")) {
+			if(((ImageThumbnailComponent) itc).getPath().toString().startsWith("http")) {
 				try {
-					URL ur = new URL(s.toString());
+					URL ur = new URL(((ImageThumbnailComponent) itc).getPath().toString());
 					String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
 					File f;
 					if(name != null || name != "") {
@@ -83,7 +83,7 @@ public class ImageBase {
 				}
 			} else {
 				//Original
-				File f = new File(s.toString());
+				File f = new File(((ImageThumbnailComponent) itc).getPath().toString());
 				String name = f.getName();
 				
 				//Export
@@ -117,7 +117,11 @@ public class ImageBase {
 	}
 	
 	public void remove(String path) {
-		images.remove(path);
+		for(ImageThumbnailComponent itc : images) {
+			if(itc.getPath().equals(path)) {
+				images.remove(itc);
+			}
+		}
 		for (ImageBaseChangedListener ibcl : listeners) {
 			ibcl.removedImage(path);
 		}
@@ -127,9 +131,9 @@ public class ImageBase {
 		boolean b = false;
 		for (ImageSearchResult r : results.listResults()) {
 			StatusBar.getInstance().activateProgressBar();
-			Object[] ids = images.keySet().toArray();
-			for(Object s : ids) {
-				if(s.toString().equalsIgnoreCase(r.getClickUrl())) {
+			Object[] ids = images.toArray();
+			for(Object itc : ids) {
+				if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(r.getClickUrl())) {
 					StatusBar.getInstance().deactivateProgressBar();
 					b = true;
 				} else {
@@ -149,9 +153,10 @@ public class ImageBase {
 				e.printStackTrace();
 			}
 			for (ImageBaseChangedListener ibcl : listeners) {
-				images.put(r.getClickUrl(), image);
 				StatusBar.getInstance().setStatusText("adding: " + r.getClickUrl());
-				ibcl.add(image, r.getClickUrl(), true);
+				ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, r.getClickUrl());
+				images.add(imtc);
+				ibcl.add(imtc, true);
 			}
 			StatusBar.getInstance().setStatusText("");
 			StatusBar.getInstance().deactivateProgressBar();
@@ -163,9 +168,9 @@ public class ImageBase {
 		StatusBar.getInstance().activateProgressBar();
 		if(dir.isFile()) {
 			//Prüfen, ob unterstützte Bilddatei...
-			Object[] ids = images.keySet().toArray();
-			for(Object s : ids) {
-				if(s.toString().equalsIgnoreCase(dir.getAbsolutePath())) {
+			Object[] ids = images.toArray();
+			for(Object itc : ids) {
+				if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(dir.getAbsolutePath())) {
 					StatusBar.getInstance().deactivateProgressBar();
 					return;
 				}
@@ -173,9 +178,10 @@ public class ImageBase {
 			image = ICUtil.getInstance().getThumbnal(
 					ImageIO.read(dir));
 			for (ImageBaseChangedListener ibcl : listeners) {
-				images.put(dir.getAbsolutePath(), image);
 				StatusBar.getInstance().setStatusText("adding: " + dir.getAbsolutePath());
-				ibcl.add(image, dir.getAbsolutePath(), true);
+				ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, dir.getAbsolutePath());
+				images.add(imtc);
+				ibcl.add(imtc, true);
 			}
 			StatusBar.getInstance().setStatusText("");
 			StatusBar.getInstance().deactivateProgressBar();
@@ -185,9 +191,9 @@ public class ImageBase {
 		for(File file : dir.listFiles()) {
 			boolean b1 = false;
 			if(file.isFile()) {
-				Object[] ids = images.keySet().toArray();
-				for(Object s : ids) {
-					if(s.toString().equalsIgnoreCase(file.getAbsolutePath())) {
+				Object[] ids = images.toArray();
+				for(Object itc : ids) {
+					if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(file.getAbsolutePath())) {
 						StatusBar.getInstance().deactivateProgressBar();
 						b1 = true;
 					}
@@ -225,9 +231,10 @@ public class ImageBase {
 								ImageIO.read(file));
 						}
 						for (ImageBaseChangedListener ibcl : listeners) {
-							images.put(file.getAbsolutePath(), image);
 							StatusBar.getInstance().setStatusText("adding: " + file.getAbsolutePath());
-							ibcl.add(image, file.getAbsolutePath(), true);
+							ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, file.getAbsolutePath());
+							images.add(imtc);
+							ibcl.add(imtc, true);
 						}
 						b = true;
 					} catch (Exception e) {
