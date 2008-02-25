@@ -26,7 +26,7 @@ import javax.swing.SwingUtilities;
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 
-public class ImageThumbnailComponent extends JComponent implements ThumbnailSizeListener {
+public class ImageThumbnailComponent extends JComponent implements ThumbnailSizeListener, Comparable<ImageThumbnailComponent> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -208,5 +208,10 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		popupMenu.add(rem);
 		popupMenu.show(this, x, y);
 }
+
+	@Override
+	public int compareTo(ImageThumbnailComponent o) {
+		return 0;
+	}
 	
 }

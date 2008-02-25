@@ -61,4 +61,9 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 		setBackground(Color.black, new Color(80, 30, 30));
 	}
 
+	@Override
+	public void sorted() {
+		// TODO sorted
+	}
+
 }

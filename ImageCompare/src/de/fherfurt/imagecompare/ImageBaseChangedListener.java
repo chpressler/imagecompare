@@ -11,5 +11,7 @@ public interface ImageBaseChangedListener {
 	void add(ImageThumbnailComponent image, boolean b);
 	
 	void removedImage(String path);
+	
+	void sorted();
 
 }
