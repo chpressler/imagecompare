@@ -76,9 +76,9 @@ public class MainFrame extends JFrame {
 		
 		splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ImageCompareComponent(), new ImagePreviewComponent());
 		splitpane.setBorder(BorderFactory.createEmptyBorder());
-		splitpane.setDividerLocation(0.8);
+		splitpane.setDividerLocation(0.5);
 		splitpane.setOneTouchExpandable(true);
-		splitpane.setSize(800, 600);
+//		splitpane.setSize(800, 600);
 		
 		add(splitpane, BorderLayout.CENTER);
 		add(StatusBar.getInstance(), BorderLayout.SOUTH);
@@ -88,7 +88,6 @@ public class MainFrame extends JFrame {
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.gridx = 1;
 		gbc.weightx = Integer.MAX_VALUE;
-		
 		((JPanel) getGlassPane()).add(ControlPanel.getInstance(), gbc);
 		
 		this.setVisible(true);
