@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -79,6 +81,12 @@ public class MainFrame extends JFrame {
 		splitpane.setDividerLocation(0.5);
 		splitpane.setOneTouchExpandable(true);
 //		splitpane.setSize(800, 600);
+		splitpane.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent c) {
+				splitpane.setDividerLocation(0.5);
+			}
+		});
+
 		
 		add(splitpane, BorderLayout.CENTER);
 		add(StatusBar.getInstance(), BorderLayout.SOUTH);
