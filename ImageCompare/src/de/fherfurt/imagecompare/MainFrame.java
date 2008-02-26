@@ -22,8 +22,7 @@ import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DarkStar;
 
-import de.fherfurt.imagecompare.swing.components.FilterAndSortComponent;
-import de.fherfurt.imagecompare.swing.components.FilterComponent;
+import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.ImageCompareComponent;
 import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
@@ -81,7 +80,6 @@ public class MainFrame extends JFrame {
 		splitpane.setOneTouchExpandable(true);
 		splitpane.setSize(800, 600);
 		
-//		add(new ControlPanel(), BorderLayout.WEST);
 		add(splitpane, BorderLayout.CENTER);
 		add(StatusBar.getInstance(), BorderLayout.SOUTH);
 
@@ -91,8 +89,7 @@ public class MainFrame extends JFrame {
 		gbc.gridx = 1;
 		gbc.weightx = Integer.MAX_VALUE;
 		
-		FilterAndSortComponent fc = new FilterAndSortComponent();
-		((JPanel) getGlassPane()).add(fc, gbc);
+		((JPanel) getGlassPane()).add(ControlPanel.getInstance(), gbc);
 		
 		this.setVisible(true);
 	
