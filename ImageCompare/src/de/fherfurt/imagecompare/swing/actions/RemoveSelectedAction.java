@@ -17,7 +17,7 @@ public class RemoveSelectedAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		for(Component c : PreviewThumbnailComponent.getInstance().getComponents()) {
 			if(((ImageThumbnailComponent) c).isSelected()) {
-				ImageBase.getInstance().remove(((ImageThumbnailComponent) c).getPath());
+				ImageBase.getInstance().remove(((ImageThumbnailComponent) c));
 			}
 		}
 	}

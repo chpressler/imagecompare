@@ -124,14 +124,10 @@ public class ImageBase {
 		System.gc();
 	}
 	
-	public void remove(String path) {
-		for(ImageThumbnailComponent itc : images) {
-			if(itc.getPath().equals(path)) {
-				images.remove(itc);
-			}
-		}
+	public void remove(ImageThumbnailComponent itc) {
+		images.remove(itc);
 		for (ImageBaseChangedListener ibcl : listeners) {
-			ibcl.removedImage(path);
+			ibcl.removedImage(itc.getPath());
 		}
 	}
 	
