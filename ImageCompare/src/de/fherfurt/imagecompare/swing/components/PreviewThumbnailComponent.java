@@ -85,6 +85,7 @@ public class PreviewThumbnailComponent extends JPanel implements ImageBaseChange
 
 	@Override
 	public void sorted() {
+		updateUI();
 	}
 
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.swing.components.PreviewThumbnailComponent;
+import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
 
 public class PreviewThumbnailComponentExternalDropTarget implements

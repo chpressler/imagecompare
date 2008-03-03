@@ -145,8 +145,8 @@ public class ImageCompareMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				final JDialog jd = new JDialog();
 				JOptionPane.showMessageDialog(jd,
-						"ImageCompare\nVersion 1.0\n\n(C)hristian Pressler - FH Erfurt\nMasterthesis 2008", "About",
-						JOptionPane.INFORMATION_MESSAGE);
+						"ImageCompare\nVersion 1.0\n\n(c)hristian Pressler - FH Erfurt\nMasterthesis 2008\n\nhttp://imagecompare.googlecode.com\nchristian.pressler@googlemail.com", "About ImageCompare",
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon("about.jpg"));
 			}
 		});
 		help.add(help_about);

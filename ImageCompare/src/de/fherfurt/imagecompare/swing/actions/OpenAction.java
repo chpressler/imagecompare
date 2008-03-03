@@ -27,7 +27,7 @@ public class OpenAction extends AbstractAction {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					JFileChooser fileChooser = new JFileChooser(".");
+					JFileChooser fileChooser = new JFileChooser();
 					fileChooser.setMultiSelectionEnabled(false);
 					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					//Filter

@@ -7,6 +7,7 @@ import javax.swing.JToolBar;
 import com.jgoodies.looks.HeaderStyle;
 import com.jgoodies.looks.Options;
 
+import de.fherfurt.imagecompare.swing.actions.ControlPanelAction;
 import de.fherfurt.imagecompare.swing.actions.ExportAction;
 import de.fherfurt.imagecompare.swing.actions.HelpAction;
 import de.fherfurt.imagecompare.swing.actions.ImportAction;
@@ -14,7 +15,6 @@ import de.fherfurt.imagecompare.swing.actions.NewAction;
 import de.fherfurt.imagecompare.swing.actions.OpenAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAsAction;
-import de.fherfurt.imagecompare.swing.actions.SearchAction;
 import de.fherfurt.imagecompare.swing.actions.SortAction;
 
 public class ImageCompareToolBar extends JToolBar {
@@ -36,7 +36,7 @@ public class ImageCompareToolBar extends JToolBar {
 		this.add(new ImportAction());
 		this.add(new ExportAction());
 		this.addSeparator();
-		this.add(new SearchAction());
+		this.add(new ControlPanelAction());
 		this.add(new SortAction());
 		this.addSeparator();
 		this.add(new HelpAction());

@@ -182,46 +182,47 @@ public class ICUtil {
 		return 100 * (255-i) / 255;
 	}
 	
-	public boolean isColored(BufferedImage image) {
-		int w = image.getWidth(), h = image.getHeight(); 
-		int[] argbArray = new int[ w * h ]; 
-		image.getRGB( 0 /* startX */, 0 /* startY */, 
-		              w,  h, argbArray, 
-		              0 /* offset */, w /* scansize */ );
-		int r, g, b;
-		int e = 0;
-		//alle Pixel analysieren auf Farbsättigung
-		for (int is = 0; is < argbArray.length; is+=4) {
-			r   = (argbArray[is] >> 16) & 0xff; 
-			g = (argbArray[is] >> 8)  & 0xff; 
-			b  = (argbArray[is])       & 0xff;
-				if( !(((r - b) > -10) && ((r - b) < 10)) && !(((r - g) > -10) && ((r - g) < 10)) && !(((b - g) > -10) && ((b - g) < 10))) {
-//					if( ((r < 230) && (r > 20)) ) {
-//						System.out.println("extrem: " + r + " - " + g + " - " + b);
-//					}
-					e++;
-				}
-			//wenn mehr als 10% farbige pixel, dann bild wahrscheinlisch auch sw
-			if(e > ((argbArray.length/4)*10/100)) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean isColored(BufferedImage image) {
+//		int w = image.getWidth(), h = image.getHeight(); 
+//		int[] argbArray = new int[ w * h ]; 
+//		image.getRGB( 0 /* startX */, 0 /* startY */, 
+//		              w,  h, argbArray, 
+//		              0 /* offset */, w /* scansize */ );
+//		int r, g, b;
+//		int e = 0;
+//		//alle Pixel analysieren auf Farbsättigung
+//		for (int is = 0; is < argbArray.length; is+=4) {
+//			r   = (argbArray[is] >> 16) & 0xff; 
+//			g = (argbArray[is] >> 8)  & 0xff; 
+//			b  = (argbArray[is])       & 0xff;
+//				if( !(((r - b) > -10) && ((r - b) < 10)) && !(((r - g) > -10) && ((r - g) < 10)) && !(((b - g) > -10) && ((b - g) < 10))) {
+////					if( ((r < 230) && (r > 20)) ) {
+////						System.out.println("extrem: " + r + " - " + g + " - " + b);
+////					}
+//					e++;
+//				}
+//			//wenn mehr als 10% farbige pixel, dann bild wahrscheinlisch auch sw
+//			if(e > ((argbArray.length/4)*10/100)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	public int getAverageLum(BufferedImage image, boolean hist) {
 		if(hist) {
 			clearHistogramm();
 			getHistogramData(image);
 		}
-		Iterator iter = lum.keySet().iterator();
+		Iterator<Integer> iter = lum.keySet().iterator();
 		int al = 0;
 		int c = 0;
 		while(iter.hasNext()) {
-			al += lum.get(iter.next());
-			c++;
+			int key = iter.next();
+			al += key * lum.get(key);
+			c += lum.get(key);
 		}
-		return al / c;
+		return ((al / c) * 100) / 256;
 	}
 	
 	public int getAverageSat(BufferedImage image) {
@@ -230,17 +231,17 @@ public class ICUtil {
 		image.getRGB( 0 /* startX */, 0 /* startY */, 
 		              w,  h, argbArray, 
 		              0 /* offset */, w /* scansize */ );
-		int r, g, b, as = 0;
+		int r = 0, g = 0, b = 0, as = 0;
 		int a[] = new int[3]; 
 		for (int is = 0; is < argbArray.length; is+=4) {
 			r   = (argbArray[is] >> 16) & 0xff; 
 			g = (argbArray[is] >> 8)  & 0xff; 
 			b  = (argbArray[is])       & 0xff;
-			a[0] = r - b;
-			a[1] = r - g;
-			a[2] = g - b;
+			a[0] = r;
+			a[1] = g;
+			a[2] = b;
 			Arrays.sort(a);
-			as += a[0];
+			as += a[2] - a[0];
 		}
 		return (as / argbArray.length) * 100 / 255;
 	}

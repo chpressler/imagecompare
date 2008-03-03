@@ -1,9 +1,18 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -47,7 +56,7 @@ public class SearchComponent extends JPanel {
 		setBackground(null);
 	    setOpaque(false);
 	    
-	    setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Search"));
+	    setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(Color.white, Color.lightGray), "Search"));
 		
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
@@ -119,12 +128,12 @@ public class SearchComponent extends JPanel {
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			//TODO -> erst alle laufenden Threads beenden! (ThreadWorker???)
-    			final String response = jTextField1.getText();
+    			final String searchstring = jTextField1.getText();
     			if(yahoo) {
     			new Thread(new Runnable() {
     				@Override
     				public void run() {
-    					ImageSearchRequest request = new ImageSearchRequest(response);            
+    					ImageSearchRequest request = new ImageSearchRequest(searchstring);            
     			        request.setAdultOk(true);
     			        request.setResults(50);
 //    			        request.setStart(BigInteger.valueOf(10));
@@ -160,10 +169,50 @@ public class SearchComponent extends JPanel {
     			}
     			if(local) {
     				new Thread(new Runnable() {
-						@Override
-						public void run() {
-							
-						}}).start();
+    					@Override
+        				public void run() {
+    						try {
+    							Properties properties = new Properties();
+    							properties.load(new FileInputStream("resources/preferences"));
+    							String dbhost = properties.getProperty("dbhost");
+    							String dbport = properties.getProperty("dbport");
+    							String db = properties.getProperty("db");
+    							String user = properties.getProperty("user");
+    							String password = properties.getProperty("password");
+    							Class.forName("com.mysql.jdbc.Driver");
+    							Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":" + dbport + "/" + db + "?user=" + user + "&password=" + password);
+								Statement stmt = conn.createStatement();
+								ResultSet rs = stmt.executeQuery("SELECT path FROM images WHERE path LIKE '%" + searchstring + "%'");
+								ArrayList<String> results = new ArrayList<String>();
+								while(rs.next()) {
+									results.add(rs.getString(1));
+								}
+								
+								for(String p : results) {
+									File f = null;
+									try {
+										f = new File(p);
+									} catch (Exception e) {
+									
+									}
+									if (f == null || !f.exists()) {
+										String subquery = "(select id FROM images where path = '"
+												+ p + "')";
+										stmt
+												.execute("DELETE FROM attributes where image_id = "
+														+ subquery);
+										stmt
+												.execute("DELETE FROM images where path = '"
+														+ p + "'");
+									} else {
+										ImageBase.getInstance().setImageBase(f);
+									}	
+								}
+								conn.close();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+        				}}).start();
     			}
     		}});
 

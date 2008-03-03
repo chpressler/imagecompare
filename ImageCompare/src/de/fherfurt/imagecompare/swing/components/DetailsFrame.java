@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
@@ -33,6 +34,8 @@ import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
 
+import de.fherfurt.imagecompare.ImageAnalyser;
+import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.util.ICUtil;
 
 public class DetailsFrame extends JFrame {
@@ -44,8 +47,8 @@ public class DetailsFrame extends JFrame {
 	ExifPanel ep;
 
 	public DetailsFrame(ImageComponent ic) {
-		System.out.println(ICUtil.getInstance().getFaceCount(ic.getPath()));
-		String name = ic.getPath().substring(ic.getPath().lastIndexOf(File.separatorChar)+1);
+//		System.out.println(ICUtil.getInstance().getFaceCount(ic.getPath()));
+		String name = ic.getPath().substring(ic.getPath().lastIndexOf("/")+1);
 		setTitle(name);
 		setAlwaysOnTop(true);
 		setLayout(null);
@@ -131,96 +134,27 @@ class ExifPanel extends JPanel {
 	int uk = 0;
 	
 	public ExifPanel(String path) {
-		Metadata metadata = new Metadata();
 		setLayout(null);
-		File jpegFile = new File(path);
-		try {
-			if (path.startsWith("http")) {
-				try {
-					InputStream inputStream = new URL(path).openConnection()
-							.getInputStream();
-					metadata = JpegMetadataReader.readMetadata(inputStream);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			else {
-				metadata = JpegMetadataReader.readMetadata(jpegFile);
-			}
-		} catch (JpegProcessingException e) {
-			e.printStackTrace();
+		HashMap<String, String> attributes = new HashMap<String, String>();
+		
+		if(ImportDBMySQLHandler.getInstance().isImported(path)) {
+			attributes = ImportDBMySQLHandler.getInstance().getAttributes(path.replaceAll("\\\\", "/"));
+		} else {
+			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path.replaceAll("\\\\", "/")));
 		}
-//		try {
-//			new ExifReader(jpegFile).extract(metadata);
-//		} catch (JpegProcessingException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			new IptcReader(jpegFile).extract(metadata);
-//		} catch (JpegProcessingException e) {
-//			e.printStackTrace();
-//		}
-		// iterate through metadata directories
-		Iterator directories = metadata.getDirectoryIterator();
-		while (directories.hasNext()) {
-			final Directory directory = (Directory) directories.next();
-			// iterate through tags and print to System.out
-			Iterator tags = directory.getTagIterator();
-			while (tags.hasNext()) {
-				final Tag tag = (Tag) tags.next();
-				final int tt = tag.getTagType();
-				JLabel tag_name = new JLabel(tag.getTagName());
-				if(tag.getTagName().contains("Component") || tag.getTagName().contains("humbnail")) {
-					continue;
-				}
-				if(tag.getTagName().contains("eyword")) {
-					JTextField jtf = new JTextField();
-					jtf.addKeyListener(new KeyListener() {
-						@Override
-						public void keyPressed(KeyEvent e) {	
-						}
-						@Override
-						public void keyReleased(KeyEvent e) {
-						}
-						@Override
-						public void keyTyped(KeyEvent e) {
-							System.out.println(((JTextField)e.getSource()).getText());
-							directory.setString(tt, ((JTextField)e.getSource()).getText());
-						}});
-					jtf.setText(directory.getString(tt));
-					tag_name.setBounds(2, uk, 100, 15);
-					jtf.setBounds(150, uk, 87, 15);
-					uk += 20;
-					add(tag_name);
-					add(jtf);
-				} else {
-					JLabel tag_value = new JLabel();
-					tag_value.setText(directory.getString(tag.getTagType()));
-					tag_value.setToolTipText(directory.getString(tag.getTagType()));
-					tag_name.setBounds(2, uk, 100, 15);
-					tag_value.setBounds(150, uk, 87, 15);
-					uk += 20;
-					add(tag_name);
-					add(tag_value);
-				}
-			}
-		} 
-		Directory exifDirectory = 
-			metadata.getDirectory(ExifDirectory.class); 
-			String cameraMake = exifDirectory.getString(ExifDirectory.TAG_MAKE); 
-			String cameraModel = exifDirectory.getString(ExifDirectory.TAG_MODEL); 
-			Directory iptcDirectory = metadata.getDirectory(IptcDirectory.class); 
-			String caption = iptcDirectory.getString(IptcDirectory.TAG_CAPTION); 
-		try {
-			byte[] thumbnail = exifDirectory.getByteArray(ExifDirectory.TAG_THUMBNAIL_DATA);
-//			Image im = getToolkit().createImage(thumbnail);
-//			getGraphics().drawImage(im, 0, 0, 160, 120, null);
-//			for(byte b : thumbnail) {
-//				System.out.println(Integer.parseInt(Byte.toString(b)));
-//			}
-//			System.out.println();
-		} catch (MetadataException e) {
-			e.printStackTrace();
+		
+		JLabel name, value;
+		Iterator iter = attributes.keySet().iterator();
+		while(iter.hasNext()) {
+			String k = (String) iter.next();
+			name = new JLabel(k);
+			name.setBounds(2, uk, 100, 15);
+			value = new JLabel(attributes.get(k));
+			value.setToolTipText(value.getText());
+			value.setBounds(110, uk, 127, 15);
+			uk += 20;
+			add(name);
+			add(value);
 		}
 		setPreferredSize(new Dimension(237, uk + 10));
 	}	

@@ -1,12 +1,9 @@
 package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -14,16 +11,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JComponent;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ImageAnalyser;
+import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 
 public class ImageThumbnailComponent extends JComponent implements ThumbnailSizeListener, Comparable<ImageThumbnailComponent> {
@@ -42,11 +38,22 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 	
 	private JPopupMenu popupMenu;
 	
+	private HashMap<String, String> attributes = new HashMap<String, String>();
+
+	public HashMap<String, String> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(HashMap<String, String> attributes) {
+		this.attributes = attributes;
+	}
+
 	public ImageThumbnailComponent(BufferedImage image, String path) {
 		StatusBar.getInstance().addThumbnailSizeListener(this);
 		defsize = StatusBar.getInstance().getSliderValue();
 		this.image = image;
-		this.path = path;
+		this.path = path.replaceAll("\\\\", "/");
+		setToolTipText(this.path);
 		setPreferredSize(new Dimension(defsize, defsize));
 		try {
 			if (image.getWidth() > image.getHeight()) {
@@ -95,7 +102,6 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 										fos.write(xz);
 									}
 								fos.close();
-								System.out.println(file.getAbsolutePath());
 							} else {
 								file = new File(p);
 							}
@@ -112,7 +118,14 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 						selected = true;
 					}
 					buildMenu(e.getX(), e.getY());
-				}
+//					Iterator iter = attributes.keySet().iterator();
+//					System.out.println("---------------------------------");
+//					while(iter.hasNext()) {
+//						String k = (String) iter.next();
+//						System.out.println(k + " - " + attributes.get(k));
+//					}
+//					System.out.println("---------------------------------");
+					}
 			}
 
 			@Override
@@ -132,6 +145,12 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 			}
 			
 		});
+		if(ImportDBMySQLHandler.getInstance().isImported(getPath())) {
+			attributes = ImportDBMySQLHandler.getInstance().getAttributes(getPath());
+		} else {
+			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path));
+			ImportDBMySQLHandler.getInstance().addImport(this);
+		}
 	}
 	
 	public BufferedImage getImage() {
@@ -201,7 +220,6 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 	}
 	
 	private void buildMenu(int x, int y) { 
-		final ImageThumbnailComponent parent = this;
 		popupMenu = new JPopupMenu();
 		JMenuItem rem = new JMenuItem("remove selected from ImageBase");
 		rem.addActionListener(new RemoveSelectedAction());
@@ -211,7 +229,187 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 
 	@Override
 	public int compareTo(ImageThumbnailComponent o) {
+		//sort by path
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("path")) {
+			if(attributes.get("path") == null && o.getAttributes().get("path") == null) {
+				return 0;
+			} else if(attributes.get("path") != null && o.getAttributes().get("path") == null) {
+				return -1;
+			} else if(attributes.get("path") == null && o.getAttributes().get("path") != null) {
+				return 1;
+			} else {
+				return o.getAttributes().get("path").compareToIgnoreCase(getAttributes().get("path"));
+			}
+		}
+		//sort by keywords
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("keywords")) {
+			if(attributes.get("keywords") == null && o.getAttributes().get("keywords") == null) {
+				return 0;
+			} else if(attributes.get("keywords") != null && o.getAttributes().get("keywords") == null) {
+				return -1;
+			} else if(attributes.get("keywords") == null && o.getAttributes().get("keywords") != null) {
+				return 1;
+			} else {
+				return o.getAttributes().get("keywords").compareToIgnoreCase(getAttributes().get("keywords"));
+			}
+		}
+		//sort by cameratype
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("cameratype")) {
+			if(attributes.get("cameratype") == null && o.getAttributes().get("cameratype") == null) {
+				return 0;
+			} else if(attributes.get("cameratype") != null && o.getAttributes().get("cameratype") == null) {
+				return -1;
+			} else if(attributes.get("cameratype") == null && o.getAttributes().get("cameratype") != null) {
+				return 1;
+			} else {
+				return o.getAttributes().get("cameratype").compareToIgnoreCase(getAttributes().get("cameratype"));
+			}
+		}
+		//sort by filesize
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("filesize")) {
+			if(attributes.get("filesize") == null && o.getAttributes().get("filesize") == null) {
+				return 0;
+			} else if(attributes.get("filesize") != null && o.getAttributes().get("filesize") == null) {
+				return -1;
+			} else if(attributes.get("filesize") == null && o.getAttributes().get("filesize") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("filesize")) - (Long.parseLong(attributes.get("filesize"))));
+			}
+		}
+		//sort by createdate
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("createdate")) {
+		
+		}
+		//sort by changedate
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("changedate")) {
+		
+		}
+		//sort by makedate
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("makedate")) {
+		
+		}
+		//sort by pixelcount
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("pixelCount")) {
+			if(attributes.get("pixelCount") == null && o.getAttributes().get("pixelCount") == null) {
+				return 0;
+			} else if(attributes.get("pixelCount") != null && o.getAttributes().get("pixelCount") == null) {
+				return -1;
+			} else if(attributes.get("pixelCount") == null && o.getAttributes().get("pixelCount") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("pixelCount")) - (Long.parseLong(attributes.get("pixelCount"))));
+			}
+		}
+		//sort by exposureTime
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("exposureTime")) {
+		
+		}
+		//sort by fnumber
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("fnumber")) {
+			
+		}
+		//sort by focalLength
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("focalLength")) {
+		
+		}
+		//sort by flash
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("flash")) {
+		
+		}
+		//sort by iso
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("iso")) {
+		
+		}
+		//sort by stars
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("stars")) {
+		
+		}
+		//sort by avgSat
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("avgSat")) {
+			if(attributes.get("avgSat") == null && o.getAttributes().get("avgSat") == null) {
+				return 0;
+			} else if(attributes.get("avgSat") != null && o.getAttributes().get("avgSat") == null) {
+				return -1;
+			} else if(attributes.get("avgSat") == null && o.getAttributes().get("avgSat") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("avgSat")) - (Long.parseLong(attributes.get("avgSat"))));
+			}
+		}
+		//sort by avgLum
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("avgLum")) {
+			if(attributes.get("avgLum") == null && o.getAttributes().get("avgLum") == null) {
+				return 0;
+			} else if(attributes.get("avgLum") != null && o.getAttributes().get("avgLum") == null) {
+				return -1;
+			} else if(attributes.get("avgLum") == null && o.getAttributes().get("avgLum") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("avgLum")) - (Long.parseLong(attributes.get("avgLum"))));
+			}
+		}
+		//sort by contrast
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("contrast")) {
+			if(attributes.get("contrast") == null && o.getAttributes().get("contrast") == null) {
+				return 0;
+			} else if(attributes.get("contrast") != null && o.getAttributes().get("contrast") == null) {
+				return -1;
+			} else if(attributes.get("contrast") == null && o.getAttributes().get("contrast") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("contrast")) - (Long.parseLong(attributes.get("contrast"))));
+			}
+		}
+		//sort by dynamic
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("dynamic")) {
+			if(attributes.get("dynamic") == null && o.getAttributes().get("dynamic") == null) {
+				return 0;
+			} else if(attributes.get("dynamic") != null && o.getAttributes().get("dynamic") == null) {
+				return -1;
+			} else if(attributes.get("dynamic") == null && o.getAttributes().get("dynamic") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("dynamic")) - (Long.parseLong(attributes.get("dynamic"))));
+			}
+		}
+		//sort by faceCount
+		if(ControlPanel.getInstance().getSortComponent().getSortBy().equals("faceCount")) {
+			if(attributes.get("faceCount") == null && o.getAttributes().get("faceCount") == null) {
+				return 0;
+			} else if(attributes.get("faceCount") != null && o.getAttributes().get("faceCount") == null) {
+				return -1;
+			} else if(attributes.get("faceCount") == null && o.getAttributes().get("faceCount") != null) {
+				return 1;
+			} else {
+				return (int) (Long.parseLong(o.getAttributes().get("faceCount")) - (Long.parseLong(attributes.get("faceCount"))));
+			}
+		} 
 		return 0;
+	}
+
+	public int getImagewidth() {
+		return imagewidth;
+	}
+
+	public void setImagewidth(int imagewidth) {
+		this.imagewidth = imagewidth;
+	}
+
+	public int getImageheight() {
+		return imageheight;
+	}
+
+	public void setImageheight(int imageheight) {
+		this.imageheight = imageheight;
+	}
+
+	public int getDefsize() {
+		return defsize;
+	}
+
+	public void setDefsize(int defsize) {
+		this.defsize = defsize;
 	}
 	
 }

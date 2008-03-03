@@ -11,6 +11,12 @@ public class ControlPanel extends JPanel {
 	
 	private static volatile ControlPanel instance;
 	
+	private SearchComponent sc;
+	
+	private FilterComponent fc;
+	
+	private SortComponent soc;
+	
 	public static synchronized ControlPanel getInstance() {
 		if(instance == null) {
 			synchronized (ControlPanel.class) {
@@ -23,12 +29,29 @@ public class ControlPanel extends JPanel {
 	}
 
 	private ControlPanel() {
-		setBackground(new Color(80, 30, 30, 160));
+		setBackground(new Color(60, 25, 25, 200));
 //	    setOpaque(false);       
 		setLayout(new GridLayout(0, 1));
-		add(new SearchComponent());
-		add(new FilterComponent());
-		add(new SortComponent());
+		
+		sc = new SearchComponent();
+		fc = new FilterComponent();
+		soc = new SortComponent();
+		
+		add(sc);
+		add(fc);
+		add(soc);
+	}
+
+	public SearchComponent getSearchcomponent() {
+		return sc;
+	}
+
+	public FilterComponent getFilterComponent() {
+		return fc;
+	}
+
+	public SortComponent getSortComponent() {
+		return soc;
 	}
 	
 }

@@ -7,8 +7,8 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.io.Serializable;
 
-import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
-import de.fherfurt.imagecompare.swing.components.PreviewThumbnailComponent;
+import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.swing.components.ThumbnailSizeListener;
 
@@ -46,8 +46,6 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 		maxComponentWidth = 0;
 		maxComponentHeight = 0;
 
-		// compute the maximum component widths and heights
-		// and set the preferred size to the sum of the component sizes.
 		for (int i = 0; i < n; i++) {
 			Component c = parent.getComponent(i);
 			if (c.isVisible()) {
@@ -76,14 +74,45 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 	@Override
 	public void layoutContainer(Container parent) {
 		synchronized (parent.getTreeLock()) {
-			x = 5; y = 5;
-			for (Component c : parent.getComponents()) {
-				if(x > parent.getWidth() - w + 10) {
-					y += c.getHeight() + 5;
-					x = 5;
+			x = 5;
+			y = 5;
+			if (ControlPanel.getInstance().getSortComponent().sorted()) {
+				if (ControlPanel.getInstance().getSortComponent()
+						.isDescenting()) {
+					for (int i = 0; i < ImageBase.getInstance().getimageList()
+							.size(); i++) {
+						if (x > parent.getWidth() - w + 10) {
+							y += ImageBase.getInstance().getimageList().get(i)
+									.getHeight() + 5;
+							x = 5;
+						}
+						ImageBase.getInstance().getimageList().get(i)
+								.setBounds(x, y, w, h);
+						x += ImageBase.getInstance().getimageList().get(i)
+								.getWidth() + 5;
+					}
+				} else {
+					for (int i = ImageBase.getInstance().getimageList().size() - 1; i >= 0; i--) {
+						if (x > parent.getWidth() - w + 10) {
+							y += ImageBase.getInstance().getimageList().get(i)
+									.getHeight() + 5;
+							x = 5;
+						}
+						ImageBase.getInstance().getimageList().get(i)
+								.setBounds(x, y, w, h);
+						x += ImageBase.getInstance().getimageList().get(i)
+								.getWidth() + 5;
+					}
 				}
-				c.setBounds(x, y, w, h);
-				x += c.getWidth() + 5;
+			} else {
+				for (Component c : parent.getComponents()) {
+					if (x > parent.getWidth() - w + 10) {
+						y += c.getHeight() + 5;
+						x = 5;
+					}
+					c.setBounds(x, y, w, h);
+					x += c.getWidth() + 5;
+				}
 			}
 		}
 	}

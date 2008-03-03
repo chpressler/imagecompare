@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -18,36 +19,10 @@ public class FilterComponent extends JPanel {
 	private JTextField f = new JTextField(5);
 	
 	public FilterComponent() {
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(Color.white, Color.lightGray), "Filter"));
 		setBackground(null);
 	    setOpaque(false);
-		setLayout(new GridLayout(0, 2));
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("Aperture: "));
-		add(a);
-		add(new JLabel("Focus: "));
-		add(f);
 		
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		add(new JLabel("String: "));
-		add(string);
-		
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Filter"));
 	}
 
 }

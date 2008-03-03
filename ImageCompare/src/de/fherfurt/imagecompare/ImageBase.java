@@ -21,6 +21,7 @@ import com.drew.metadata.exif.ExifDirectory;
 import com.yahoo.search.ImageSearchResult;
 import com.yahoo.search.ImageSearchResults;
 
+import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
@@ -49,25 +50,30 @@ public class ImageBase {
 		return instance;
 	}
 	
+	public ArrayList<ImageThumbnailComponent> getimageList() {
+		return images;
+	}
+	
 	public void sort() {
+//		System.out.println("sort by: " + ControlPanel.getInstance().getSortComponent().getSortBy());
 		Collections.sort(images);
 		for(ImageBaseChangedListener ibcl : listeners) {
 			ibcl.sorted();
 		}
 	}
 	
-	public void exportToDir(String dir) {
+	public synchronized void exportToDir(String dir) {
 		File d = new File(dir);
 		if(!d.exists()) {
 			d.mkdirs();
 		}
-		Object[] ids = images.toArray();
+		
 		int iii = 0;
-		for(Object itc : ids) {
+		for(ImageThumbnailComponent itc : images) {
 			iii++;
-			if(((ImageThumbnailComponent) itc).getPath().toString().startsWith("http")) {
+			if(itc.getPath().startsWith("http")) {
 				try {
-					URL ur = new URL(((ImageThumbnailComponent) itc).getPath().toString());
+					URL ur = new URL(itc.getPath());
 					String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
 					File f;
 					if(name != null || name != "") {
@@ -89,7 +95,7 @@ public class ImageBase {
 				}
 			} else {
 				//Original
-				File f = new File(((ImageThumbnailComponent) itc).getPath().toString());
+				File f = new File(itc.getPath());
 				String name = f.getName();
 				
 				//Export
@@ -133,13 +139,10 @@ public class ImageBase {
 		boolean b = false;
 		for (ImageSearchResult r : results.listResults()) {
 			StatusBar.getInstance().activateProgressBar();
-			Object[] ids = images.toArray();
-			for(Object itc : ids) {
-				if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(r.getClickUrl())) {
-					StatusBar.getInstance().deactivateProgressBar();
+			for(ImageThumbnailComponent itc : images) {
+				if(itc.getPath().equalsIgnoreCase(r.getClickUrl())) {
+//					StatusBar.getInstance().deactivateProgressBar();
 					b = true;
-				} else {
-					b = false;
 				}
 			}
 			if(b) {
@@ -154,10 +157,11 @@ public class ImageBase {
 				StatusBar.getInstance().deactivateProgressBar();
 				e.printStackTrace();
 			}
+			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, r.getClickUrl());
+			images.add(imtc);
+			sort();
 			for (ImageBaseChangedListener ibcl : listeners) {
-				StatusBar.getInstance().setStatusText("adding: " + r.getClickUrl());
-				ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, r.getClickUrl());
-				images.add(imtc);
+				StatusBar.getInstance().setStatusText(" adding: " + r.getClickUrl());
 				ibcl.add(imtc, true);
 			}
 			StatusBar.getInstance().setStatusText("");
@@ -169,20 +173,20 @@ public class ImageBase {
 		boolean b = true;
 		StatusBar.getInstance().activateProgressBar();
 		if(dir.isFile()) {
-			//Prüfen, ob unterstützte Bilddatei...
-			Object[] ids = images.toArray();
-			for(Object itc : ids) {
-				if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(dir.getAbsolutePath())) {
+			for(ImageThumbnailComponent itc : images) {
+				String p = dir.getAbsolutePath().replaceAll("\\\\", "/");;
+				if(itc.getPath().equalsIgnoreCase(p)) {
 					StatusBar.getInstance().deactivateProgressBar();
 					return;
 				}
 			}
 			image = ICUtil.getInstance().getThumbnal(
 					ImageIO.read(dir));
+			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, dir.getAbsolutePath());
+			images.add(imtc);
+			sort();
 			for (ImageBaseChangedListener ibcl : listeners) {
-				StatusBar.getInstance().setStatusText("adding: " + dir.getAbsolutePath());
-				ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, dir.getAbsolutePath());
-				images.add(imtc);
+				StatusBar.getInstance().setStatusText(" adding: " + dir.getAbsolutePath());
 				ibcl.add(imtc, true);
 			}
 			StatusBar.getInstance().setStatusText("");
@@ -190,13 +194,13 @@ public class ImageBase {
 			return;
 		}
 		
+		try {
 		for(File file : dir.listFiles()) {
 			boolean b1 = false;
 			if(file.isFile()) {
-				Object[] ids = images.toArray();
-				for(Object itc : ids) {
-					if(((ImageThumbnailComponent) itc).getPath().toString().equalsIgnoreCase(file.getAbsolutePath())) {
-						StatusBar.getInstance().deactivateProgressBar();
+				for(ImageThumbnailComponent itc : images) {
+					if(itc.getPath().equalsIgnoreCase(file.getAbsolutePath())) {
+//						StatusBar.getInstance().deactivateProgressBar();
 						b1 = true;
 					}
 				}
@@ -232,10 +236,11 @@ public class ImageBase {
 						image = ICUtil.getInstance().getThumbnal(
 								ImageIO.read(file));
 						}
+						ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, file.getAbsolutePath());
+						images.add(imtc);
+						sort();
 						for (ImageBaseChangedListener ibcl : listeners) {
-							StatusBar.getInstance().setStatusText("adding: " + file.getAbsolutePath());
-							ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, file.getAbsolutePath());
-							images.add(imtc);
+							StatusBar.getInstance().setStatusText(" adding: " + file.getAbsolutePath());
 							ibcl.add(imtc, true);
 						}
 						b = true;
@@ -246,6 +251,10 @@ public class ImageBase {
 					}
 				}
 			}
+		}
+		} catch (Exception e) {
+			StatusBar.getInstance().setStatusText("");
+			StatusBar.getInstance().deactivateProgressBar();
 		}
 		StatusBar.getInstance().setStatusText("");
 		StatusBar.getInstance().deactivateProgressBar();
