@@ -78,7 +78,9 @@ public class ImportDBMySQLHandler implements IImport {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":" + dbport + "/" + db + "?user=" + user + "&password=" + password);
 			Statement stmt = conn.createStatement();
-			absolutePath = absolutePath.replace("\\", "/");
+			if(!absolutePath.startsWith("http")) {
+				absolutePath = absolutePath.replace("\\", "/");
+			}
 			ResultSet rs = stmt.executeQuery("SELECT * FROM images WHERE path = '" + absolutePath + "'");
 			return rs.next();
 		} catch (Exception e) {
@@ -155,7 +157,9 @@ public class ImportDBMySQLHandler implements IImport {
 //		stmt.execute("DELETE FROM images");
 //		stmt.execute("DELETE FROM attributes");
 
-		absolutePath = absolutePath.replaceAll("\\\\", "/");
+		if(!absolutePath.startsWith("http")) {
+			absolutePath = absolutePath.replaceAll("\\\\", "/");
+		}
 		
 		//Table images
 		try {

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -52,7 +53,11 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		StatusBar.getInstance().addThumbnailSizeListener(this);
 		defsize = StatusBar.getInstance().getSliderValue();
 		this.image = image;
-		this.path = path.replaceAll("\\\\", "/");
+		if(path.startsWith("http")) {
+			this.path = path;
+		} else {
+			this.path = path.replaceAll("\\\\", "/");
+		}
 		setToolTipText(this.path);
 		setPreferredSize(new Dimension(defsize, defsize));
 		try {
@@ -148,7 +153,11 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		if(ImportDBMySQLHandler.getInstance().isImported(getPath())) {
 			attributes = ImportDBMySQLHandler.getInstance().getAttributes(getPath());
 		} else {
-			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path));
+			if(path.startsWith("http:")) {
+				//aus InputStream TempFile machen
+			} else {
+				attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path), "");
+			}
 			ImportDBMySQLHandler.getInstance().addImport(this);
 		}
 	}

@@ -122,7 +122,7 @@ public class ImportAction extends AbstractAction {
 						System.out.println(file.getAbsolutePath() + " schon importiert");
 						continue;
 					}
-					ImportDBMySQLHandler.getInstance().addImport(file.getAbsolutePath(), ImageAnalyser.getInstance().getImageAttributes(file));
+					ImportDBMySQLHandler.getInstance().addImport(file.getAbsolutePath(), ImageAnalyser.getInstance().getImageAttributes(file ,""));
 				}
 			}
 		}

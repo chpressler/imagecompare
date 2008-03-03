@@ -142,7 +142,6 @@ public class SearchComponent extends JPanel {
     					} catch (Exception e1) {
     						e1.printStackTrace();
     					} 
-    					
     					ImageBase.getInstance().setImageBase(results);
     				}}).start();
     			}

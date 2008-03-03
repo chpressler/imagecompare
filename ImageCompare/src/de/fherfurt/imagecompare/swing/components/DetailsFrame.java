@@ -140,7 +140,7 @@ class ExifPanel extends JPanel {
 		if(ImportDBMySQLHandler.getInstance().isImported(path)) {
 			attributes = ImportDBMySQLHandler.getInstance().getAttributes(path.replaceAll("\\\\", "/"));
 		} else {
-			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path.replaceAll("\\\\", "/")));
+			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path.replaceAll("\\\\", "/")), "");
 		}
 		
 		JLabel name, value;

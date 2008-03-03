@@ -2,6 +2,8 @@ package de.fherfurt.imagecompare;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -30,7 +32,7 @@ public class ImageAnalyser {
 		return instance;
 	}
 	
-	public HashMap<String, String> getImageAttributes(File f) {
+	public HashMap<String, String> getImageAttributes(File f, String url) {
 		HashMap<String, String> metadatamap = new HashMap<String, String>();
 		Metadata metadata = new Metadata();
 		try {
@@ -44,7 +46,11 @@ public class ImageAnalyser {
 		String make = "";
 		int x = 0, y = 0;
 		
-		metadatamap.put("path", f.getAbsolutePath().replaceAll("\\\\", "/"));
+		if(url.isEmpty()) {
+			metadatamap.put("path", f.getAbsolutePath().replaceAll("\\\\", "/"));
+		} else {
+			metadatamap.put("path", url);
+		}
 		while (directories.hasNext()) {
 			final Directory directory = (Directory) directories.next();
 			Iterator tags = directory.getTagIterator();
