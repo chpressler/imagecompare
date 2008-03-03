@@ -155,32 +155,36 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		if(ImportDBMySQLHandler.getInstance().isImported(getPath())) {
 			attributes = ImportDBMySQLHandler.getInstance().getAttributes(getPath());
 		} else {
-			if(getPath().startsWith("http:")) {
-				//aus InputStream TempFile machen
+			if (getPath().startsWith("http:")) {
+				// aus InputStream TempFile machen
 				File f = null;
 				try {
-				URL ur = new URL(getPath());
-				String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
-//				String suffix = name.split(".")[name.split(".").length-1];
-				f = new File("temp" + name);
-				FileOutputStream fos = new FileOutputStream(f);
-				InputStream inputStream = ur.openConnection().getInputStream();
-				int z = 0;
-				while(z >= 0) {
-					z = inputStream.read();
-					fos.write(z);
-				}
-				fos.close();
-				attributes = ImageAnalyser.getInstance().getImageAttributes(f, getPath());
-				f.delete();
+					URL ur = new URL(getPath());
+					String name = ur.getFile().split("/")[ur.getFile().split(
+							"/").length - 1];
+					// String suffix =
+					// name.split(".")[name.split(".").length-1];
+					f = new File("temp" + name);
+					FileOutputStream fos = new FileOutputStream(f);
+					InputStream inputStream = ur.openConnection()
+							.getInputStream();
+					int z = 0;
+					while (z >= 0) {
+						z = inputStream.read();
+						fos.write(z);
+					}
+					fos.close();
+					attributes = ImageAnalyser.getInstance()
+							.getImageAttributes(f, getPath());
+					f.delete();
 				} catch (IIOException iioe) {
 					f.delete();
-				}
-					catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				attributes = ImageAnalyser.getInstance().getImageAttributes(new File(getPath()), "");
+				attributes = ImageAnalyser.getInstance().getImageAttributes(
+						new File(getPath()), "");
 			}
 			ImportDBMySQLHandler.getInstance().addImport(this);
 		}
