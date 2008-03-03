@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -153,10 +154,26 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		if(ImportDBMySQLHandler.getInstance().isImported(getPath())) {
 			attributes = ImportDBMySQLHandler.getInstance().getAttributes(getPath());
 		} else {
-			if(path.startsWith("http:")) {
+			if(getPath().startsWith("http:")) {
 				//aus InputStream TempFile machen
+				try {
+				URL ur = new URL(getPath());
+				String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
+				File f = new File("temp" + name);
+				FileOutputStream fos = new FileOutputStream(f);
+				InputStream inputStream = ur.openConnection().getInputStream();
+				int z = 0;
+				while(z >= 0) {
+					z = inputStream.read();
+					fos.write(z);
+				}
+				fos.close();
+				attributes = ImageAnalyser.getInstance().getImageAttributes(f, getPath());
+				} catch (Exception e) {
+					System.out.println("sdfsfdfsfdfsd");
+				}
 			} else {
-				attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path), "");
+				attributes = ImageAnalyser.getInstance().getImageAttributes(new File(getPath()), "");
 			}
 			ImportDBMySQLHandler.getInstance().addImport(this);
 		}
