@@ -268,8 +268,8 @@ try {
 			int i = x;
 			
 			for (v = 0; v < gridRows; v++) {
-				xrow[v] = splines.xGrid[i];;
-				yrow[v] = splines.yGrid[i];;
+				xrow[v] = splines.xGrid[i];
+				yrow[v] = splines.yGrid[i];
 				i += cols;
 			}
 

@@ -158,6 +158,9 @@ public class ImageBase {
 				e.printStackTrace();
 			}
 			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, r.getClickUrl());
+			if(imtc.getAttributes().isEmpty()) {
+				continue;
+			}
 			images.add(imtc);
 			sort();
 			for (ImageBaseChangedListener ibcl : listeners) {
@@ -174,7 +177,7 @@ public class ImageBase {
 		StatusBar.getInstance().activateProgressBar();
 		if(dir.isFile()) {
 			for(ImageThumbnailComponent itc : images) {
-				String p = dir.getAbsolutePath().replaceAll("\\\\", "/");;
+				String p = dir.getAbsolutePath().replaceAll("\\\\", "/");
 				if(itc.getPath().equalsIgnoreCase(p)) {
 					StatusBar.getInstance().deactivateProgressBar();
 					return;
@@ -183,6 +186,9 @@ public class ImageBase {
 			image = ICUtil.getInstance().getThumbnal(
 					ImageIO.read(dir));
 			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, dir.getAbsolutePath());
+			if(imtc.getAttributes().isEmpty()) {
+				return;
+			}
 			images.add(imtc);
 			sort();
 			for (ImageBaseChangedListener ibcl : listeners) {
@@ -237,6 +243,9 @@ public class ImageBase {
 								ImageIO.read(file));
 						}
 						ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, file.getAbsolutePath());
+						if(imtc.getAttributes().isEmpty()) {
+							return;
+						}
 						images.add(imtc);
 						sort();
 						for (ImageBaseChangedListener ibcl : listeners) {

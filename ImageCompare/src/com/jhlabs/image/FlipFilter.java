@@ -117,7 +117,7 @@ public class FlipFilter extends AbstractBufferedImageOp {
 					break;
 				case FLIP_90CW:
 					newRow = col;
-					newCol = h - row - 1;;
+					newCol = h - row - 1;
 					break;
 				case FLIP_90CCW:
 					newRow = w - col - 1;
