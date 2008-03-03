@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 
+import javax.imageio.IIOException;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -156,10 +157,12 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		} else {
 			if(getPath().startsWith("http:")) {
 				//aus InputStream TempFile machen
+				File f = null;
 				try {
 				URL ur = new URL(getPath());
 				String name = ur.getFile().split("/")[ur.getFile().split("/").length-1];
-				File f = new File("temp" + name);
+//				String suffix = name.split(".")[name.split(".").length-1];
+				f = new File("temp" + name);
 				FileOutputStream fos = new FileOutputStream(f);
 				InputStream inputStream = ur.openConnection().getInputStream();
 				int z = 0;
@@ -169,8 +172,12 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				}
 				fos.close();
 				attributes = ImageAnalyser.getInstance().getImageAttributes(f, getPath());
-				} catch (Exception e) {
-					System.out.println("sdfsfdfsfdfsd");
+				f.delete();
+				} catch (IIOException iioe) {
+					f.delete();
+				}
+					catch (Exception e) {
+					e.printStackTrace();
 				}
 			} else {
 				attributes = ImageAnalyser.getInstance().getImageAttributes(new File(getPath()), "");
