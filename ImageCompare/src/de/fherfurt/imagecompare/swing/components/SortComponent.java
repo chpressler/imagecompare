@@ -66,6 +66,10 @@ public class SortComponent extends JPanel {
 	
 	private boolean sorted = false;
 	
+	public Document getDoc() {
+		return doc;
+	}
+	
 	public boolean sorted() {
 		return sorted;
 	}

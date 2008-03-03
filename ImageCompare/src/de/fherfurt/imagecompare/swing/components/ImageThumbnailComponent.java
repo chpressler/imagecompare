@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.IIOException;
@@ -262,7 +263,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		rem.addActionListener(new RemoveSelectedAction());
 		popupMenu.add(rem);
 		popupMenu.show(this, x, y);
-}
+	}
 
 	@Override
 	public int compareTo(ImageThumbnailComponent o) {
@@ -421,8 +422,231 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 			} else {
 				return (int) (Long.parseLong(o.getAttributes().get("faceCount")) - (Long.parseLong(attributes.get("faceCount"))));
 			}
-		} 
-		return 0;
+		} else {
+			String name = "";
+			int weight = 0;
+			String value = "";
+			int erg = 0;
+			for (int i = 0; i < ControlPanel.getInstance().getSortComponent()
+					.getDoc().getDocumentElement().getChildNodes().getLength(); i++) {
+				if (ControlPanel.getInstance().getSortComponent().getDoc()
+						.getDocumentElement().getChildNodes().item(i)
+						.getAttributes().getNamedItem("name").getNodeValue()
+						.equals(
+								ControlPanel.getInstance().getSortComponent()
+										.getSortBy())) {
+					for (int i1 = 0; i1 < ControlPanel.getInstance()
+							.getSortComponent().getDoc().getDocumentElement()
+							.getChildNodes().item(i).getChildNodes()
+							.getLength(); i1++) {
+						name = ControlPanel.getInstance().getSortComponent()
+								.getDoc().getDocumentElement().getChildNodes()
+								.item(i).getChildNodes().item(i1)
+								.getAttributes().getNamedItem("name")
+								.getNodeValue();
+						weight = Integer.parseInt(ControlPanel.getInstance()
+								.getSortComponent().getDoc()
+								.getDocumentElement().getChildNodes().item(i)
+								.getChildNodes().item(i1).getAttributes()
+								.getNamedItem("weight").getNodeValue());
+						value = ControlPanel.getInstance().getSortComponent()
+								.getDoc().getDocumentElement().getChildNodes()
+								.item(i).getChildNodes().item(i1)
+								.getAttributes().getNamedItem("value")
+								.getNodeValue();
+
+						// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+						// sort by filesize
+						if (name.equals("filesize")) {
+							if (attributes.get("filesize") == null
+									&& o.getAttributes().get("filesize") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("filesize") != null
+									&& o.getAttributes().get("filesize") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("filesize") == null
+									&& o.getAttributes().get("filesize") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("filesize")) - (Long
+												.parseLong(attributes.get("filesize")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("filesize")) - (Long
+												.parseLong(attributes.get("filesize")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+								
+							}
+						}
+						// sort by pixelcount
+						if (name.equals("pixelCount")) {
+							if (attributes.get("pixelCount") == null
+									&& o.getAttributes().get("pixelCount") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("pixelCount") != null
+									&& o.getAttributes().get("pixelCount") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("pixelCount") == null
+									&& o.getAttributes().get("pixelCount") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("pixelCount")) - (Long
+												.parseLong(attributes.get("pixelCount")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("pixelCount")) - (Long
+												.parseLong(attributes.get("pixelCount")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+							}
+						}
+						// sort by avgSat
+						if (name.equals("avgSat")) {
+							if (attributes.get("avgSat") == null
+									&& o.getAttributes().get("avgSat") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("avgSat") != null
+									&& o.getAttributes().get("avgSat") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("avgSat") == null
+									&& o.getAttributes().get("avgSat") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("avgSat")) - (Long
+												.parseLong(attributes.get("avgSat")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("avgSat")) - (Long
+												.parseLong(attributes.get("avgSat")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+							
+							}
+						}
+						// sort by avgLum
+						if (name.equals("avgLum")) {
+							if (attributes.get("avgLum") == null
+									&& o.getAttributes().get("avgLum") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("avgLum") != null
+									&& o.getAttributes().get("avgLum") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("avgLum") == null
+									&& o.getAttributes().get("avgLum") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("avgLum")) - (Long
+												.parseLong(attributes.get("avgLum")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("avgLum")) - (Long
+												.parseLong(attributes.get("avgLum")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+								
+							}
+						}
+						// sort by contrast
+						if (name.equals("contrast")) {
+							if (attributes.get("contrast") == null
+									&& o.getAttributes().get("contrast") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("contrast") != null
+									&& o.getAttributes().get("contrast") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("contrast") == null
+									&& o.getAttributes().get("contrast") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("contrast")) - (Long
+												.parseLong(attributes.get("contrast")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("contrast")) - (Long
+												.parseLong(attributes.get("contrast")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+								
+							}
+						}
+						// sort by dynamic
+						if (name.equals("dynamic")) {
+							if (attributes.get("dynamic") == null
+									&& o.getAttributes().get("dynamic") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("dynamic") != null
+									&& o.getAttributes().get("dynamic") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("dynamic") == null
+									&& o.getAttributes().get("dynamic") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("dynamic")) - (Long
+												.parseLong(attributes.get("dynamic")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("dynamic")) - (Long
+												.parseLong(attributes.get("dynamic")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+								
+							}
+						}
+						// sort by faceCount
+						if (name.equals("faceCount")) {
+							if (attributes.get("faceCount") == null
+									&& o.getAttributes().get("faceCount") == null) {
+								erg += 0 * weight;
+							} else if (attributes.get("faceCount") != null
+									&& o.getAttributes().get("faceCount") == null) {
+								erg += -1 * weight;
+							} else if (attributes.get("faceCount") == null
+									&& o.getAttributes().get("faceCount") != null) {
+								erg += 1 * weight;
+							} else {
+								if((int) (Long.parseLong(o.getAttributes()
+										.get("faceCount")) - (Long
+												.parseLong(attributes.get("faceCount")))) > 0) {
+									erg += 1 * weight;
+								} else if((int) (Long.parseLong(o.getAttributes()
+										.get("faceCount")) - (Long
+												.parseLong(attributes.get("faceCount")))) < 0) {
+									erg += -1 * weight;
+								} else {
+									erg += 0 * weight;
+								}
+								
+							}
+						}
+
+						////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					}
+				}
+
+			}
+			System.out.println("erg " + erg);
+			return erg;
+		}
 	}
 
 	public int getImagewidth() {
