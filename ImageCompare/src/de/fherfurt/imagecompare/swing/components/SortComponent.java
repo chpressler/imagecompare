@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -19,6 +22,12 @@ import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataListener;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import com.sun.j3d.utils.applet.MainFrame;
 
@@ -28,6 +37,10 @@ import de.fherfurt.imagecompare.ImageBase;
 public class SortComponent extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private Document doc = null;
+
+	private DocumentBuilderFactory dbf;
 
 	private javax.swing.JButton jButton1;
 
@@ -64,11 +77,34 @@ public class SortComponent extends JPanel {
 	public boolean isDescenting() {
 		return descenting;
 	}
+	
+	private static void removeTextNodes(Node node) {
+		if (!node.hasChildNodes()) {
+			return;
+		} else {
+			for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+				if ((node.getChildNodes().item(i)).getNodeType() != Document.TEXT_NODE) {
+					removeTextNodes((node.getChildNodes().item(i)));
+				} else {
+					node.removeChild((node.getChildNodes().item(i)));
+					i--;
+				}
+			}
+		}
+	}
 	    
 	public SortComponent() {
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(Color.white, Color.lightGray), "Sort"));
 		setBackground(null);
 	    setOpaque(false);
+	    
+	    dbf = DocumentBuilderFactory.newInstance();
+	    try {
+			doc = dbf.newDocumentBuilder().parse(new File("profiles.xml"));
+			removeTextNodes(doc.getDocumentElement());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         jComboBox1 = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
@@ -144,7 +180,13 @@ public class SortComponent extends JPanel {
 	    
         jButton1 = new javax.swing.JButton();
 
-        jComboBox1.setModel(new DefaultComboBoxModel());
+        ArrayList<String> profilenames = new ArrayList<String>();
+        if(doc != null) {
+        	for(int i = 0; i < doc.getDocumentElement().getChildNodes().getLength(); i++ ) {
+        		profilenames.add(doc.getDocumentElement().getChildNodes().item(i).getAttributes().getNamedItem("name").getNodeValue());
+        	}
+        }
+        jComboBox1.setModel(new DefaultComboBoxModel(profilenames.toArray()));
         jComboBox1.setEnabled(false);
         jComboBox1.addActionListener(new ActionListener() {
 			@Override
