@@ -1,0 +1,10 @@
+<profiles>
+	<profile name="LumSat">
+		<attribute name="avgLum" weight="5" value="" />
+		<attribute name="avgSat" weight="-6" value="" />
+	</profile>
+	<profile name="LumSize">
+		<attribute name="avgLum" weight="5" value="" />
+		<attribute name="filesize" weight="2" value="" />
+	</profile>
+</profiles>
