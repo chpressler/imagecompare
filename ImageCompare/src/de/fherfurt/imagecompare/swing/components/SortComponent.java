@@ -29,8 +29,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import com.sun.j3d.utils.applet.MainFrame;
-
 import de.fherfurt.imagecompare.Attributes;
 import de.fherfurt.imagecompare.ImageBase;
 
