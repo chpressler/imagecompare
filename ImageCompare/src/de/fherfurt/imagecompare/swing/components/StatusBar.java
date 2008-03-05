@@ -1,17 +1,17 @@
 package de.fherfurt.imagecompare.swing.components;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import de.fherfurt.imagecompare.ImageBase;
 
 public class StatusBar extends JPanel {
 
@@ -23,7 +23,9 @@ public class StatusBar extends JPanel {
 	
 	private JLabel text;
 	
-	JSlider slider;
+	private JSlider slider;
+	
+	private JComboBox size;
 	
 	ArrayList<ThumbnailSizeListener> listeners = new ArrayList<ThumbnailSizeListener>();
 	
@@ -47,9 +49,11 @@ public class StatusBar extends JPanel {
 	}
 	
 	private StatusBar() {
+		String[] sizes = {"all", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30"};
 		text = new JLabel("");
 		pb = new JProgressBar();
 		slider = new JSlider();
+		size = new JComboBox(sizes);
 		slider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -59,10 +63,19 @@ public class StatusBar extends JPanel {
 				}
 			}});
 		slider.setValue(9);
-		setLayout(new GridLayout(0, 3));
+		setLayout(new GridLayout(0, 4));
 		add(slider);
+		add(size);
 		add(pb);
 		add(text);
+	}
+	
+	public int getImageBaseSize() {
+		if(size.getSelectedItem().toString().equals("all")) {
+			return ImageBase.getInstance().getimageList().size();
+		} else {
+			return Integer.parseInt(size.getSelectedItem().toString());
+		}
 	}
 	
 	public int getSliderValue() {
