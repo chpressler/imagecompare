@@ -210,6 +210,7 @@ public class SearchComponent extends JPanel {
 								conn.close();
 							} catch (Exception e) {
 								e.printStackTrace();
+								StatusBar.getInstance().deactivateProgressBar();
 							}
         				}}).start();
     			}
