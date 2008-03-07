@@ -79,8 +79,14 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 			if (ControlPanel.getInstance().getSortComponent().sorted()) {
 				if (ControlPanel.getInstance().getSortComponent()
 						.isDescenting()) {
+					int i1 = 0; 
 					for (int i = 0; i < ImageBase.getInstance().getimageList()
 							.size(); i++) {
+						i1++;
+						if(StatusBar.getInstance().getImageBaseSize() < i1) {
+							ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
+							continue;
+						}
 						if (x > parent.getWidth() - w + 10) {
 							y += ImageBase.getInstance().getimageList().get(i)
 									.getHeight() + 5;
@@ -92,7 +98,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 								.getWidth() + 5;
 					}
 				} else {
+					int i1 = 0;
 					for (int i = ImageBase.getInstance().getimageList().size() - 1; i >= 0; i--) {
+						i1++;
+						if(StatusBar.getInstance().getImageBaseSize() < i1) {
+							ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
+							continue;
+						}
 						if (x > parent.getWidth() - w + 10) {
 							y += ImageBase.getInstance().getimageList().get(i)
 									.getHeight() + 5;
@@ -105,7 +117,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 					}
 				}
 			} else {
+				int i = 0;
 				for (Component c : parent.getComponents()) {
+					i++;
+					if(StatusBar.getInstance().getImageBaseSize() < i) {
+						c.setBounds(0,0,0,0);
+						continue;
+					}
 					if (x > parent.getWidth() - w + 10) {
 						y += c.getHeight() + 5;
 						x = 5;
