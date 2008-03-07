@@ -204,7 +204,13 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			JMenuItem removefromIB = new JMenuItem("remove from ImageBase");
 			removefromIB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					for(ImageThumbnailComponent itc : ImageBase.getInstance().getimageList()) {
+						if(itc.getPath().equals(p.getPath())) {
+							layeredPane.remove(p);
+							((JTabbedPane)layeredPane.getParent().getParent()).updateUI();
+							ImageBase.getInstance().remove(itc);
+						}
+					}
 				}});
 			popupMenu.add(removefromIB);
 			JMenuItem removePerm = new JMenuItem("delete File");
