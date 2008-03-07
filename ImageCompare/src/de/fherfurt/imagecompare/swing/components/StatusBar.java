@@ -52,7 +52,7 @@ public class StatusBar extends JPanel {
 	}
 	
 	private StatusBar() {
-		String[] sizes = {"all", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30"};
+		String[] sizes = {"all", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "50", "60", "70", "80", "90", "100"};
 		text = new JLabel("");
 		pb = new JProgressBar();
 		slider = new JSlider();
@@ -60,7 +60,9 @@ public class StatusBar extends JPanel {
 		size.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				PreviewThumbnailComponent.getInstance().getLayout().layoutContainer(PreviewThumbnailComponent.getInstance());
 				PreviewThumbnailComponent.getInstance().updateUI();
+				PreviewThumbnailComponent.getInstance().repaint();
 			}});
 		slider.addChangeListener(new ChangeListener() {
 			@Override
