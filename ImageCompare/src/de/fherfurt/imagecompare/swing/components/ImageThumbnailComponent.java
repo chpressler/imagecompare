@@ -132,9 +132,9 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 						repaint(); 
 					}
 				} else if(SwingUtilities.isRightMouseButton(e)) {
-//					if(!selected) {
-//						selected = true;
-//					}
+					if(!selected) {
+						selected = true;
+					}
 					buildMenu(e.getX(), e.getY());
 //					Iterator iter = attributes.keySet().iterator();
 //					System.out.println("---------------------------------");
@@ -152,6 +152,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				
 			}
 
 			@Override
