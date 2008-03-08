@@ -252,6 +252,135 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 				}
 			}
 			
+			//Contrast
+			if(o.getName().equals("contrast")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("contrast").toString()) == Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("contrast").toString()) < Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("contrast").toString()) > Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
+			//Dynamic
+			if(o.getName().equals("dynamic")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("dynamic").toString()) == Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("dynamic").toString()) < Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("dynamic").toString()) > Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
+			//FaceCount
+			if(o.getName().equals("faceCount")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("faceCount").toString()) == Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("faceCount").toString()) < Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("faceCount").toString()) > Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
 		}
 		return ok;
 	}
