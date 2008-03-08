@@ -220,6 +220,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				g.drawRect(0, 0, defsize-1, defsize-1);
 				g.drawRect(1, 1, defsize-3, defsize-3);
 				g.drawRect(2, 2, defsize-5, defsize-5);
+				g.drawRect(3, 3, defsize-7, defsize-7);
 			}
 		} else {
 			if(selected) {
