@@ -91,6 +91,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 							ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
 							continue;
 						}
+						if(FilterFrame.getInstance().isFilterOn()) {
+							if(!isPictureOk(ImageBase.getInstance().getimageList().get(i))) {
+								ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
+								i1--;
+								continue;
+							}
+						}
 						if (x > parent.getWidth() - w + 10) {
 							y += ImageBase.getInstance().getimageList().get(i)
 									.getHeight() + 5;
@@ -108,6 +115,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 						if(StatusBar.getInstance().getImageBaseSize() < i1) {
 							ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
 							continue;
+						}
+						if(FilterFrame.getInstance().isFilterOn()) {
+							if(!isPictureOk(ImageBase.getInstance().getimageList().get(i))) {
+								ImageBase.getInstance().getimageList().get(i).setBounds(0,0,0,0);
+								i1--;
+								continue;
+							}
 						}
 						if (x > parent.getWidth() - w + 10) {
 							y += ImageBase.getInstance().getimageList().get(i)
