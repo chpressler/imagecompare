@@ -71,6 +71,9 @@ public class ImageBase {
 		int iii = 0;
 		for(ImageThumbnailComponent itc : images) {
 			iii++;
+			if(iii > StatusBar.getInstance().getImageBaseSize()) {
+				return;
+			}
 			if(itc.getPath().startsWith("http")) {
 				try {
 					URL ur = new URL(itc.getPath());
@@ -92,6 +95,7 @@ public class ImageBase {
 					fos.close();
 				} catch (Exception e) {
 					e.printStackTrace();
+					continue;
 				}
 			} else {
 				//Original
@@ -115,6 +119,7 @@ public class ImageBase {
 					
 				} catch (Exception e) {
 					e.printStackTrace();
+					continue;
 				}
 			}
 		}
@@ -205,7 +210,8 @@ public class ImageBase {
 			boolean b1 = false;
 			if(file.isFile()) {
 				for(ImageThumbnailComponent itc : images) {
-					if(itc.getPath().equalsIgnoreCase(file.getAbsolutePath())) {
+					String p = file.getAbsolutePath().replaceAll("\\\\", "/");
+					if(itc.getPath().equalsIgnoreCase(p)) {
 //						StatusBar.getInstance().deactivateProgressBar();
 						b1 = true;
 					}

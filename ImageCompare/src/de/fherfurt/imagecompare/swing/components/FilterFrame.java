@@ -68,7 +68,7 @@ public class FilterFrame extends JFrame {
 						PreviewThumbnailComponent.getInstance().updateUI();
 					}});
 		    	textfield.setName(a.toString());
-		    	getContentPane().add(new JLabel(a.toString()));
+		    	getContentPane().add(new JLabel(a.getDesc()));
 		    	getContentPane().add(o);
 		    	getContentPane().add(textfield);
 		    	filterMap.put(o, textfield);

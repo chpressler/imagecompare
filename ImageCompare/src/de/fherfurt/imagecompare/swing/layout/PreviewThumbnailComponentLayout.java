@@ -190,6 +190,49 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 		while(iter.hasNext()){
 			Operator o = iter.next();
 			
+			//Filesize
+			if(o.getName().equals("filesize")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Long.parseLong(image.getAttributes()
+								.get("filesize").toString()) == Long
+								.parseLong(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Long.parseLong(image.getAttributes()
+								.get("filesize").toString()) < Long
+								.parseLong(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Long.parseLong(image.getAttributes()
+								.get("filesize").toString()) > Long
+								.parseLong(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
 			//Saturation
 			if(o.getName().equals("avgSat")) {
 				if(o.getSelectedItem().toString().equals("=")) {
