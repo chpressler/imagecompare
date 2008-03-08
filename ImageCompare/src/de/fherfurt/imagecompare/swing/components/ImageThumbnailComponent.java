@@ -288,7 +288,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				if(index == 0) {
 					return;
 				}
-				Collections.rotate(ImageBase.getInstance().getimageList().subList(index, index+2), -1);				
+				Collections.rotate(ImageBase.getInstance().getimageList().subList(index-2, index), -1);				
 //				PreviewThumbnailComponent.getInstance().getLayout().layoutContainer(PreviewThumbnailComponent.getInstance());
 				PreviewThumbnailComponent.getInstance().updateUI();
 			}});
@@ -297,7 +297,13 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		move_up.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				int index = ( ImageBase.getInstance().getimageList().indexOf(((ImageThumbnailComponent) ((JPopupMenu)((JMenuItem) e.getSource()).getParent()).getInvoker())) );
+				if(index == 0) {
+					return;
+				}
+				Collections.rotate(ImageBase.getInstance().getimageList().subList(index-1, index+1), -1);				
+//				PreviewThumbnailComponent.getInstance().getLayout().layoutContainer(PreviewThumbnailComponent.getInstance());
+				PreviewThumbnailComponent.getInstance().updateUI();
 			}});
 		popupMenu.add(move_down);
  		popupMenu.show(this, x, y);
