@@ -6,9 +6,13 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.io.Serializable;
+import java.util.Iterator;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
+import de.fherfurt.imagecompare.swing.components.FilterFrame;
+import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
+import de.fherfurt.imagecompare.swing.components.Operator;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.swing.components.ThumbnailSizeListener;
 
@@ -123,6 +127,13 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 					if(StatusBar.getInstance().getImageBaseSize() < i) {
 						c.setBounds(0,0,0,0);
 						continue;
+					} 
+					if (FilterFrame.getInstance().isFilterOn()) {
+						if (!isPictureOk((ImageThumbnailComponent) c)) {
+							c.setBounds(0, 0, 0, 0);
+							i--;
+							continue;
+						}
 					}
 					if (x > parent.getWidth() - w + 10) {
 						y += c.getHeight() + 5;
@@ -133,6 +144,102 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 				}
 			}
 		}
+	}
+	
+	private boolean isPictureOk(ImageThumbnailComponent image) {
+		Iterator<Operator> iter = FilterFrame.getInstance().getFilterMap().keySet().iterator();
+		boolean ok = true;
+		while(iter.hasNext()){
+			Operator o = iter.next();
+			
+			//Saturation
+			if(o.getName().equals("avgSat")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgSat").toString()) == Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgSat").toString()) < Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgSat").toString()) > Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
+			//Luminance
+			if(o.getName().equals("avgLum")) {
+				if(o.getSelectedItem().toString().equals("=")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgLum").toString()) == Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+						} else {
+							ok  = false;
+						}
+					} catch (Exception e) {
+						
+					}
+				} else if(o.getSelectedItem().toString().equals("<")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgLum").toString()) < Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+					
+					}
+				} else if(o.getSelectedItem().toString().equals(">")) {
+					try {
+						if (Integer.parseInt(image.getAttributes()
+								.get("avgLum").toString()) > Integer
+								.parseInt(FilterFrame.getInstance()
+										.getFilterMap().get(o).getText())) {
+							
+						} else {
+							ok = false;
+						}
+					} catch (Exception e) {
+	
+					}
+				}
+			}
+			
+		}
+		return ok;
 	}
 
 	@Override
