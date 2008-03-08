@@ -115,6 +115,13 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 			xdiff = p1.x - p2.x;
 			ydiff = p1.y - p2.y;
 
+			for(ImageThumbnailComponent itc : ImageBase.getInstance().getimageList()) {
+				if(itc.getPath().equals(pic.getPath())) {
+					itc.setDragged(true);
+					itc.repaint();
+				}
+			}
+			
 			// pic.setLocation(e.getX(), e.getY());
 			// pic.setSize(pic.getWidth() + 5, pic.getHeight() + 5);
 			// layeredPane.add(pic, JLayeredPane.DRAG_LAYER);
@@ -141,6 +148,14 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 		if (pic == null) {
 			return;
 		}
+		
+		for(ImageThumbnailComponent itc : ImageBase.getInstance().getimageList()) {
+			if(itc.getPath().equals(pic.getPath())) {
+				itc.setDragged(false);
+				itc.repaint();
+			}
+		}
+		
 		pic.setLocation((e.getX() - (int)pic.getParent().getLocation().getX()) - xdiff, (e.getY() - (int)pic.getParent().getLocation().getY()) - ydiff);
 		if(SwingUtilities.isLeftMouseButton(e)) {
 			pic.setNewSize(pic.getWidth()-10, pic.getHeight()-10);

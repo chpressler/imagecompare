@@ -40,9 +40,15 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 	
 	private boolean selected = false;
 	
+	private boolean dragged = false;
+	
 	private JPopupMenu popupMenu;
 	
 	private HashMap<String, String> attributes = new HashMap<String, String>();
+	
+	public void setDragged(boolean b) {
+		dragged = b;
+	}
 
 	public HashMap<String, String> getAttributes() {
 		return attributes;
@@ -199,7 +205,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 	public void paint(Graphics g) {
 		if (image != null) {
 			if(selected) {
-				g.setColor(Color.red);
+				g.setColor(Color.orange);
 				g.drawRect(0, 0, defsize-1, defsize-1);
 				g.drawRect(1, 1, defsize-3, defsize-3);
 				g.drawImage(image, ((defsize - imagewidth) / 2) + 1, ((defsize - imageheight) / 2) + 1, imagewidth-2, imageheight-2, this);
@@ -207,6 +213,13 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				g.setColor(Color.gray);
 				g.drawRect(0, 0, defsize-1, defsize-1);
 				g.drawImage(image, (defsize - imagewidth) / 2, (defsize - imageheight) / 2, imagewidth, imageheight, this);
+			}
+			
+			if(dragged) {
+				g.setColor(Color.red);
+				g.drawRect(0, 0, defsize-1, defsize-1);
+				g.drawRect(1, 1, defsize-3, defsize-3);
+				g.drawRect(2, 2, defsize-5, defsize-5);
 			}
 		} else {
 			if(selected) {
