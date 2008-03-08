@@ -41,6 +41,7 @@ public class FilterFrame extends JFrame {
 	
 	public FilterFrame() {
 		super("FilterOptions");
+		setAlwaysOnTop(true);
 		 getContentPane().setLayout(new GridLayout(0, 3));
 		    for(Attributes a : Attributes.values()) {
 		    	JTextField textfield = new JTextField();
