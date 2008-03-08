@@ -135,27 +135,51 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 					}
 				}
 			} else {
+				
 				int i = 0;
-				for (Component c : parent.getComponents()) {
+				for (int ii = ImageBase.getInstance().getimageList().size() - 1; ii >= 0; ii--) {
+					ImageThumbnailComponent itc = ImageBase.getInstance().getimageList().get(ii);
 					i++;
 					if(StatusBar.getInstance().getImageBaseSize() < i) {
-						c.setBounds(0,0,0,0);
+						itc.setBounds(0,0,0,0);
 						continue;
 					} 
 					if (FilterFrame.getInstance().isFilterOn()) {
-						if (!isPictureOk((ImageThumbnailComponent) c)) {
-							c.setBounds(0, 0, 0, 0);
+						if (!isPictureOk(itc)) {
+							itc.setBounds(0, 0, 0, 0);
 							i--;
 							continue;
 						}
 					}
 					if (x > parent.getWidth() - w + 10) {
-						y += c.getHeight() + 5;
+						y += itc.getHeight() + 5;
 						x = 5;
 					}
-					c.setBounds(x, y, w, h);
-					x += c.getWidth() + 5;
+					itc.setBounds(x, y, w, h);
+					x += itc.getWidth() + 5;
 				}
+				
+//				int i = 0;
+//				for (Component c : parent.getComponents()) {
+//					i++;
+//					if(StatusBar.getInstance().getImageBaseSize() < i) {
+//						c.setBounds(0,0,0,0);
+//						continue;
+//					} 
+//					if (FilterFrame.getInstance().isFilterOn()) {
+//						if (!isPictureOk((ImageThumbnailComponent) c)) {
+//							c.setBounds(0, 0, 0, 0);
+//							i--;
+//							continue;
+//						}
+//					}
+//					if (x > parent.getWidth() - w + 10) {
+//						y += c.getHeight() + 5;
+//						x = 5;
+//					}
+//					c.setBounds(x, y, w, h);
+//					x += c.getWidth() + 5;
+//				}
 			}
 		}
 	}
@@ -350,7 +374,7 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 							ok  = false;
 						}
 					} catch (Exception e) {
-						
+
 					}
 				} else if(o.getSelectedItem().toString().equals("<")) {
 					try {
@@ -363,7 +387,7 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 							ok = false;
 						}
 					} catch (Exception e) {
-					
+						
 					}
 				} else if(o.getSelectedItem().toString().equals(">")) {
 					try {
@@ -376,7 +400,7 @@ public class PreviewThumbnailComponentLayout implements LayoutManager, Thumbnail
 							ok = false;
 						}
 					} catch (Exception e) {
-	
+						
 					}
 				}
 			}

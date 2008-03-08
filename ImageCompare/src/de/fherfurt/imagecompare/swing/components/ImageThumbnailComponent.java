@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.imageio.IIOException;
@@ -23,6 +26,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.ImageAnalyser;
+import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 
@@ -276,7 +280,27 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 		JMenuItem rem = new JMenuItem("remove selected from ImageBase");
 		rem.addActionListener(new RemoveSelectedAction());
 		popupMenu.add(rem);
-		popupMenu.show(this, x, y);
+		JMenuItem move_up = new JMenuItem("move up");
+		move_up.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = ( ImageBase.getInstance().getimageList().indexOf(((ImageThumbnailComponent) ((JPopupMenu)((JMenuItem) e.getSource()).getParent()).getInvoker())) );
+				if(index == 0) {
+					return;
+				}
+				Collections.rotate(ImageBase.getInstance().getimageList().subList(index, index+2), -1);				
+//				PreviewThumbnailComponent.getInstance().getLayout().layoutContainer(PreviewThumbnailComponent.getInstance());
+				PreviewThumbnailComponent.getInstance().updateUI();
+			}});
+		popupMenu.add(move_up);
+		JMenuItem move_down = new JMenuItem("move down");
+		move_up.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}});
+		popupMenu.add(move_down);
+ 		popupMenu.show(this, x, y);
 	}
 
 	@Override
