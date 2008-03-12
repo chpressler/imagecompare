@@ -689,7 +689,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				}
 
 			}
-			System.out.println("erg " + erg);
+//			System.out.println("erg " + erg);
 			return erg;
 		}
 	}

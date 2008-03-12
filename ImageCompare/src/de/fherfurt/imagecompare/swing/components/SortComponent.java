@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -18,16 +17,13 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataListener;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import de.fherfurt.imagecompare.Attributes;
 import de.fherfurt.imagecompare.ImageBase;
@@ -73,7 +69,12 @@ public class SortComponent extends JPanel {
 	}
 	
 	public String getSortBy() {
-		return sortBy;
+		if(jRadioButton1.isSelected()) {
+			return jComboBox2.getSelectedItem().toString();
+		} else {
+			return jComboBox1.getSelectedItem().toString();
+		}
+//		return sortBy;
 	}
 	
 	public boolean isDescenting() {
@@ -247,6 +248,7 @@ public class SortComponent extends JPanel {
 				if(!sorted) {
 					sorted = true;
 				}
+				System.out.println("sortBy: " + sortBy);
 				SwingUtilities.getRoot(((JButton) e.getSource())).repaint();
 				ImageBase.getInstance().sort();
 			}});

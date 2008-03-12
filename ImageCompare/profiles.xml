@@ -15,7 +15,7 @@
 		<attribute name="filesize" weight="1" value="" />
 	</profile>
 	<profile name="BiggestDarkest">
-		<attribute name="avgLum" weight="1" value="" />
+		<attribute name="avgLum" weight="-1" value="" />
 		<attribute name="filesize" weight="1" value="" />
 	</profile>
 </profiles>
