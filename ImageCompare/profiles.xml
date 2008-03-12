@@ -7,4 +7,15 @@
 		<attribute name="avgLum" weight="5" value="" />
 		<attribute name="filesize" weight="2" value="" />
 	</profile>
+	<profile name="Resume">
+		<attribute name="contrast" weight="1" value="" />
+		<attribute name="avgSat" weight="-1" value="" />
+		<attribute name="dynamic" weight="-1" value="" />
+		<attribute name="filesize" weight="1" value="" />
+		<attribute name="filesize" weight="1" value="" />
+	</profile>
+	<profile name="BiggestDarkest">
+		<attribute name="avgLum" weight="1" value="" />
+		<attribute name="filesize" weight="1" value="" />
+	</profile>
 </profiles>
