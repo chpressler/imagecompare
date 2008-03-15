@@ -134,7 +134,7 @@ public class SearchComponent extends JPanel {
     				@Override
     				public void run() {
     					ImageSearchRequest request = new ImageSearchRequest(searchstring);            
-    			        request.setAdultOk(true);
+    			        request.setAdultOk(false);
     			        request.setResults(50);
 //    			        request.setStart(BigInteger.valueOf(10));
     			        try {
