@@ -107,6 +107,7 @@ public class ImageAnalyser {
 		} catch (Exception e2) {
 			metadatamap.put("faceCount", "0");
 			System.out.println("faceCountError -> " + e2.getMessage());
+			e2.printStackTrace();
 		}
 		try {
 			metadatamap.put("lastModofied", Long.toString(f.lastModified()));

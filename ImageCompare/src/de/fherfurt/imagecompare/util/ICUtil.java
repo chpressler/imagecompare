@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import de.offis.faint.controller.HotSpotController;
 import de.offis.faint.controller.MainController;
@@ -35,8 +36,9 @@ public class ICUtil {
 	}
 	
 	public int getFaceCount(String path) {
-		//TODO -> implement FaceCount
 		ImageModel im = new ImageModel(new File(path));
+//		MainController.getInstance().getBufferedImageCache().cacheImage(path);
+		im.initThumbnail();
 		Region[] faces = MainController.getInstance().detectFaces(im, false);
 		return faces.length;
 	}
