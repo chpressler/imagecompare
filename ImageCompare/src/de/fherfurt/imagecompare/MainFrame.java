@@ -30,6 +30,7 @@ import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
 import de.fherfurt.imagecompare.swing.components.ImagePreviewComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
+import de.offis.faint.controller.MainController;
 
 public class MainFrame extends JFrame {
 
@@ -39,6 +40,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super("ImageCompare");
+		MainController.getInstance();
 		try {
 			UIManager.installLookAndFeel("JGoodies Windows LaF",
 					"com.jgoodies.looks.windows.WindowsLookAndFeel");

@@ -105,6 +105,7 @@ public class ImageAnalyser {
 			metadatamap.put("faceCount", Integer.toString(ICUtil.getInstance()
 					.getFaceCount(f.getAbsolutePath())));
 		} catch (Exception e2) {
+			metadatamap.put("faceCount", "0");
 			System.out.println("faceCountError -> " + e2.getMessage());
 		}
 		try {

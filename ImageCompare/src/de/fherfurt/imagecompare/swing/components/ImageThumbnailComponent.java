@@ -192,6 +192,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				} catch (IIOException iioe) {
 					f.delete();
 				} catch (Exception e) {
+					f.delete();
 					e.printStackTrace();
 				}
 			} else {
