@@ -36,8 +36,8 @@ public class ICUtil {
 	
 	public int getFaceCount(String path) {
 		//TODO -> implement FaceCount
-//		ImageModel im = new ImageModel(new File(path));
-		Region[] faces = MainController.getInstance().detectFaces(new ImageModel(new File(path)), false);
+		ImageModel im = new ImageModel(new File(path));
+		Region[] faces = MainController.getInstance().detectFaces(im, false);
 		return faces.length;
 	}
 	
