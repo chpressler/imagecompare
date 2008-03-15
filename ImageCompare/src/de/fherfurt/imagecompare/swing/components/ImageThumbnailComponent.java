@@ -177,6 +177,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 					// String suffix =
 					// name.split(".")[name.split(".").length-1];
 					f = new File("temp" + name);
+//					f.createNewFile();
 					FileOutputStream fos = new FileOutputStream(f);
 					InputStream inputStream = ur.openConnection()
 							.getInputStream();
@@ -188,8 +189,6 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 					fos.close();
 					attributes = ImageAnalyser.getInstance()
 							.getImageAttributes(f, getPath());
-					f.delete();
-				} catch (IIOException iioe) {
 					f.delete();
 				} catch (Exception e) {
 					f.delete();
