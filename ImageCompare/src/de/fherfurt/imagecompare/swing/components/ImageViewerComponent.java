@@ -2,7 +2,9 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -266,16 +268,11 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 //		this.layeredPane = layeredPane;
 //	}
 	
-	
-//	public void paintComponent( Graphics g ) {
-////		imageLabel.setBounds(jsp.getWidth() - width/2, jsp.getHeight() - height/2, imageLabel.width, imageLabel.height);
-//		
-////		Graphics2D g2d = (Graphics2D) g;
-////      Rectangle r = this.getParent().getBounds();
-//        
-////        g2d.drawImage(image,0,0,width,height,this);
-////        this.setPreferredSize(new Dimension(width,height));
-////        this.revalidate();
-//    }
+	@Override
+	public void paint( Graphics g ) {
+		setPreferredSize(new Dimension(getParent().getWidth()/2-10, getParent().getHeight()/2-10));
+		super.paint(g);
+        this.revalidate();
+    }
 
 }
