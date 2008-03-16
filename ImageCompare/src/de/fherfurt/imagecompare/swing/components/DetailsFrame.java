@@ -133,7 +133,15 @@ class ExifPanel extends JPanel {
 		Iterator iter = attributes.keySet().iterator();
 		while(iter.hasNext()) {
 			String k = (String) iter.next();
-			name = new JLabel(k);
+			
+			try {
+				name = new JLabel(Attributes.valueOf(k).getDesc());
+				name.setToolTipText(Attributes.valueOf(k).getDesc());
+			} catch (Exception e) {
+				name = new JLabel(k);
+				name.setToolTipText(k);
+			}
+			
 			name.setBounds(2, uk, 100, 15);
 			value = new JLabel(attributes.get(k));
 			value.setToolTipText(value.getText());
