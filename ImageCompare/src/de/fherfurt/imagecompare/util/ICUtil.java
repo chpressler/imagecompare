@@ -36,11 +36,15 @@ public class ICUtil {
 	}
 	
 	public int getFaceCount(String path) {
-		ImageModel im = new ImageModel(new File(path));
-//		MainController.getInstance().getBufferedImageCache().cacheImage(path);
-		im.initThumbnail();
-		Region[] faces = MainController.getInstance().detectFaces(im, false);
-		return faces.length;
+		if (path.endsWith("jpg") || path.endsWith("JPG")) {
+			ImageModel im = new ImageModel(new File(path));
+			// MainController.getInstance().getBufferedImageCache().cacheImage(path);
+			im.initThumbnail();
+			Region[] faces = MainController.getInstance()
+					.detectFaces(im, false);
+			return faces.length;
+		}
+		return 0;
 	}
 	
 	private void clearHistogramm() {
