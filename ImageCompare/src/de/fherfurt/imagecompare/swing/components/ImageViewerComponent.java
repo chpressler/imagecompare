@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
@@ -16,10 +18,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -44,6 +49,8 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 	private JScrollPane jsp;
 	
 	private Graphics2D g;
+	
+	private JPopupMenu popupMenu;
 	
 	public ImageViewerComponent() {
 		new ImageViewerDropPathTarget(this);
@@ -113,38 +120,7 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 		imageLabel.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e)) {
-					try {
-						JFileChooser fc = new JFileChooser();
-						int ret = fc.showOpenDialog(null);
-//						fc.addChoosableFileFilter(new FileFilter() {
-//							public boolean accept(File f) {
-//								if (f.isDirectory())
-//									return true;
-//								return f.getName().toLowerCase().endsWith(".jpg");
-//							}
-//
-//							public String getDescription() {
-//								return "JPG Images";
-//							}
-//						});
-						fc.setMultiSelectionEnabled(false);
-						//fc.setCurrentDirectory(new File("resources/"));
-						fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-						if (ret == JFileChooser.APPROVE_OPTION) {
-							image = ImageIO.read(new File(fc.getSelectedFile().getAbsolutePath()));
-							setImage(image, fc.getSelectedFile().getAbsolutePath());
-//							setImage(new ImageComponent(image));
-							System.out.println(fc.getSelectedFile().getAbsolutePath());
-						}
-						if (ret == JFileChooser.CANCEL_OPTION) {
-							
-						}
-
-					} catch (Exception e1) {
-						e1.printStackTrace();
-						JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
-								"Exception", JOptionPane.ERROR_MESSAGE);
-					}
+					buildMenu(e.getX() - ((JComponent) e.getSource()).getX(), e.getY() - ((JComponent) e.getSource()).getY());
 				}
 			}
 
@@ -268,5 +244,62 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 		super.paint(g);
         this.revalidate();
     }
+	
+	public void buildMenu(int x, int y) {
+		popupMenu = new JPopupMenu();
+		JMenuItem remove = new JMenuItem("remove");
+		remove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		popupMenu.add(remove);
+		JMenuItem or_size = new JMenuItem("set to original Size");
+		or_size.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imageLabel.setNewSize(image.getWidth(), image.getHeight());
+			}
+		});
+		popupMenu.add(or_size);
+		JMenuItem open = new JMenuItem("open Image");
+		open.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					JFileChooser fc = new JFileChooser();
+					int ret = fc.showOpenDialog(null);
+//					fc.addChoosableFileFilter(new FileFilter() {
+//						public boolean accept(File f) {
+//							if (f.isDirectory())
+//								return true;
+//							return f.getName().toLowerCase().endsWith(".jpg");
+//						}
+//
+//						public String getDescription() {
+//							return "JPG Images";
+//						}
+//					});
+					fc.setMultiSelectionEnabled(false);
+					//fc.setCurrentDirectory(new File("resources/"));
+					fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					if (ret == JFileChooser.APPROVE_OPTION) {
+						image = ImageIO.read(new File(fc.getSelectedFile().getAbsolutePath()));
+						setImage(image, fc.getSelectedFile().getAbsolutePath());
+//						setImage(new ImageComponent(image));
+						System.out.println(fc.getSelectedFile().getAbsolutePath());
+					}
+					if (ret == JFileChooser.CANCEL_OPTION) {
+						
+					}
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
+							"Exception", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		popupMenu.add(open);
+		popupMenu.show(this, x, y);
+	}
 
 }
