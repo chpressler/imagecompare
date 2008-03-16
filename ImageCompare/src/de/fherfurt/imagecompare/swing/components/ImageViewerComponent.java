@@ -4,8 +4,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
@@ -13,14 +11,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.media.jai.Histogram;
-import javax.media.jai.JAI;
-import javax.media.jai.PlanarImage;
-import javax.media.jai.RenderedOp;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -173,7 +166,7 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 		
 //		layeredPane.add(imagePanel, (Integer) (JLayeredPane.DEFAULT_LAYER) + 2);
 		
-		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Bild"));
+		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), ""));
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(jsp);
 		
@@ -208,6 +201,7 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 		imageLabel.setImage(image);
 		imageLabel.setPath(p);
 		imageLabel.setNewSize(width, height);
+		this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), p));
 //		jsp.repaint();
 //		imagePanel.setPreferredSize(new Dimension(height, width));
 //		imageLabel.paintComponent(image.getGraphics());
