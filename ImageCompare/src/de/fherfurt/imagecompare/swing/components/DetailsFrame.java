@@ -5,12 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -23,20 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 
-import com.drew.imaging.jpeg.JpegMetadataReader;
-import com.drew.imaging.jpeg.JpegProcessingException;
-import com.drew.metadata.Directory;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.MetadataException;
-import com.drew.metadata.Tag;
-import com.drew.metadata.exif.ExifDirectory;
-import com.drew.metadata.iptc.IptcDirectory;
-
+import de.fherfurt.imagecompare.Attributes;
 import de.fherfurt.imagecompare.ImageAnalyser;
 import de.fherfurt.imagecompare.ImportDBMySQLHandler;
-import de.fherfurt.imagecompare.util.ICUtil;
 
 public class DetailsFrame extends JFrame {
 	
