@@ -22,5 +22,24 @@
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
 	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/PhotosClient.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-appsforyourdomain-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-appsforyourdomain-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-base-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-calendar-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-calendar-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-client-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-client-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-codesearch-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-codesearch-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-core-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-docs-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-docs-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-media-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-photos-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-photos-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-spreadsheet-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-spreadsheet-meta-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-youtube-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/gdata-youtube-meta-1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
