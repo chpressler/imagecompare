@@ -140,6 +140,43 @@ public class ImageBase {
 		}
 	}
 	
+	public void setImageBase(ArrayList<String> urls) {
+		boolean b = false;
+		for(String s : urls) {
+			StatusBar.getInstance().activateProgressBar();
+			for(ImageThumbnailComponent itc : images) {
+				if(itc.getPath().equalsIgnoreCase(s)) {
+//					StatusBar.getInstance().deactivateProgressBar();
+					b = true;
+				}
+			}
+			if(b) {
+				continue;
+			}
+			try {
+				image = ICUtil.getInstance().getThumbnal(
+						ImageIO.read(new URL(s)));
+//				image = ImageIO.read(new URL(r.getClickUrl()));
+			} catch (Exception e) {
+				StatusBar.getInstance().setStatusText("");
+				StatusBar.getInstance().deactivateProgressBar();
+				e.printStackTrace();
+			}
+			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, s);
+			if(imtc.getAttributes().isEmpty()) {
+				continue;
+			}
+			images.add(imtc);
+			sort();
+			for (ImageBaseChangedListener ibcl : listeners) {
+				StatusBar.getInstance().setStatusText(" adding: " + s);
+				ibcl.add(imtc, true);
+			}
+			StatusBar.getInstance().setStatusText("");
+			StatusBar.getInstance().deactivateProgressBar();
+		}
+	}
+	
 	public void setImageBase(ImageSearchResults results) {	
 		boolean b = false;
 		for (ImageSearchResult r : results.listResults()) {

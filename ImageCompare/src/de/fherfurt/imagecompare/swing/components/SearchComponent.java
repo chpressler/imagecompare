@@ -7,17 +7,24 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import com.google.gdata.client.Query;
+import com.google.gdata.client.photos.PicasawebService;
+import com.google.gdata.data.photos.GphotoEntry;
+import com.google.gdata.data.photos.PhotoEntry;
+import com.google.gdata.data.photos.PhotoFeed;
 import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;
@@ -149,7 +156,36 @@ public class SearchComponent extends JPanel {
     				new Thread(new Runnable() {
 						@Override
 						public void run() {
-							
+							try {
+								ArrayList<String> urls = new ArrayList<String>();
+								PicasawebService myService = new PicasawebService(
+										"exampleCo-exampleApp-1");
+								URL feedUrl = new URL(
+										"http://picasaweb.google.com/data/feed/api/all?q=" + jTextField1.getText());
+								Query myQuery = new Query(feedUrl);
+//								myQuery.setMaxResults(50);
+								
+								PhotoFeed resultFeed = myService.query(myQuery,
+										PhotoFeed.class);
+								
+								List<PhotoEntry> photos = new ArrayList<PhotoEntry>();
+								
+								for (GphotoEntry entry : resultFeed
+										.getEntries()) {
+									
+									GphotoEntry adapted = entry
+											.getAdaptedEntry();
+									if (adapted instanceof PhotoEntry) {
+										photos.add((PhotoEntry) adapted);
+									}
+								}
+								for (PhotoEntry pho : photos) {
+									urls.add(pho.getMediaContents().get(0).getUrl().toString());
+								}
+								ImageBase.getInstance().setImageBase(urls);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}}).start();
     			}
     			if(torrent) {
