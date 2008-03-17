@@ -5,7 +5,7 @@
 	</profile>
 	<profile name="Comic">
 		<attribute name="avgLum" weight="-1" value="" />
-		<attribute name="avgSat" weight="2" value="" />
+		<attribute name="avgSat" weight="1" value="" />
 		<attribute name="dynamic" weight="-1" value="" />
 	</profile>
 	<profile name="Scanned">
