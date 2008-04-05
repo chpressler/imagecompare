@@ -1,8 +1,5 @@
 package de.fherfurt.imagecompare.swing.components;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 

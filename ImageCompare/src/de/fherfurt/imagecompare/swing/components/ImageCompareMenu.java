@@ -1,5 +1,6 @@
 package de.fherfurt.imagecompare.swing.components;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -68,6 +69,8 @@ public class ImageCompareMenu extends JMenuBar {
 	JMenuItem help_about = new JMenuItem(ResourceHandler.getInstance().getStrings().getString("about"), new ImageIcon("resources/icons/" + ResourceHandler.getInstance().getIcons().getString("about")));
 
 	public ImageCompareMenu(final JFrame jf) {
+		
+		setBackground(Color.black);
 
 		putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.BOTH);
 		
@@ -95,6 +98,7 @@ public class ImageCompareMenu extends JMenuBar {
 //		file.add(file_save_as);
 		file.addSeparator();
 		file.add(file_exit);
+		file.setBackground(Color.black);
 
 		JMenuItem jmi;
 		int number = UIManager.getInstalledLookAndFeels().length;
@@ -134,7 +138,8 @@ public class ImageCompareMenu extends JMenuBar {
 		edit.addSeparator();
 		edit.add(laf);
 		edit.add(edit_properties);
-
+		edit.setBackground(Color.black);
+		
 		add(file);
 		add(edit);
 		
@@ -150,6 +155,8 @@ public class ImageCompareMenu extends JMenuBar {
 			}
 		});
 		help.add(help_about);
+		help.setBackground(Color.black);
+		
 		add(help);
 	}
 

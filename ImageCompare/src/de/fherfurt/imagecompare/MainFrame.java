@@ -20,9 +20,10 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.DarkStar;
+import org.jvnet.substance.SubstanceLookAndFeel;
+import org.jvnet.substance.button.ClassicButtonShaper;
+
+import org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel;
 
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.ImageCompareComponent;
@@ -42,6 +43,7 @@ public class MainFrame extends JFrame {
 		super("ImageCompare");
 		MainController.getInstance();
 		try {
+			
 			UIManager.installLookAndFeel("JGoodies Windows LaF",
 					"com.jgoodies.looks.windows.WindowsLookAndFeel");
 			UIManager.installLookAndFeel("JGoodies Plastic LaF",
@@ -51,7 +53,7 @@ public class MainFrame extends JFrame {
 			UIManager.installLookAndFeel("JGoodies PlasticXP LaF",
 					"com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
 			
-			PlasticLookAndFeel.setPlasticTheme(new DarkStar());
+//			PlasticLookAndFeel.setPlasticTheme(new DarkStar());
 //			PlasticLookAndFeel.setPlasticTheme(new Silver());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyGreen());
 //			PlasticLookAndFeel.setPlasticTheme(new SkyBlue());
@@ -60,8 +62,12 @@ public class MainFrame extends JFrame {
 //			PlasticLookAndFeel.setPlasticTheme(new DesertBlue());
 //			PlasticLookAndFeel.setPlasticTheme(new ExperienceRoyale());
 //			PlasticLookAndFeel.setPlasticTheme(new com.jgoodies.looks.plastic.theme.BrownSugar());
+//			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 			
-			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+			UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel());
+			
+			SubstanceLookAndFeel.setCurrentButtonShaper(new ClassicButtonShaper());
+
 			
 		} catch (Exception e1) {
 			final JDialog jd = new JDialog();
@@ -113,6 +119,7 @@ public class MainFrame extends JFrame {
 		jw.getContentPane().add(label);
 		jw.setBounds(h / 2 - 150, w / 2 - 250, 500, 300);
 		jw.setVisible(true);
+		JFrame.setDefaultLookAndFeelDecorated(true);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new MainFrame();
