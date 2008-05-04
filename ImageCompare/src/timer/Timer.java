@@ -1,4 +1,5 @@
 package timer;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -105,8 +106,10 @@ public class Timer extends JFrame {
 			public void mouseMoved(MouseEvent e) {
 				if(e.getPoint().y > 152) {
 					TimerPanel.getInstance().setInfo();
+					TimerPanel.getInstance().setCursor(new Cursor(Cursor.HAND_CURSOR));
 				} else {
 					TimerPanel.getInstance().setInfoString();
+					TimerPanel.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 				TimerPanel.getInstance().repaint();
 			}});
