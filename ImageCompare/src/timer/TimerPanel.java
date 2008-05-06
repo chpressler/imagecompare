@@ -174,6 +174,8 @@ class TimerPanel extends JPanel {
 	    g.setColor(Color.black);
 		g.fillRect(0, getHeight() / 4, getWidth(), getHeight());
 		
+		g.drawImage(image, 10, 10, image.getWidth(), image.getHeight(), this);
+		
 		g.setFont(f);
 		g.setColor(Color.gray);
 		g.drawString("MyJavaTimer", 93, 33);
@@ -201,7 +203,6 @@ class TimerPanel extends JPanel {
 		g.setFont(f);
 		g.drawLine(0, 152, 300, 152);
 		g.drawString(infostr, 5, 165);
-		g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), this);
 		
 		g.setColor(Color.lightGray);
 		g.drawRect(0, 0, getWidth()-1, getHeight()-1);
