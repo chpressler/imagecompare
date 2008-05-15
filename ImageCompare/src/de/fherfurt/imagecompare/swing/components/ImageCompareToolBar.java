@@ -13,6 +13,7 @@ import de.fherfurt.imagecompare.swing.actions.HelpAction;
 import de.fherfurt.imagecompare.swing.actions.ImportAction;
 import de.fherfurt.imagecompare.swing.actions.NewAction;
 import de.fherfurt.imagecompare.swing.actions.OpenAction;
+import de.fherfurt.imagecompare.swing.actions.PicasaAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAction;
 import de.fherfurt.imagecompare.swing.actions.SaveAsAction;
 import de.fherfurt.imagecompare.swing.actions.SortAction;
@@ -40,6 +41,8 @@ public class ImageCompareToolBar extends JToolBar {
 		this.add(new SortAction());
 		this.addSeparator();
 		this.add(new HelpAction());
+		this.addSeparator();
+		this.add(new PicasaAction());
 	}
 
 }

@@ -3,6 +3,7 @@ package de.fherfurt.imagecompare.swing.components;
 import java.awt.Color;
 import java.awt.GridLayout;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class ControlPanel extends JPanel {

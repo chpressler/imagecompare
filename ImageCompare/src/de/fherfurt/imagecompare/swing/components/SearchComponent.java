@@ -22,9 +22,11 @@ import javax.swing.JPanel;
 
 import com.google.gdata.client.Query;
 import com.google.gdata.client.photos.PicasawebService;
+import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.data.photos.PhotoFeed;
+import com.google.gdata.data.photos.UserFeed;
 import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;
@@ -160,8 +162,10 @@ public class SearchComponent extends JPanel {
 								ArrayList<String> urls = new ArrayList<String>();
 								PicasawebService myService = new PicasawebService(
 										"exampleCo-exampleApp-1");
+								
 								URL feedUrl = new URL(
 										"http://picasaweb.google.com/data/feed/api/all?q=" + jTextField1.getText());
+								
 								Query myQuery = new Query(feedUrl);
 //								myQuery.setMaxResults(50);
 								
