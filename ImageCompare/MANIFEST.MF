@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.6.5
+Created-By: 1.6.0-b105 (Sun Microsystems Inc.)
+Main-Class: de.fherfurt.imagecompare.MainFrame
+Class-Path: lib/Cascade.jar lib/faint.jar lib/gdata-appsforyourdomain-1.0.jar 
+lib/gdata-appsforyourdomain-meta-1.0.jar lib/gdata-base-1.0.jar 
+lib/gdata-calendar-1.0.jar lib/gdata-calendar-meta-1.0.jar lib/gdata-client-1.0.jar 
+lib/gdata-client-meta-1.0.jar lib/gdata-codesearch-1.0.jar lib/gdata-codesearch-meta-1.0.jar 
+lib/gdata-core-1.0.jar lib/gdata-docs-1.0.jar lib/gdata-docs-meta-1.0.jar 
+lib/gdata-media-1.0.jar lib/gdata-photos-1.0.jar lib/gdata-photos-meta-1.0.jar 
+lib/gdata-spreadsheet-1.0.jar lib/gdata-spreadsheet-meta-1.0.jar 
+lib/gdata-youtube-1.0.jar lib/gdata-youtube-meta-1.0.jar lib/gnujaxp.jar lib/ij.jar 
+lib/itext-2.0.2.jar lib/jai_codec.jar lib/jai_core.jar lib/jcommon-1.0.10.jar 
+lib/jfreechart-1.0.6.jar lib/jfreechart-1.0.6-experimental.jar lib/jfreechart-1.0.6-swt.jar 
+lib/junit.jar lib/looks-2.1.4.jar lib/MetadataExtractor.jar 
+lib/mysql-connector-java-3.1.12-bin.jar lib/PhotosClient.jar 
+lib/servlet.jar lib/swtgraphics2d.jar lib/yahoo_search-2.0.1.jar lib/substance.jar
+ 
