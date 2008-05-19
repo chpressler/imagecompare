@@ -22,8 +22,7 @@ import javax.swing.UIManager;
 
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.button.ClassicButtonShaper;
-
-import org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel;
+import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 
 import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.ImageCompareComponent;
@@ -31,6 +30,7 @@ import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
 import de.fherfurt.imagecompare.swing.components.ImagePreviewComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
+import de.fherfurt.imagecompare.swing.uidelegates.PilotTabbedPaneUI;
 import de.offis.faint.controller.MainController;
 
 public class MainFrame extends JFrame {
@@ -64,9 +64,11 @@ public class MainFrame extends JFrame {
 //			PlasticLookAndFeel.setPlasticTheme(new com.jgoodies.looks.plastic.theme.BrownSugar());
 //			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 			
-			UIManager.setLookAndFeel(new SubstanceRavenGraphiteLookAndFeel());
+			UIManager.setLookAndFeel(new SubstanceRavenLookAndFeel());
 			
 			SubstanceLookAndFeel.setCurrentButtonShaper(new ClassicButtonShaper());
+			
+//			UIManager.put("TabbedPaneUI", PilotTabbedPaneUI.class);
 
 			
 		} catch (Exception e1) {

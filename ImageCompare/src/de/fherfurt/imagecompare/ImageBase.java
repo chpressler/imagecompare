@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -18,10 +19,14 @@ import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifDirectory;
+import com.google.gdata.client.photos.PicasawebService;
+import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.media.MediaFileSource;
+import com.google.gdata.data.photos.AlbumEntry;
+import com.google.gdata.data.photos.PhotoEntry;
 import com.yahoo.search.ImageSearchResult;
 import com.yahoo.search.ImageSearchResults;
 
-import de.fherfurt.imagecompare.swing.components.ControlPanel;
 import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
@@ -123,6 +128,52 @@ public class ImageBase {
 				}
 			}
 		}
+	}
+	
+	public synchronized void exportToPicasa(String album, boolean exists) {
+		try {
+			PicasawebService myService =
+				  new PicasawebService("exampleCo-exampleApp-1");
+
+				myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
+
+				if(!exists) {
+				URL postUrl =
+				  new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user"));
+				AlbumEntry myEntry = new AlbumEntry();
+
+				myEntry.setTitle(new PlainTextConstruct(album));
+				//TODO 
+//				myEntry.setDescription(new
+//				  PlainTextConstruct("My trip to Mongolia was most enjoyable, but cold."));
+//
+//				Person author = new Person("Elizabeth Bennet", null, "liz@gmail.com");
+//				myEntry.getAuthors().add(author);
+
+				// Send the request and receive the response:
+				AlbumEntry insertedEntry = myService.insert(postUrl, myEntry);
+				}
+				
+				URL feedUrl = new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user") + "/album/" + album);
+
+				for(ImageThumbnailComponent itc : images) {
+					System.out.println(itc.getPath());
+					PhotoEntry myPhoto = new PhotoEntry();
+					myPhoto.setTitle(new PlainTextConstruct(itc.getPath()));
+//					myPhoto.setDescription(new PlainTextConstruct("Darcy on the beach"));
+//					myPhoto.setClient("myClientName");
+					myPhoto.setTimestamp (new Date());
+					
+					MediaFileSource myMedia = new MediaFileSource(new File(itc.getPath()), "image/jpeg");
+					myPhoto.setMediaSource(myMedia);
+
+					PhotoEntry returnedPhoto = myService.insert(feedUrl, myPhoto);
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void clear() {

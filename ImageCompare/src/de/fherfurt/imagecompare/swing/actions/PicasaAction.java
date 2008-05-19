@@ -27,6 +27,7 @@ import com.google.gdata.data.photos.UserFeed;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.models.ICPicasaComboBoxModel;
 
 public class PicasaAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
@@ -54,7 +55,7 @@ class PicasaFrame extends JFrame {
 		super("PicasaWebAlbums");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(300, 50);
-		cb = new JComboBox(new ICComboBoxModel());
+		cb = new JComboBox(new ICPicasaComboBoxModel());
 		cb.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
@@ -105,42 +106,6 @@ class PicasaFrame extends JFrame {
 		getContentPane().add(cb);
 //		pack();
 		setVisible(true);
-	}
-	
-}
-
-class ICComboBoxModel extends DefaultComboBoxModel {
-	
-	private static final long serialVersionUID = 1L;
-	List<AlbumEntry> albums; 
-	
-	public ICComboBoxModel() {
-		try {
-			ArrayList<String> urls = new ArrayList<String>();
-			PicasawebService myService = new PicasawebService(
-					"exampleCo-exampleApp-1");
-			
-			myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
-			
-			URL albumAndPhotosUrl = new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user") + "/?kind=album");
-			UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl, UserFeed.class);
-
-			albums = myUserFeed.getAlbumEntries();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println(albums.size());
-	}
-
-	@Override
-	public Object getElementAt(int index) {
-		return albums.get(index).getName();
-	}
-
-	@Override
-	public int getSize() {
-		return albums.size();
 	}
 	
 }
