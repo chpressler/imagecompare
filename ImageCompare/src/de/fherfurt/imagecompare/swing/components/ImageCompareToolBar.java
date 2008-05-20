@@ -11,6 +11,7 @@ import de.fherfurt.imagecompare.swing.actions.ControlPanelAction;
 import de.fherfurt.imagecompare.swing.actions.ExportAction;
 import de.fherfurt.imagecompare.swing.actions.HelpAction;
 import de.fherfurt.imagecompare.swing.actions.ImportAction;
+import de.fherfurt.imagecompare.swing.actions.LightTableImageExportAction;
 import de.fherfurt.imagecompare.swing.actions.NewAction;
 import de.fherfurt.imagecompare.swing.actions.OpenAction;
 import de.fherfurt.imagecompare.swing.actions.PicasaAction;
@@ -43,6 +44,7 @@ public class ImageCompareToolBar extends JToolBar {
 		this.add(new HelpAction());
 		this.addSeparator();
 		this.add(new PicasaAction());
+		this.add(new LightTableImageExportAction());
 	}
 
 }

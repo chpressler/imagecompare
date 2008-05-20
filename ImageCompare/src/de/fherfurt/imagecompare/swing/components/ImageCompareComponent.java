@@ -11,7 +11,7 @@ public class ImageCompareComponent extends JTabbedPane {
 	public ImageCompareComponent() {
 //		setUI(new PilotTabbedPaneUI());
 //		setPreferredSize(new Dimension(1024, 500));
-		add(new LightTableComponent() , ResourceHandler.getInstance().getStrings().getString("lighttable"));
+		add(LightTableComponent.getInstance() , ResourceHandler.getInstance().getStrings().getString("lighttable"));
 		add(new ImageViewerComponents(), ResourceHandler.getInstance().getStrings().getString("imageviewer"));
 	}
 	

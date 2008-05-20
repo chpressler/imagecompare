@@ -41,6 +41,19 @@ import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 public class LightTableComponent extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static volatile LightTableComponent instance;
+	
+	public static synchronized LightTableComponent getInstance() {
+		if(instance == null) {
+			synchronized (LightTableComponent.class) {
+				if(instance == null) {
+					instance = new LightTableComponent();
+				}
+			}
+		}
+		return instance;
+	}
 
 	JLayeredPane layeredPane;
     ImageComponent pic;
@@ -51,7 +64,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
     int xdiff = 0;
     int ydiff = 0;
     
-	public LightTableComponent() {
+	private LightTableComponent() {
 		setBackground(Color.black);
 		layeredPane = new JLayeredPane();
 		new LightTableDropPathTarget(this);
