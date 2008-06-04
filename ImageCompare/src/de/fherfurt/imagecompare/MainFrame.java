@@ -30,7 +30,6 @@ import de.fherfurt.imagecompare.swing.components.ImageCompareMenu;
 import de.fherfurt.imagecompare.swing.components.ImageCompareToolBar;
 import de.fherfurt.imagecompare.swing.components.ImagePreviewComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
-import de.fherfurt.imagecompare.swing.uidelegates.PilotTabbedPaneUI;
 import de.offis.faint.controller.MainController;
 
 public class MainFrame extends JFrame {
