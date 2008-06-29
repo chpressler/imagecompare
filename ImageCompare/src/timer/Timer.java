@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.IOException;
 import java.net.URI;
 
 import javax.swing.JFrame;
@@ -36,7 +35,7 @@ public class Timer extends JFrame {
 	}
 	
 	private Timer() {
-		super("BigFootTimer");
+		super("cp Timer");
 		setUndecorated(true); 
 		
 //		getRootPane().setOpaque(false);

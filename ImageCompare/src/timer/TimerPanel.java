@@ -178,9 +178,9 @@ class TimerPanel extends JPanel {
 		
 		g.setFont(f);
 		g.setColor(Color.gray);
-		g.drawString("MyJavaTimer", 93, 33);
+		g.drawString("cp Timer", 170, 33);
 		g.setColor(Color.lightGray);
-		g.drawString("MyJavaTimer", 90, 30);
+		g.drawString("cp Timer", 167, 30);
 		
 		if(ssb.isStop()) {
 			g.setColor(Color.darkGray);
