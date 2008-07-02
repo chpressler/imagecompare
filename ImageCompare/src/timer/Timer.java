@@ -56,7 +56,7 @@ public class Timer extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getPoint().y > 152) {
 					try {
-						Desktop.getDesktop().mail(new URI("mailto", "christian.pressler@googlemail.com?subject=MyShutdownTimer", null)); //mailto: Anhang...!!!
+						Desktop.getDesktop().mail(new URI("mailto", "christian.pressler@googlemail.com?subject=cpTimer", null)); //mailto: Anhang...!!!
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
