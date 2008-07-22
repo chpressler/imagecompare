@@ -3,6 +3,7 @@ package de.fherfurt.imagecompare;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Properties;
@@ -21,6 +22,8 @@ public class ImportDBDerbyHandler implements IImport {
 	
 	private Properties props;
 	
+	private Connection conn;
+	
 	public static synchronized ImportDBDerbyHandler getInstance() {
 		if(instance == null) {
 			synchronized (ImportDBDerbyHandler.class) {
@@ -34,35 +37,51 @@ public class ImportDBDerbyHandler implements IImport {
 
 	private ImportDBDerbyHandler() {
 		try {
-			Class.forName(driver).newInstance();
-			Connection conn;
 			props = new Properties();
 			props.load(new FileInputStream("resources/preferences"));
-			conn = DriverManager.getConnection(protocol + dbName
+			
+			try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
-
-			System.out.println("Connected to and created database " + dbName);
-
-			Statement s = conn.createStatement();
-
-			s.execute("create table image(num int, addr varchar(40))");
-			System.out.println("Created table image");
-
+				Statement s = conn.createStatement();
+				
+//				s.execute("drop table image");
+//				s.execute("drop table attributes");
+				
+				s.execute("create table image(id bigint, path varchar(500))");
+				s.execute("create table attributes(id bigint, name varchar(500), value varchar(500), image_id bigint)");
+				conn.close();
+			} catch (SQLException sqle) {
+				System.out.println("DB schon vorhanden ? -> " + sqle.getMessage());
+//				sqle.printStackTrace();
+			}
+			
 			// DriverManager.getConnection("jdbc:derby:MyDbTest;shutdown=true");
 			// DriverManager.getConnection("jdbc:derby:;shutdown=true");
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	public void addImport(String absolutePath, HashMap<String, String> metadata) {
-		System.out.println("added Import: " + absolutePath);
+		try {
+			Class.forName(driver).newInstance();
+			conn = DriverManager.getConnection(protocol + dbName
+					+ ";create=true", props);
+			
+			
+			
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void addImport(ImageThumbnailComponent imtc) {
-		System.out.println("added Import: " + imtc.getName());
+		System.out.println("added Derby Import: " + imtc.getName());
 	}
 
 	@Override

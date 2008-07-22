@@ -52,7 +52,7 @@ public class ImportDBMySQLHandler implements IImport {
 			user = properties.getProperty("user");
 			password = properties.getProperty("password");
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -66,6 +66,7 @@ public class ImportDBMySQLHandler implements IImport {
 		while(rs.next()) {
 			attributes.put(rs.getString("name"), rs.getString("value"));
 		}
+		conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -81,6 +82,7 @@ public class ImportDBMySQLHandler implements IImport {
 				absolutePath = absolutePath.replace("\\", "/");
 			}
 			ResultSet rs = stmt.executeQuery("SELECT * FROM images WHERE path = '" + absolutePath + "'");
+			conn.close();
 			return rs.next();
 		} catch (Exception e) {
 			e.printStackTrace();
