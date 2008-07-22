@@ -11,7 +11,7 @@ public class DerbyImageSearcher implements ILocalImageSearcher {
 
 	@Override
 	public ArrayList<String> getResults(String pattern) {
-		return null;
+		return new ArrayList<String>();
 	}
 
 }
