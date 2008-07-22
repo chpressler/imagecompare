@@ -99,7 +99,7 @@ public class ImportXMLDomHandler {
 		doc.getDocumentElement().getFirstChild().appendChild(image);
 	}
 	
-	private static void removeTextNodes(Node node) {
+	private void removeTextNodes(Node node) {
 		if (!node.hasChildNodes()) {
 			return;
 		} else {
@@ -114,7 +114,7 @@ public class ImportXMLDomHandler {
 		}
 	}
 
-	private static void removeAllChildren(Node node) {
+	private void removeAllChildren(Node node) {
 		if (!node.hasChildNodes()) {
 			return;
 		} else {

@@ -22,11 +22,9 @@ import javax.swing.JPanel;
 
 import com.google.gdata.client.Query;
 import com.google.gdata.client.photos.PicasawebService;
-import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.data.photos.PhotoFeed;
-import com.google.gdata.data.photos.UserFeed;
 import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;

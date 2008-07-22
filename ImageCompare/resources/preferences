@@ -1,5 +1,11 @@
-dbhost=localhost
+dbhost=85.214.59.56
 dbport=3306
-db=ic
-user=root
-password=duluth
+db=db1211228830-229
+user=db1211228830-229
+password=0JWSOxjA42u8
+
+#dbhost=localhost
+#dbport=3306
+#db=ic
+#user=root
+#password=duluth
