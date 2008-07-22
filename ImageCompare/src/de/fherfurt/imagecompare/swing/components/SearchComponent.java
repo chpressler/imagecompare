@@ -29,7 +29,10 @@ import com.yahoo.search.ImageSearchRequest;
 import com.yahoo.search.ImageSearchResults;
 import com.yahoo.search.SearchClient;
 
+import de.fherfurt.imagecompare.DerbyImageSearcher;
+import de.fherfurt.imagecompare.ILocalImageSearcher;
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.MySQLImageSearcher;
 
 public class SearchComponent extends JPanel {
 
@@ -57,6 +60,8 @@ public class SearchComponent extends JPanel {
 	
 	private boolean local = true;
 	
+	private ILocalImageSearcher localSearcher;
+	
 	public SearchComponent() {
 		
 		client = new SearchClient("5myAFqbV34GNV1sI8eeYuoN8ifTOQCM7PWLGrdUUZfUrVdRkRVBBXz5innamFOrH");
@@ -65,6 +70,8 @@ public class SearchComponent extends JPanel {
 	    
 	    setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(Color.white, Color.lightGray), "Search"));
 		
+	    localSearcher = new DerbyImageSearcher();
+	    
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -209,43 +216,21 @@ public class SearchComponent extends JPanel {
     					@Override
         				public void run() {
     						try {
-    							Properties properties = new Properties();
-    							properties.load(new FileInputStream("resources/preferences"));
-    							String dbhost = properties.getProperty("dbhost");
-    							String dbport = properties.getProperty("dbport");
-    							String db = properties.getProperty("db");
-    							String user = properties.getProperty("user");
-    							String password = properties.getProperty("password");
-    							Class.forName("com.mysql.jdbc.Driver");
-    							Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":" + dbport + "/" + db + "?user=" + user + "&password=" + password);
-								Statement stmt = conn.createStatement();
-								ResultSet rs = stmt.executeQuery("SELECT path FROM images WHERE path LIKE '%" + searchstring + "%'");
-								ArrayList<String> results = new ArrayList<String>();
-								while(rs.next()) {
-									results.add(rs.getString(1));
-								}
-								
-								for(String p : results) {
+								ArrayList<String> results = localSearcher
+										.getResults(searchstring);
+								for (String p : results) {
 									File f = null;
 									try {
 										f = new File(p);
 									} catch (Exception e) {
-									
+										e.printStackTrace();
 									}
 									if (f == null || !f.exists()) {
-										String subquery = "(select id FROM images where path = '"
-												+ p + "')";
-										stmt
-												.execute("DELETE FROM attributes where image_id = "
-														+ subquery);
-										stmt
-												.execute("DELETE FROM images where path = '"
-														+ p + "'");
+										localSearcher.deleteImage(p);
 									} else {
 										ImageBase.getInstance().setImageBase(f);
-									}	
+									}
 								}
-								conn.close();
 							} catch (Exception e) {
 								e.printStackTrace();
 								StatusBar.getInstance().deactivateProgressBar();

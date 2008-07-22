@@ -3,7 +3,26 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/imageCompare"/>
 	<classpathentry kind="lib" path="lib/Cascade.jar"/>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry kind="lib" path="lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_cs.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_de_DE.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_es.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_fr.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_hu.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_it.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_ja_JP.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_ko_KR.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_pl.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_pt_BR.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_ru.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_zh_CN.jar"/>
+	<classpathentry kind="lib" path="lib/derbyLocale_zh_TW.jar"/>
+	<classpathentry kind="lib" path="lib/derbynet.jar"/>
+	<classpathentry kind="lib" path="lib/derbyrun.jar"/>
+	<classpathentry kind="lib" path="lib/derbytools.jar"/>
 	<classpathentry kind="lib" path="lib/faint.jar"/>
 	<classpathentry kind="lib" path="lib/gdata-appsforyourdomain-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/gdata-appsforyourdomain-meta-1.0.jar"/>
@@ -30,9 +49,9 @@
 	<classpathentry kind="lib" path="lib/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.10.jar"/>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.6-experimental.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.6-swt.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
 	<classpathentry kind="lib" path="lib/MetadataExtractor.jar"/>
@@ -42,23 +61,5 @@
 	<classpathentry kind="lib" path="lib/substance.jar"/>
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
 	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derby.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyclient.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_cs.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_de_DE.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_es.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_fr.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_hu.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_it.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_ja_JP.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_ko_KR.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_pl.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_pt_BR.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_ru.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_zh_CN.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyLocale_zh_TW.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbynet.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbyrun.jar"/>
-	<classpathentry kind="lib" path="/DerbyTest/lib/derbytools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
