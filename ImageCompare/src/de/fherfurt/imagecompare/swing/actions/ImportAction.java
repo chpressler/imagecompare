@@ -20,7 +20,9 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
 
+import de.fherfurt.imagecompare.IImport;
 import de.fherfurt.imagecompare.ImageAnalyser;
+import de.fherfurt.imagecompare.ImportDBDerbyHandler;
 import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.ResourceHandler;
 
@@ -31,6 +33,8 @@ public class ImportAction extends AbstractAction {
 	private JProgressBar bar;
 
 	boolean b = true;
+	
+	private IImport importer = ImportDBDerbyHandler.getInstance();
 
 	public ImportAction() {
 		putValue(Action.NAME, "import");
@@ -118,12 +122,12 @@ public class ImportAction extends AbstractAction {
 //						continue;
 //					}
 //					ImportXMLDomHandler.getInstance().addImport(file.getAbsolutePath(), getMetadata(file));
-					if(ImportDBMySQLHandler.getInstance().isImported(file.getAbsolutePath())) {
+					if(importer.isImported(file.getAbsolutePath())) {
 						System.out.println(file.getAbsolutePath() + " schon importiert");
 						continue;
 					}
 					//TODO -> Factory for different ImportClass types
-					ImportDBMySQLHandler.getInstance().addImport(file.getAbsolutePath(), ImageAnalyser.getInstance().getImageAttributes(file ,""));
+					importer.addImport(file.getAbsolutePath(), ImageAnalyser.getInstance().getImageAttributes(file ,""));
 				}
 			}
 		}

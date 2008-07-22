@@ -25,8 +25,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.IImport;
 import de.fherfurt.imagecompare.ImageAnalyser;
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ImportDBDerbyHandler;
 import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 
@@ -49,6 +51,8 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 	private JPopupMenu popupMenu;
 	
 	private HashMap<String, String> attributes = new HashMap<String, String>();
+	
+	private IImport importer = ImportDBDerbyHandler.getInstance();
 	
 	public void setDragged(boolean b) {
 		dragged = b;
@@ -164,8 +168,8 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 			}
 			
 		});
-		if(ImportDBMySQLHandler.getInstance().isImported(getPath())) {
-			attributes = ImportDBMySQLHandler.getInstance().getAttributes(getPath());
+		if(importer.isImported(getPath())) {
+			attributes = importer.getAttributes(getPath());
 		} else {
 			if (getPath().startsWith("http:")) {
 				// aus InputStream TempFile machen
@@ -198,7 +202,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 				attributes = ImageAnalyser.getInstance().getImageAttributes(
 						new File(getPath()), "");
 			}
-			ImportDBMySQLHandler.getInstance().addImport(this);
+			importer.addImport(this);
 		}
 	}
 	
