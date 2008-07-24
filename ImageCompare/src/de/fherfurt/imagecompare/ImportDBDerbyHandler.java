@@ -45,24 +45,21 @@ public class ImportDBDerbyHandler implements IImport {
 			props.load(new FileInputStream("resources/preferences"));
 			
 			try {
+				if(conn == null || conn.isClosed()) {
 				Class.forName(driver).newInstance();
 				conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
+				}
 //				conn.setAutoCommit(false);
 				Statement s = conn.createStatement();
 				
 //				s.execute("drop table attributes");
 //				s.execute("drop table image");		
 				
-				ResultSet rs = s.executeQuery("select * from attributes");
-				while(rs.next()) {
-					System.out.println(rs.getString("path"));
-				}
-				
 				s.execute("create table images(id bigint not null generated always as identity (start with 1, increment by 1), path varchar(500) not null, primary key(id))");
 				s.execute("create table attributes(id bigint not null generated always as identity (start with 1, increment by 1), name varchar(500) not null, value varchar(500) not null, image_id bigint not null, primary key(id), foreign key(image_id) references images(id))");
 				
-				conn.close();
+//				conn.close();
 			} catch (SQLException sqle) {
 				System.out.println("DB schon vorhanden ? -> " + sqle.getMessage());
 //				sqle.printStackTrace();
@@ -78,10 +75,12 @@ public class ImportDBDerbyHandler implements IImport {
 	@Override
 	public void addImport(String absolutePath, HashMap<String, String> metadata) {
 		try {
+			if(conn == null || conn.isClosed()) {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
 			conn.setAutoCommit(false);
+			}
 			Statement stmt = conn.createStatement();
 
 			//TODO -> Radiobutton if new... 
@@ -139,24 +138,20 @@ public class ImportDBDerbyHandler implements IImport {
 							+ ")");
 				}
 			}
-
+//			conn.close();
 			} catch(Exception e) {
 				e.printStackTrace();
-			} finally {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
 	}
 
 	@Override
 	public void addImport(ImageThumbnailComponent imtc) {
 		try {
+			if(conn == null || conn.isClosed()) {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
+			}
 			conn.setAutoCommit(false);
 			Statement stmt = conn.createStatement();
 
@@ -207,15 +202,9 @@ public class ImportDBDerbyHandler implements IImport {
 							+ "\')");
 				}
 			}
-
+			conn.close();
 			} catch(Exception e) {
 				e.printStackTrace();
-			} finally {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
 	}
 
@@ -223,9 +212,11 @@ public class ImportDBDerbyHandler implements IImport {
 	public HashMap<String, String> getAttributes(String path) {
 		HashMap<String, String> attributes = new HashMap<String, String>();
 		try {
+			if(conn == null || conn.isClosed()) {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
+			}
 //			conn.setAutoCommit(false);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt
@@ -234,7 +225,7 @@ public class ImportDBDerbyHandler implements IImport {
 			while (rs.next()) {
 				attributes.put(rs.getString("name"), rs.getString("value"));
 			}
-			conn.close();
+//			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -244,9 +235,11 @@ public class ImportDBDerbyHandler implements IImport {
 	@Override
 	public boolean isImported(String absolutePath) {
 		try {
+			if(conn == null || conn.isClosed()) {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
+			}
 //			conn.setAutoCommit(false);
 			Statement stmt = conn.createStatement();
 			if(!absolutePath.startsWith("http")) {
