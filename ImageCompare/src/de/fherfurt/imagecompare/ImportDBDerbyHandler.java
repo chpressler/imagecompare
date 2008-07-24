@@ -51,11 +51,12 @@ public class ImportDBDerbyHandler implements IImport {
 //				conn.setAutoCommit(false);
 				Statement s = conn.createStatement();
 				
-//				s.execute("drop table image");
 //				s.execute("drop table attributes");
+//				s.execute("drop table image");		
 				
-				s.execute("create table images(id bigint primary key, path varchar(500) not null unique)");
-				s.execute("create table attributes(id bigint, name varchar(500) not null, value varchar(500) not null, image_id bigint not null)");
+				s.execute("create table images(id bigint not null generated always as identity (start with 1, increment by 1), path varchar(500) not null, primary key(id))");
+				s.execute("create table attributes(id bigint not null generated always as identity (start with 1, increment by 1), name varchar(500) not null, value varchar(500) not null, image_id bigint not null, primary key(id), foreign key(image_id) references images(id))");
+				
 				conn.close();
 			} catch (SQLException sqle) {
 				System.out.println("DB schon vorhanden ? -> " + sqle.getMessage());
@@ -88,8 +89,10 @@ public class ImportDBDerbyHandler implements IImport {
 			
 			//Table images
 			try {
-				stmt.execute("INSERT INTO `images` (`path`) VALUES (\"" + absolutePath + "\");");
+				stmt.execute("INSERT INTO images (path) VALUES (\"" + absolutePath + "\")");
+				System.out.println("--------------------------------///////////////////////////////////////////////////////////////////////////");
 			} catch(java.sql.SQLException sqle) {
+				sqle.printStackTrace();
 				System.out.println("already imported - UNIQE MySQL Exception - should not happen here");
 				return;
 			}
@@ -118,17 +121,17 @@ public class ImportDBDerbyHandler implements IImport {
 					continue;
 				}
 				try {
-					stmt.execute("INSERT INTO `attributes` (`name`, `value`, `image_id`) VALUES (\"" + s + "\", \""
+					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\"" + s + "\", \""
 							+ metadata.get(s).trim()
 							+ "\", \""
 							+ imageid
-							+ "\");");
+							+ "\")");
 				} catch (Exception e) {
-					stmt.execute("INSERT INTO `attributes` (`name`, `value`, `image_id`) VALUES (\"" + s + "\", \""
+					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\"" + s + "\", \""
 							+ ""
 							+ "\", \""
 							+ imageid
-							+ "\");");
+							+ "\")");
 				}
 			}
 
@@ -149,9 +152,11 @@ public class ImportDBDerbyHandler implements IImport {
 
 			//Table images
 			try {
-				stmt.execute("INSERT INTO `images` (`path`) VALUES (\"" + imtc.getPath() + "\");");
+				stmt.execute("INSERT INTO images (path) VALUES (\"" + imtc.getPath() + "\")");
+				System.out.println("--------------------------------///////////////////////////////////////////////////////////////////////////");
 			} catch(java.sql.SQLException sqle) {
 				System.out.println("already imported - UNIQE MySQL Exception - should not happen here");
+				sqle.printStackTrace();
 				return;
 			}
 			
@@ -179,17 +184,17 @@ public class ImportDBDerbyHandler implements IImport {
 					continue;
 				}
 				try {
-					stmt.execute("INSERT INTO `attributes` (`name`, `value`, `image_id`) VALUES (\"" + s + "\", \""
+					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\"" + s + "\", \""
 							+ imtc.getAttributes().get(s).trim()
 							+ "\", \""
 							+ imageid
-							+ "\");");
+							+ "\")");
 				} catch (Exception e) {
-					stmt.execute("INSERT INTO `attributes` (`name`, `value`, `image_id`) VALUES (\"" + s + "\", \""
+					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\"" + s + "\", \""
 							+ ""
 							+ "\", \""
 							+ imageid
-							+ "\");");
+							+ "\")");
 				}
 			}
 

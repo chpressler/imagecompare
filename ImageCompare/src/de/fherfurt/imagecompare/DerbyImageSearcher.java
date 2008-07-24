@@ -33,11 +33,18 @@ public class DerbyImageSearcher implements ILocalImageSearcher {
 //				conn.setAutoCommit(false);
 				Statement s = conn.createStatement();
 				
-//				s.execute("drop table image");
 //				s.execute("drop table attributes");
+//				s.execute("drop table images");
 				
-				s.execute("create table image(id bigint, path varchar(500))");
-				s.execute("create table attributes(id bigint, name varchar(500), value varchar(500), image_id bigint)");
+//				String test1 = "CREATE TABLE HOTELAVAILABILITY (HOTEL_ID INT NOT NULL, BOOKING_DATE DATE NOT NULL, ROOMS_TAKEN INT DEFAULT 0, PRIMARY KEY (HOTEL_ID, BOOKING_DATE))";
+//				String test2 = "CREATE TABLE PEOPLE (PERSON_ID INT NOT NULL GENERATED ALWAYS AS IDENTITY CONSTRAINT PEOPLE_PK PRIMARY KEY, PERSON VARCHAR(26))";
+//				String test3 = "CREATE TABLE GROUP (GROUP_ID SMALLINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 5, INCREMENT BY 5), ADDRESS VARCHAR(100), PHONE VARCHAR(15))";
+//				s.execute(test1);
+//				s.execute(test2);
+//				s.execute(test3);
+				
+				s.execute("create table images(id bigint not null generated always as identity (start with 1, increment by 1), path varchar(500) not null, primary key(id))");
+				s.execute("create table attributes(id bigint not null generated always as identity (start with 1, increment by 1), name varchar(500) not null, value varchar(500) not null, image_id bigint not null, primary key(id), foreign key(image_id) references images(id))");
 				conn.close();
 			} catch (SQLException sqle) {
 				System.out.println("DB schon vorhanden ? -> " + sqle.getMessage());
