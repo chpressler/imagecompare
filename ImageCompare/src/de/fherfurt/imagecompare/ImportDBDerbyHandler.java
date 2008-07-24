@@ -50,8 +50,20 @@ public class ImportDBDerbyHandler implements IImport {
 				conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
 				}
+				
+//				System.out.println(protocol + dbName + ";create=true");
 //				conn.setAutoCommit(false);
 				Statement s = conn.createStatement();
+				
+//				ResultSet rs = s.executeQuery("select * from images");
+//				while(rs.next()) {
+//					System.out.println(rs.getString("path"));
+//				}
+//				
+//				rs = s.executeQuery("select * from attributes");
+//				while(rs.next()) {
+//					System.out.println(rs.getString("path"));
+//				}
 				
 //				s.execute("drop table attributes");
 //				s.execute("drop table image");		
