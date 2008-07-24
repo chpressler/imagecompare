@@ -62,7 +62,7 @@ public class ImportDBDerbyHandler implements IImport {
 //				
 //				rs = s.executeQuery("select * from attributes");
 //				while(rs.next()) {
-//					System.out.println(rs.getString("path"));
+//					System.out.println(rs.getString("id") + " - " + rs.getString("name") + " - " + rs.getString("value"));
 //				}
 				
 //				s.execute("drop table attributes");
@@ -142,12 +142,15 @@ public class ImportDBDerbyHandler implements IImport {
 							+ "\', "
 							+ imageid
 							+ ")");
+					System.out.println("TRY");
 				} catch (Exception e) {
 					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\'" + s + "\', \'"
 							+ ""
 							+ "\', "
 							+ imageid
 							+ ")");
+					System.out.println("CATCH");
+					e.printStackTrace();
 				}
 			}
 //			conn.close();

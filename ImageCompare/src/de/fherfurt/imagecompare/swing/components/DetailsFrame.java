@@ -21,7 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 import de.fherfurt.imagecompare.Attributes;
+import de.fherfurt.imagecompare.IImport;
 import de.fherfurt.imagecompare.ImageAnalyser;
+import de.fherfurt.imagecompare.ImportDBDerbyHandler;
 import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 
 public class DetailsFrame extends JFrame {
@@ -116,15 +118,18 @@ public class DetailsFrame extends JFrame {
 class ExifPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private IImport importer;
 
 	int uk = 0;
 	
 	public ExifPanel(String path) {
+		importer = ImportDBDerbyHandler.getInstance();
 		setLayout(null);
 		HashMap<String, String> attributes = new HashMap<String, String>();
 		
-		if(ImportDBMySQLHandler.getInstance().isImported(path)) {
-			attributes = ImportDBMySQLHandler.getInstance().getAttributes(path.replaceAll("\\\\", "/"));
+		if(importer.isImported(path)) {
+			attributes = importer.getAttributes(path.replaceAll("\\\\", "/"));
 		} else {
 			attributes = ImageAnalyser.getInstance().getImageAttributes(new File(path.replaceAll("\\\\", "/")), "");
 		}
