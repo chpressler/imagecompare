@@ -17,22 +17,24 @@ public class ICPicasaComboBoxModel extends DefaultComboBoxModel {
 	private static final long serialVersionUID = 1L;
 	List<AlbumEntry> albums; 
 	
-	public ICPicasaComboBoxModel() {
-		try {
+	public ICPicasaComboBoxModel() throws Exception {
 			ArrayList<String> urls = new ArrayList<String>();
-			PicasawebService myService = new PicasawebService(
-					"exampleCo-exampleApp-1");
-			
-			myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
-			
-			URL albumAndPhotosUrl = new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user") + "/?kind=album");
-			UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl, UserFeed.class);
+		PicasawebService myService = new PicasawebService(
+				"exampleCo-exampleApp-1");
 
-			albums = myUserFeed.getAlbumEntries();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		myService.setUserCredentials(ResourceHandler.getInstance().getStrings()
+				.getString("user"), ResourceHandler.getInstance().getStrings()
+				.getString("pw"));
+
+		URL albumAndPhotosUrl = new URL(
+				"http://picasaweb.google.com/data/feed/api/user/"
+						+ ResourceHandler.getInstance().getStrings().getString(
+								"user") + "/?kind=album");
+		UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl,
+				UserFeed.class);
+
+		albums = myUserFeed.getAlbumEntries();
+
 		System.out.println(albums.size());
 	}
 

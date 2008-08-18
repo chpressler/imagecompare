@@ -20,7 +20,7 @@ public class ExportAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		new ExportFrame();
+		ExportFrame.getInstance().setVisible(true);
 	}
 
 }

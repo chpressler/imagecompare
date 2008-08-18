@@ -41,6 +41,19 @@ public class ExportFrame extends JFrame {
 	
 	private JProgressBar pb;
 	
+	private static volatile ExportFrame instance;
+	
+	public static synchronized ExportFrame getInstance() {
+		if(instance == null) {
+			synchronized (ExportFrame.class) {
+				if(instance == null) {
+					instance = new ExportFrame();
+				}
+			}
+		}
+		return instance;
+	}
+	
 	// Variables declaration - do not modify
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
@@ -51,7 +64,7 @@ public class ExportFrame extends JFrame {
     private ButtonGroup bg = new ButtonGroup();
     // End of variables declaration
 
-	public ExportFrame() {
+	private ExportFrame() {
 		super("Export");
 		pb = new JProgressBar();
 		
@@ -120,8 +133,11 @@ public class ExportFrame extends JFrame {
 
 	        jTextField1.setText(""); // NOI18N
 	        jTextField1.setName("jTextField1"); // NOI18N
-
-	        jComboBox1.setModel(new ICPicasaComboBoxModel());
+		try {
+			jComboBox1.setModel(new ICPicasaComboBoxModel());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	        jComboBox1.setName("jComboBox1"); // NOI18N
 
 	        jButton1.setText("export"); // NOI18N
@@ -248,4 +264,14 @@ public class ExportFrame extends JFrame {
 		p.add(c);
 	}
 	
+	@Override
+	public void setVisible(boolean b) {
+		try {
+			jComboBox1.setModel(new ICPicasaComboBoxModel());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.setVisible(b);
+	}
+
 }
