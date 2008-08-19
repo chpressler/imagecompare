@@ -23,7 +23,6 @@ import javax.swing.filechooser.FileSystemView;
 import de.fherfurt.imagecompare.IImport;
 import de.fherfurt.imagecompare.ImageAnalyser;
 import de.fherfurt.imagecompare.ImportDBDerbyHandler;
-import de.fherfurt.imagecompare.ImportDBMySQLHandler;
 import de.fherfurt.imagecompare.ResourceHandler;
 
 public class ImportAction extends AbstractAction {

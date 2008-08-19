@@ -2,20 +2,11 @@ package de.fherfurt.imagecompare.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 
-import de.offis.faint.controller.HotSpotController;
 import de.offis.faint.controller.MainController;
-import de.offis.faint.interfaces.IDetectionFilter;
-import de.offis.faint.interfaces.IDetectionPlugin;
-import de.offis.faint.interfaces.IModule;
-import de.offis.faint.interfaces.IRecognitionFilter;
-import de.offis.faint.interfaces.IRecognitionPlugin;
 import de.offis.faint.model.ImageModel;
 import de.offis.faint.model.Region;
 

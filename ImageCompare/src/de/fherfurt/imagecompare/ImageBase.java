@@ -276,6 +276,10 @@ public class ImageBase {
 					return;
 				}
 			}
+			
+			if(dir.getName().endsWith(".bmp") || dir.getName().endsWith(".BMP")) {
+				return;
+			}
 			image = ICUtil.getInstance().getThumbnal(
 					ImageIO.read(dir));
 			ImageThumbnailComponent imtc = new ImageThumbnailComponent(image, dir.getAbsolutePath());
@@ -283,11 +287,13 @@ public class ImageBase {
 				return;
 			}
 			images.add(imtc);
+			
 			sort();
 			for (ImageBaseChangedListener ibcl : listeners) {
 				StatusBar.getInstance().setStatusText(" adding: " + dir.getAbsolutePath());
 				ibcl.add(imtc, true);
 			}
+		
 			StatusBar.getInstance().setStatusText("");
 			StatusBar.getInstance().deactivateProgressBar();
 			return;

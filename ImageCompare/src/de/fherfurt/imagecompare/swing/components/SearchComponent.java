@@ -6,15 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -32,7 +26,6 @@ import com.yahoo.search.SearchClient;
 import de.fherfurt.imagecompare.DerbyImageSearcher;
 import de.fherfurt.imagecompare.ILocalImageSearcher;
 import de.fherfurt.imagecompare.ImageBase;
-import de.fherfurt.imagecompare.MySQLImageSearcher;
 
 public class SearchComponent extends JPanel {
 
