@@ -30,12 +30,15 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import com.blogofbug.swing.components.effects.ContainedEffect;
 import com.blogofbug.swing.components.effects.Effect;
 import com.blogofbug.swing.components.effects.EffectEngine;
 import com.blogofbug.swing.components.effects.ReflectionEffect;
 import com.blogofbug.utility.ImageUtilities;
+
+import de.fherfurt.imagecompare.ResourceHandler;
 
 /**
  * A RichComponent which takes the supplied image, adds on 50% to the height of the image
@@ -133,6 +136,7 @@ public class ReflectedImageLabel extends JButton{
         try {
             setRichImage(new URL(imageURL));
         } catch (MalformedURLException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
         }
         construct();
@@ -149,6 +153,7 @@ public class ReflectedImageLabel extends JButton{
         try {
             setRichImage(new URL(imageURL));
         } catch (MalformedURLException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
         }
         construct();
@@ -199,8 +204,10 @@ public class ReflectedImageLabel extends JButton{
         try {
             image = ImageIO.read(new URL(imageURL));
         } catch (MalformedURLException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
         } catch (IOException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
         }
         this.setupImage(image);
@@ -296,6 +303,7 @@ public class ReflectedImageLabel extends JButton{
         try {
             setRichImage(image.toURL());
         } catch (MalformedURLException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
         }
     }

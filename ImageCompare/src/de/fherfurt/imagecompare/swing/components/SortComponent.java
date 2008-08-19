@@ -14,6 +14,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
@@ -27,6 +28,7 @@ import org.w3c.dom.Node;
 
 import de.fherfurt.imagecompare.Attributes;
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ResourceHandler;
 
 public class SortComponent extends JPanel {
 	
@@ -106,6 +108,7 @@ public class SortComponent extends JPanel {
 			doc = dbf.newDocumentBuilder().parse(new File("profiles.xml"));
 			removeTextNodes(doc.getDocumentElement());
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 

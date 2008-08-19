@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import de.fherfurt.imagecompare.ResourceHandler;
 
@@ -23,6 +24,7 @@ public class HelpAction extends AbstractAction {
 		try {
 			Runtime.getRuntime().exec("cmd.exe /c start http://www.fh-erfurt.de");
 		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 	}

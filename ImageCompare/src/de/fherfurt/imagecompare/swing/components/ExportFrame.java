@@ -137,7 +137,7 @@ public class ExportFrame extends JFrame {
 		try {
 			jComboBox1.setModel(new ICPicasaComboBoxModel());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror"));
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 	        jComboBox1.setName("jComboBox1"); // NOI18N
@@ -195,6 +195,7 @@ public class ExportFrame extends JFrame {
 					          
 								jProgressBar1.setIndeterminate(false);
 							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 								e.printStackTrace();
 							}
 						}}).start();
@@ -271,8 +272,8 @@ public class ExportFrame extends JFrame {
 		try {
 			jComboBox1.setModel(new ICPicasaComboBoxModel());
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
-			//TODO -> JOptionPane
 		}
 		super.setVisible(b);
 	}

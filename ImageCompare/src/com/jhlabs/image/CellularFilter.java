@@ -19,7 +19,12 @@ package com.jhlabs.image;
 import java.awt.*;
 import java.awt.image.*;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import com.jhlabs.math.*;
+
+import de.fherfurt.imagecompare.ResourceHandler;
 
 public class CellularFilter extends WholeImageFilter implements Function2D, MutatableFilter, Cloneable, java.io.Serializable {
 
@@ -457,6 +462,7 @@ try {
 		}
 }
 catch (Exception e) {
+	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 	e.printStackTrace();
 	return 0;
 }

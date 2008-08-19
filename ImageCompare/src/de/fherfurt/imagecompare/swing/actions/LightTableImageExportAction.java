@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -43,7 +44,7 @@ public class LightTableImageExportAction extends AbstractAction {
 		saveComponentAsJPEG(LightTableComponent.getInstance().getLayeredPane(), LightTableComponent.getInstance(), "C:/fot.jpg");
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 	}

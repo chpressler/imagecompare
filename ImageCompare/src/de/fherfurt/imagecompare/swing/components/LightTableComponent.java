@@ -29,12 +29,14 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.controller.LightTableDropPathTarget;
 import de.fherfurt.imagecompare.swing.layout.LightTableLayout;
 
@@ -300,6 +302,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 						}
 						Desktop.getDesktop().open(file);
 					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 						e1.printStackTrace();
 				}
 				}});
@@ -316,10 +319,12 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 							uriFile = new URI("file", test, null);
 							System.out.println(uriFile);
 						} catch (URISyntaxException e1) {
+							JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 							e1.printStackTrace();
 						}
 						Desktop.getDesktop().browse(uriFile);
 					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 						e1.printStackTrace();
 					}
 				}});
@@ -330,6 +335,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 					try {
 						Desktop.getDesktop().edit(new File(p.getPath()));
 					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 						e1.printStackTrace();
 					}
 				}});
@@ -342,6 +348,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 					try {
 						Desktop.getDesktop().mail(null); //mailto: Anhang...!!!
 					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 						e1.printStackTrace();
 					}
 				}});
@@ -383,6 +390,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 							}
 							fos.close();
 						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 							e1.printStackTrace();
 						}
 					} else {
@@ -406,6 +414,7 @@ public class LightTableComponent extends JPanel implements MouseListener, MouseM
 							fos.close();
 							
 						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 							e1.printStackTrace();
 						}
 					}

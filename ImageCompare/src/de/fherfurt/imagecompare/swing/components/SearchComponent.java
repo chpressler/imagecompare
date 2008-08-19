@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.google.gdata.client.Query;
@@ -26,6 +27,7 @@ import com.yahoo.search.SearchClient;
 import de.fherfurt.imagecompare.DerbyImageSearcher;
 import de.fherfurt.imagecompare.ILocalImageSearcher;
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ResourceHandler;
 
 public class SearchComponent extends JPanel {
 
@@ -147,6 +149,7 @@ public class SearchComponent extends JPanel {
     			        try {
     						results = client.imageSearch(request);
     					} catch (Exception e1) {
+    						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
     						e1.printStackTrace();
     					} 
     					ImageBase.getInstance().setImageBase(results);
@@ -186,6 +189,7 @@ public class SearchComponent extends JPanel {
 								}
 								ImageBase.getInstance().setImageBase(urls);
 							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 								e.printStackTrace();
 							}
 						}}).start();
@@ -216,6 +220,7 @@ public class SearchComponent extends JPanel {
 									try {
 										f = new File(p);
 									} catch (Exception e) {
+										JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 										e.printStackTrace();
 									}
 									if (f == null || !f.exists()) {
@@ -225,6 +230,7 @@ public class SearchComponent extends JPanel {
 									}
 								}
 							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 								e.printStackTrace();
 								StatusBar.getInstance().deactivateProgressBar();
 							}

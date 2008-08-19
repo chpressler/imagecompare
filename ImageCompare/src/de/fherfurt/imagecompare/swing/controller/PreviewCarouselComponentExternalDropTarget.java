@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.components.PreviewCarouselComponent;
 
 public class PreviewCarouselComponentExternalDropTarget implements DropTargetListener {
@@ -59,6 +62,7 @@ public class PreviewCarouselComponentExternalDropTarget implements DropTargetLis
 							try {
 					        	ImageBase.getInstance().setImageBase(f);
 							} catch (IOException e) {
+								JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 								e.printStackTrace();
 							}
 						}}).start();

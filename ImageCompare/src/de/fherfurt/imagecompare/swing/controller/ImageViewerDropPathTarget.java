@@ -14,8 +14,10 @@ import java.io.File;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.components.ImageComponent;
 import de.fherfurt.imagecompare.swing.components.ImageViewerComponent;
 
@@ -69,8 +71,9 @@ public class ImageViewerDropPathTarget implements DropTargetListener {
 	      }
 	      dtde.rejectDrop();
 	    } catch (Exception e) {
-	      e.printStackTrace();
-	      dtde.rejectDrop();
+	    	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
+	    	e.printStackTrace();
+	    	dtde.rejectDrop();
 	    }
 	  
 	}

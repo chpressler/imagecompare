@@ -38,6 +38,9 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
+import de.fherfurt.imagecompare.ResourceHandler;
 
 /**
  * Static class with utility methods for images
@@ -74,9 +77,11 @@ public class ImageUtilities {
         try {
             image = ImageIO.read(new URL(imageURL));
         } catch (MalformedURLException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
             return null;
         } catch (IOException ex) {
+        	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
             ex.printStackTrace();
             return null;
         }

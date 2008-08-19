@@ -21,6 +21,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import de.fherfurt.imagecompare.ResourceHandler;
 
 /**
  *
@@ -64,6 +67,7 @@ public class OverlayFilter extends AbstractFilter{
             try {
                 overlayImage = ImageIO.read(new File(value));                 
             } catch (IOException ex) {
+            	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + ex.getMessage());
                 ex.printStackTrace();
             }    
         }

@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import de.fherfurt.imagecompare.ImageBase;
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.components.PreviewThumbnailComponent;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
@@ -67,6 +70,7 @@ public class PreviewThumbnailComponentExternalDropTarget implements
 								try {
 									ImageBase.getInstance().setImageBase(f);
 								} catch (IOException e) {
+									JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 									e.printStackTrace();
 								}
 							}

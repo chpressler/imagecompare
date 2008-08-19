@@ -5,11 +5,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JOptionPane;
+
 import com.blogofbug.swing.components.JCarosel;
 import com.blogofbug.swing.components.ReflectedImageLabel;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImageBaseChangedListener;
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.controller.PreviewCarouselComponentExternalDropTarget;
 
 public class PreviewCarouselComponent extends JCarosel implements ImageBaseChangedListener {
@@ -44,6 +47,7 @@ public class PreviewCarouselComponent extends JCarosel implements ImageBaseChang
 				updateUI();
 			}
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 		setBackground(Color.black, new Color(80, 30, 30));

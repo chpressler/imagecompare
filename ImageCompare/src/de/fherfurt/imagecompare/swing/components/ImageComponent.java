@@ -10,6 +10,9 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import de.fherfurt.imagecompare.ResourceHandler;
 
 public class ImageComponent extends JLabel {
 	
@@ -54,6 +57,7 @@ public class ImageComponent extends JLabel {
 		try {
 			image = (BufferedImage) i.getImage();
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 		setIcon(i);

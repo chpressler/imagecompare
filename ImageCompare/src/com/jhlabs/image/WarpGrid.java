@@ -19,6 +19,10 @@ package com.jhlabs.image;
 import java.awt.*;
 import java.awt.image.*;
 
+import javax.swing.JOptionPane;
+
+import de.fherfurt.imagecompare.ResourceHandler;
+
 /**
  * A warp grid.
  * From "A simplified approach to Image Processing" by Randy Crane
@@ -279,6 +283,7 @@ try {
 		}
 }
 catch (Exception e) {
+	JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 	e.printStackTrace();
 }
 	}

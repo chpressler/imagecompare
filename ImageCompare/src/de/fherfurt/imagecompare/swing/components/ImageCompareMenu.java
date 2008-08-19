@@ -114,12 +114,13 @@ public class ImageCompareMenu extends JMenuBar {
 						UIManager.setLookAndFeel(LAFClassName);
 						SwingUtilities.updateComponentTreeUI(jf);
 					} catch (Exception e3) {
+						JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e3.getMessage());
 						e3.printStackTrace();
-						final JDialog jd = new JDialog();
-						JOptionPane.showMessageDialog(jd,
-							    e3.getMessage(),
-							    "Exception",
-							    JOptionPane.ERROR_MESSAGE);
+//						final JDialog jd = new JDialog();
+//						JOptionPane.showMessageDialog(jd,
+//							    e3.getMessage(),
+//							    "Exception",
+//							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});

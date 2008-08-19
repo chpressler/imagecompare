@@ -48,7 +48,7 @@ public class PicasaFrame extends JFrame {
 		try {
 			cb = new JComboBox(new ICPicasaComboBoxModel());
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror"));
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 			e1.printStackTrace();
 		}
 		cb.addItemListener(new ItemListener() {
@@ -94,7 +94,7 @@ public class PicasaFrame extends JFrame {
 							}
 							ImageBase.getInstance().setImageBase(urls);
 						} catch (Exception e) {
-							//TODO -> JOptionPane
+							JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 							e.printStackTrace();
 						}
 					}}).start();

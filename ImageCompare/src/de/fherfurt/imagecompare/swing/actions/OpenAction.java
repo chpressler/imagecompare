@@ -52,9 +52,10 @@ public class OpenAction extends AbstractAction {
 		                ImageBase.getInstance().setImageBase(f);
 		            }
 				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
-							"Exception", JOptionPane.ERROR_MESSAGE);
+//					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
+//							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}}).start();
 	}

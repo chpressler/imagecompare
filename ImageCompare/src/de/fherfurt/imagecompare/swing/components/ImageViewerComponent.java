@@ -28,6 +28,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.controller.ImageViewerDropPathTarget;
 
 public class ImageViewerComponent extends JPanel implements ImageViewerListener {
@@ -292,9 +293,10 @@ public class ImageViewerComponent extends JPanel implements ImageViewerListener 
 					}
 
 				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
-							"Exception", JOptionPane.ERROR_MESSAGE);
+//					JOptionPane.showMessageDialog(new JDialog(), e1.getMessage(),
+//							"Exception", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

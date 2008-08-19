@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -26,6 +27,7 @@ import de.fherfurt.imagecompare.IImport;
 import de.fherfurt.imagecompare.ImageAnalyser;
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ImportDBDerbyHandler;
+import de.fherfurt.imagecompare.ResourceHandler;
 import de.fherfurt.imagecompare.swing.actions.RemoveSelectedAction;
 
 public class ImageThumbnailComponent extends JComponent implements ThumbnailSizeListener, Comparable<ImageThumbnailComponent> {
@@ -125,6 +127,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 							}
 							Desktop.getDesktop().open(file);
 						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e1.getMessage());
 							e1.printStackTrace();
 						} 
 					} else {
@@ -192,6 +195,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 					f.delete();
 				} catch (Exception e) {
 					f.delete();
+					JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 					e.printStackTrace();
 				}
 			} else {
