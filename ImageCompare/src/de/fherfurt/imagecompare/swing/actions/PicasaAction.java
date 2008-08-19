@@ -27,6 +27,7 @@ import com.google.gdata.data.photos.UserFeed;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.components.PicasaFrame;
 import de.fherfurt.imagecompare.swing.models.ICPicasaComboBoxModel;
 
 public class PicasaAction extends AbstractAction {
@@ -41,75 +42,6 @@ public class PicasaAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		new PicasaFrame();
+		PicasaFrame.getInstance().setVisible(true);
 	}
-}
-
-class PicasaFrame extends JFrame {
-
-	private static final long serialVersionUID = 1L;
-	
-	private JComboBox cb;
-	
-	public PicasaFrame() {
-		super("PicasaWebAlbums");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setSize(300, 50);
-		try {
-			cb = new JComboBox(new ICPicasaComboBoxModel());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		cb.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(final ItemEvent e) {
-				System.out.println(e.getItem());
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							ArrayList<String> urls = new ArrayList<String>();
-							PicasawebService myService = new PicasawebService(
-									"exampleCo-exampleApp-1");
-							
-							myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
-							
-							URL albumAndPhotosUrl = new URL("http://picasaweb.google.com/data/feed/api/user/christian.pressler/album/" + e.getItem() + "?kind=photo");
-							UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl, UserFeed.class);
-//							System.out.println(myUserFeed.getAlbumEntries().get(0).getTitle().getPlainText());
-//							for(AlbumEntry ae : myUserFeed.getAlbumEntries()) {
-//								
-//							}
-							
-							Query myQuery = new Query(albumAndPhotosUrl);
-//							myQuery.setMaxResults(50);
-							
-							PhotoFeed resultFeed = myService.query(myQuery,
-									PhotoFeed.class);
-							
-							List<PhotoEntry> photos = new ArrayList<PhotoEntry>();
-							
-							for (GphotoEntry entry : resultFeed
-									.getEntries()) {
-								
-								GphotoEntry adapted = entry
-										.getAdaptedEntry();
-								if (adapted instanceof PhotoEntry) {
-									photos.add((PhotoEntry) adapted);
-								}
-							}
-							for (PhotoEntry pho : photos) {
-								urls.add(pho.getMediaContents().get(0).getUrl().toString());
-							}
-							ImageBase.getInstance().setImageBase(urls);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}}).start();
-			}});
-		getContentPane().add(cb);
-//		pack();
-		setVisible(true);
-	}
-	
 }

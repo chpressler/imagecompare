@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -136,6 +137,7 @@ public class ExportFrame extends JFrame {
 		try {
 			jComboBox1.setModel(new ICPicasaComboBoxModel());
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror"));
 			e.printStackTrace();
 		}
 	        jComboBox1.setName("jComboBox1"); // NOI18N
@@ -270,6 +272,7 @@ public class ExportFrame extends JFrame {
 			jComboBox1.setModel(new ICPicasaComboBoxModel());
 		} catch (Exception e) {
 			e.printStackTrace();
+			//TODO -> JOptionPane
 		}
 		super.setVisible(b);
 	}
