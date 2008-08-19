@@ -206,18 +206,19 @@ public class ImportDBDerbyHandler implements IImport {
 				try {
 					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\'" + s + "\', \'"
 							+ imtc.getAttributes().get(s).trim()
-							+ "\', \'"
+							+ "\', "
 							+ imageid
-							+ "\')");
+							+ ")");
 				} catch (Exception e) {
+					e.printStackTrace();
 					stmt.execute("INSERT INTO attributes (name, value, image_id) VALUES (\'" + s + "\', \'"
 							+ ""
-							+ "\', \'"
+							+ "\', "
 							+ imageid
-							+ "\')");
+							+ ")");
 				}
 			}
-			conn.close();
+//			conn.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

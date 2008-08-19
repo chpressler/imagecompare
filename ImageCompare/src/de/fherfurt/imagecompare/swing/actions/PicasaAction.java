@@ -55,7 +55,11 @@ class PicasaFrame extends JFrame {
 		super("PicasaWebAlbums");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(300, 50);
-		cb = new JComboBox(new ICPicasaComboBoxModel());
+		try {
+			cb = new JComboBox(new ICPicasaComboBoxModel());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		cb.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
