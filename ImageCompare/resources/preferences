@@ -9,3 +9,6 @@ dbport=3306
 db=ic
 user=
 password=
+
+picasauser=
+picasapw=

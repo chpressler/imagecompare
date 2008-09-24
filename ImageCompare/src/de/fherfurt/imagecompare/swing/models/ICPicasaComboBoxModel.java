@@ -11,6 +11,7 @@ import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.UserFeed;
 
 import de.fherfurt.imagecompare.ResourceHandler;
+import de.fherfurt.imagecompare.swing.components.SettingsFrame;
 
 public class ICPicasaComboBoxModel extends DefaultComboBoxModel {
 	
@@ -22,14 +23,11 @@ public class ICPicasaComboBoxModel extends DefaultComboBoxModel {
 		PicasawebService myService = new PicasawebService(
 				"exampleCo-exampleApp-1");
 
-		myService.setUserCredentials(ResourceHandler.getInstance().getStrings()
-				.getString("user"), ResourceHandler.getInstance().getStrings()
-				.getString("pw"));
+		myService.setUserCredentials(SettingsFrame.getInstance().getProperties().getProperty("picasauser"), SettingsFrame.getInstance().getProperties().getProperty("picasapw"));
 
 		URL albumAndPhotosUrl = new URL(
 				"http://picasaweb.google.com/data/feed/api/user/"
-						+ ResourceHandler.getInstance().getStrings().getString(
-								"user") + "/?kind=album");
+						+ SettingsFrame.getInstance().getProperties().getProperty("picasauser") + "/?kind=album");
 		UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl,
 				UserFeed.class);
 

@@ -28,6 +28,7 @@ import com.yahoo.search.ImageSearchResult;
 import com.yahoo.search.ImageSearchResults;
 
 import de.fherfurt.imagecompare.swing.components.ImageThumbnailComponent;
+import de.fherfurt.imagecompare.swing.components.SettingsFrame;
 import de.fherfurt.imagecompare.swing.components.StatusBar;
 import de.fherfurt.imagecompare.util.ICUtil;
 
@@ -135,11 +136,11 @@ public class ImageBase {
 			PicasawebService myService =
 				  new PicasawebService("exampleCo-exampleApp-1");
 
-				myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
+				myService.setUserCredentials(SettingsFrame.getInstance().getProperties().getProperty("picasauser"), SettingsFrame.getInstance().getProperties().getProperty("picasapw"));
 
 				if(!exists) {
 				URL postUrl =
-				  new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user"));
+				  new URL("http://picasaweb.google.com/data/feed/api/user/" + SettingsFrame.getInstance().getProperties().getProperty("picasauser"));
 				AlbumEntry myEntry = new AlbumEntry();
 
 				myEntry.setTitle(new PlainTextConstruct(album));
@@ -154,7 +155,7 @@ public class ImageBase {
 				AlbumEntry insertedEntry = myService.insert(postUrl, myEntry);
 				}
 				
-				URL feedUrl = new URL("http://picasaweb.google.com/data/feed/api/user/" + ResourceHandler.getInstance().getStrings().getString("user") + "/album/" + album);
+				URL feedUrl = new URL("http://picasaweb.google.com/data/feed/api/user/" + SettingsFrame.getInstance().getProperties().getProperty("picasauser") + "/album/" + album);
 
 				for(ImageThumbnailComponent itc : images) {
 					System.out.println(itc.getPath());

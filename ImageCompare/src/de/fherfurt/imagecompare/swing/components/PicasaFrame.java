@@ -2,9 +2,13 @@ package de.fherfurt.imagecompare.swing.components;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,6 +21,7 @@ import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.data.photos.PhotoFeed;
 import com.google.gdata.data.photos.UserFeed;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+import com.sun.xml.internal.fastinfoset.sax.Properties;
 
 import de.fherfurt.imagecompare.ImageBase;
 import de.fherfurt.imagecompare.ResourceHandler;
@@ -43,6 +48,7 @@ public class PicasaFrame extends JFrame {
 	
 	private PicasaFrame() {
 		super("PicasaWebAlbums");
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(300, 50);
 		try {
@@ -63,7 +69,7 @@ public class PicasaFrame extends JFrame {
 							PicasawebService myService = new PicasawebService(
 									"exampleCo-exampleApp-1");
 							
-							myService.setUserCredentials(ResourceHandler.getInstance().getStrings().getString("user"), ResourceHandler.getInstance().getStrings().getString("pw"));
+							myService.setUserCredentials(SettingsFrame.getInstance().getProperties().getProperty("picasauser"), SettingsFrame.getInstance().getProperties().getProperty("picasapw"));
 							
 							URL albumAndPhotosUrl = new URL("http://picasaweb.google.com/data/feed/api/user/christian.pressler/album/" + e.getItem() + "?kind=photo");
 							UserFeed myUserFeed = myService.getFeed(albumAndPhotosUrl, UserFeed.class);
