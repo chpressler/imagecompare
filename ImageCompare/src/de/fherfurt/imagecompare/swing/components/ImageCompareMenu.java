@@ -138,6 +138,12 @@ public class ImageCompareMenu extends JMenuBar {
 		edit.add(edit_delete);
 		edit.addSeparator();
 		edit.add(laf);
+		edit_properties.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_P, InputEvent.CTRL_MASK ) );
+		edit_properties.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SettingsFrame.getInstance().setVisible(true);
+			}});
 		edit.add(edit_properties);
 		edit.setBackground(Color.black);
 		

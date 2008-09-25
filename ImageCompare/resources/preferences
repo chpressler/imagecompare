@@ -1,14 +1,9 @@
-#dbhost=85.214.59.56
-#dbport=3306
-#db=db1211228830-229
-#user=db1211228830-229
-#password=0JWSOxjA42u8
-
-dbhost=localhost
-dbport=3306
-db=ic
-user=
-password=
-
-picasauser=
+#edited in SettingsFrame: Thu Sep 25 11:04:03 CEST 2008
+#Thu Sep 25 11:04:03 CEST 2008
 picasapw=
+dbhost=localhost
+picasauser=
+user=
+db=ic
+password=
+dbport=3306
