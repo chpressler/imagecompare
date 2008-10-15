@@ -8,6 +8,7 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -54,6 +55,8 @@ public class SearchComponent extends JPanel {
 	private boolean yahoo, google, torrent, gnutella = false;
 	
 	private boolean local = true;
+	
+	private Thread imageSearchThread = null;
 	
 	private ILocalImageSearcher localSearcher;
 	
@@ -131,15 +134,20 @@ public class SearchComponent extends JPanel {
 					local = false;
 				}
 			}});
-
+        
         jButton1.setText("search");
+       
         jButton1.addActionListener(new ActionListener() {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			//TODO -> erst alle laufenden Threads beenden! (ThreadWorker???)
+    			//TODO -> nicht immer abbrechen, auch mehrere suchen gleichzeitig!!! 
     			final String searchstring = jTextField1.getText();
     			if(yahoo) {
-    			new Thread(new Runnable() {
+    				if(imageSearchThread != null && imageSearchThread.isAlive()) {
+    					imageSearchThread.stop();
+    					imageSearchThread = null;
+    				}
+    			imageSearchThread = new Thread(new Runnable() {
     				@Override
     				public void run() {
     					ImageSearchRequest request = new ImageSearchRequest(searchstring);            
@@ -153,10 +161,16 @@ public class SearchComponent extends JPanel {
     						e1.printStackTrace();
     					} 
     					ImageBase.getInstance().setImageBase(results);
-    				}}).start();
+    				}});
+    			imageSearchThread.setName("ImageSearch");
+    			imageSearchThread.start();
     			}
     			if(google) {
-    				new Thread(new Runnable() {
+    				if(imageSearchThread != null && imageSearchThread.isAlive()) {
+    					imageSearchThread.stop();
+    					imageSearchThread = null;
+    				}
+    				imageSearchThread = new Thread(new Runnable() {
 						@Override
 						public void run() {
 							try {
@@ -192,24 +206,39 @@ public class SearchComponent extends JPanel {
 								JOptionPane.showMessageDialog(null, ResourceHandler.getInstance().getStrings().getString("picasaconnecterror") + "\n" + e.getMessage());
 								e.printStackTrace();
 							}
-						}}).start();
+						}});
+    				imageSearchThread.start();
     			}
     			if(torrent) {
-    				new Thread(new Runnable() {
+    				if(imageSearchThread != null && imageSearchThread.isAlive()) {
+    					imageSearchThread.stop();
+    					imageSearchThread = null;
+    				}
+    				imageSearchThread = new Thread(new Runnable() {
 						@Override
 						public void run() {
 							
-						}}).start();
+						}});
+    				imageSearchThread.start();
     			}
     			if(gnutella) {
-    				new Thread(new Runnable() {
+    				if(imageSearchThread != null && imageSearchThread.isAlive()) {
+    					imageSearchThread.stop();
+    					imageSearchThread = null;
+    				}
+    				imageSearchThread = new Thread(new Runnable() {
 						@Override
 						public void run() {
 							
-						}}).start();
+						}});
+    				imageSearchThread.start();
     			}
     			if(local) {
-    				new Thread(new Runnable() {
+    				if(imageSearchThread != null && imageSearchThread.isAlive()) {
+    					imageSearchThread.stop();
+    					imageSearchThread = null;
+    				}
+    				imageSearchThread = new Thread(new Runnable() {
     					@Override
         				public void run() {
     						try {
@@ -234,7 +263,8 @@ public class SearchComponent extends JPanel {
 								e.printStackTrace();
 								StatusBar.getInstance().deactivateProgressBar();
 							}
-        				}}).start();
+        				}});
+    				imageSearchThread.start();
     			}
     		}});
 
