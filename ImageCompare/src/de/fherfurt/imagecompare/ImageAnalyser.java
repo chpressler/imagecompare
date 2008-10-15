@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -110,7 +111,7 @@ public class ImageAnalyser {
 			e2.printStackTrace();
 		}
 		try {
-			metadatamap.put("lastModofied", Long.toString(f.lastModified()));
+			metadatamap.put("lastModified", new Date(f.lastModified()).toString());
 		} catch (Exception e3) {
 		}
 		try {

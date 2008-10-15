@@ -43,14 +43,14 @@ public class MainFrame extends JFrame {
 		MainController.getInstance();
 		try {
 			
-			UIManager.installLookAndFeel("JGoodies Windows LaF",
-					"com.jgoodies.looks.windows.WindowsLookAndFeel");
-			UIManager.installLookAndFeel("JGoodies Plastic LaF",
-					"com.jgoodies.looks.plastic.PlasticLookAndFeel");
-			UIManager.installLookAndFeel("JGoodies Plastic3D LaF",
-					"com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
-			UIManager.installLookAndFeel("JGoodies PlasticXP LaF",
-					"com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+//			UIManager.installLookAndFeel("JGoodies Windows LaF",
+//					"com.jgoodies.looks.windows.WindowsLookAndFeel");
+//			UIManager.installLookAndFeel("JGoodies Plastic LaF",
+//					"com.jgoodies.looks.plastic.PlasticLookAndFeel");
+//			UIManager.installLookAndFeel("JGoodies Plastic3D LaF",
+//					"com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+//			UIManager.installLookAndFeel("JGoodies PlasticXP LaF",
+//					"com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
 			
 //			PlasticLookAndFeel.setPlasticTheme(new DarkStar());
 //			PlasticLookAndFeel.setPlasticTheme(new Silver());
