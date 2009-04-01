@@ -30,9 +30,8 @@ public class DerbyImageSearcher implements ILocalImageSearcher {
 				Class.forName(driver).newInstance();
 				conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
-//				conn.setAutoCommit(false);
+				conn.setAutoCommit(true);
 				Statement s = conn.createStatement();
-				
 //				s.execute("drop table attributes");
 //				s.execute("drop table images");
 				
@@ -60,19 +59,26 @@ public class DerbyImageSearcher implements ILocalImageSearcher {
 
 	@Override
 	public void deleteImage(String path) {
-		try {
-			Class.forName(driver).newInstance();
-			conn = DriverManager.getConnection(protocol + dbName
-				+ ";create=true", props);
-			conn.setAutoCommit(false);
-			Statement stmt = conn.createStatement();
-			String subquery = "(select id FROM images where path = '" + path
-					+ "')";
-			stmt.execute("DELETE FROM attributes where image_id = " + subquery);
-			stmt.execute("DELETE FROM images where path = '" + path + "'");
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		synchronized (this) {
+			try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager.getConnection(protocol + dbName
+					+ ";create=true", props);
+				conn.setAutoCommit(false);
+				Statement stmt = conn.createStatement();
+				String subquery = "(select id FROM images where path = '" + path
+						+ "')";
+				stmt.execute("DELETE FROM attributes where image_id = " + subquery);
+				stmt.execute("DELETE FROM images where path = '" + path + "'");
+				conn.close();
+			} catch (Exception e) {
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -93,6 +99,11 @@ public class DerbyImageSearcher implements ILocalImageSearcher {
 			}
 			conn.close();
 		} catch (Exception e) {
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		return results;

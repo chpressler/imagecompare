@@ -2,11 +2,15 @@ package de.fherfurt.imagecompare;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
@@ -35,6 +39,41 @@ public class ImageAnalyser {
 	
 	public HashMap<String, String> getImageAttributes(File f, String url) {
 		HashMap<String, String> metadatamap = new HashMap<String, String>();
+
+		if(url.isEmpty()) {
+			metadatamap.put("path", f.getAbsolutePath().replaceAll("\\\\", "/"));
+		} else {
+			metadatamap.put("path", url);
+		}
+		
+		BufferedImage bi;
+		try {
+			bi = ICUtil.getInstance().getThumbnal(ImageIO.read(f));
+		} catch (Exception e1) {
+			System.out.println("cant read file: -> " + f.getAbsolutePath());
+			return metadatamap;
+		}
+		try {
+			metadatamap.put("imageWidth", Integer.toString(bi.getWidth()));
+		} catch (Exception e5) {
+		}
+		try {
+			metadatamap.put("imageHeight", Integer.toString(bi.getHeight()));
+		} catch (Exception e6) {
+		}
+		
+		Properties	props = new Properties();
+		try {
+			props.load(new FileInputStream("resources/preferences"));
+		} catch (FileNotFoundException e7) {
+			e7.printStackTrace();
+		} catch (IOException e7) {
+			e7.printStackTrace();
+		}
+		if(props.get("import").equals("plain")) {
+			return metadatamap;
+		}
+		
 		Metadata metadata = new Metadata();
 		try {
 			metadata = JpegMetadataReader.readMetadata(f);
@@ -46,12 +85,7 @@ public class ImageAnalyser {
 		String model = "";
 		String make = "";
 		int x = 0, y = 0;
-		
-		if(url.isEmpty()) {
-			metadatamap.put("path", f.getAbsolutePath().replaceAll("\\\\", "/"));
-		} else {
-			metadatamap.put("path", url);
-		}
+
 		while (directories.hasNext()) {
 			final Directory directory = (Directory) directories.next();
 			Iterator tags = directory.getTagIterator();
@@ -95,13 +129,6 @@ public class ImageAnalyser {
 		}
 		metadatamap.put("camera", make + " " + model);
 		
-		BufferedImage bi;
-		try {
-			bi = ICUtil.getInstance().getThumbnal(ImageIO.read(f));
-		} catch (Exception e1) {
-			System.out.println("cant read file: -> " + f.getAbsolutePath());
-			return metadatamap;
-		}
 		try {
 			metadatamap.put("faceCount", Integer.toString(ICUtil.getInstance()
 					.getFaceCount(f.getAbsolutePath())));
@@ -117,14 +144,6 @@ public class ImageAnalyser {
 		try {
 			metadatamap.put("filesize", Long.toString(f.length()));
 		} catch (Exception e4) {
-		}
-		try {
-			metadatamap.put("imageWidth", Integer.toString(bi.getWidth()));
-		} catch (Exception e5) {
-		}
-		try {
-			metadatamap.put("imageHeight", Integer.toString(bi.getHeight()));
-		} catch (Exception e6) {
 		}
 		try {
 			metadatamap.put("dynamic", Integer.toString(ICUtil.getInstance()

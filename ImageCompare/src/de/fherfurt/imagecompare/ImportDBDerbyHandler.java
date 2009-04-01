@@ -43,7 +43,7 @@ public class ImportDBDerbyHandler implements IImport {
 		try {
 			props = new Properties();
 			props.load(new FileInputStream("resources/preferences"));
-			
+	
 			try {
 				if(conn == null || conn.isClosed()) {
 				Class.forName(driver).newInstance();
@@ -52,7 +52,7 @@ public class ImportDBDerbyHandler implements IImport {
 				}
 				
 //				System.out.println(protocol + dbName + ";create=true");
-//				conn.setAutoCommit(false);
+				conn.setAutoCommit(true);
 				Statement s = conn.createStatement();
 				
 //				ResultSet rs = s.executeQuery("select * from images");
@@ -71,7 +71,7 @@ public class ImportDBDerbyHandler implements IImport {
 				s.execute("create table images(id bigint not null generated always as identity (start with 1, increment by 1), path varchar(500) not null, primary key(id))");
 				s.execute("create table attributes(id bigint not null generated always as identity (start with 1, increment by 1), name varchar(500) not null, value varchar(500) not null, image_id bigint not null, primary key(id), foreign key(image_id) references images(id))");
 				
-//				conn.close();
+				conn.close();
 			} catch (SQLException sqle) {
 				System.out.println("DB schon vorhanden ? -> " + sqle.getMessage());
 //				sqle.printStackTrace();
@@ -91,7 +91,7 @@ public class ImportDBDerbyHandler implements IImport {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 			}
 			Statement stmt = conn.createStatement();
 
@@ -151,7 +151,7 @@ public class ImportDBDerbyHandler implements IImport {
 					e.printStackTrace();
 				}
 			}
-//			conn.close();
+			conn.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -165,7 +165,7 @@ public class ImportDBDerbyHandler implements IImport {
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
 			}
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 			Statement stmt = conn.createStatement();
 
 			//Table images
@@ -216,7 +216,7 @@ public class ImportDBDerbyHandler implements IImport {
 							+ ")");
 				}
 			}
-//			conn.close();
+			conn.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -231,7 +231,7 @@ public class ImportDBDerbyHandler implements IImport {
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
 			}
-//			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from attributes where image_id = (select id from images where path = '"
@@ -239,7 +239,7 @@ public class ImportDBDerbyHandler implements IImport {
 			while (rs.next()) {
 				attributes.put(rs.getString("name"), rs.getString("value"));
 			}
-//			conn.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -254,7 +254,7 @@ public class ImportDBDerbyHandler implements IImport {
 			conn = DriverManager.getConnection(protocol + dbName
 					+ ";create=true", props);
 			}
-//			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 			Statement stmt = conn.createStatement();
 			if(!absolutePath.startsWith("http")) {
 				absolutePath = absolutePath.replace("\\", "/");
@@ -262,6 +262,16 @@ public class ImportDBDerbyHandler implements IImport {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM images WHERE path = '" + absolutePath + "'");
 			return rs.next();
 		} catch (Exception e) {
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				e.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;

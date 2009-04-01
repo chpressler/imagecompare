@@ -10,12 +10,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -167,6 +171,7 @@ public class ImageThumbnailComponent extends JComponent implements ThumbnailSize
 			}
 			
 		});
+		
 		if(importer.isImported(getPath())) {
 			attributes = importer.getAttributes(getPath());
 		} else {

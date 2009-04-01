@@ -8,7 +8,6 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
