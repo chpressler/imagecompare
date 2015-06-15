@@ -1,0 +1,1 @@
+ImageCompare is a tool for comparing digital images
